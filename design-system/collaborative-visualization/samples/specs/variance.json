@@ -1,0 +1,142 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-variance-template",
+  "resultRef": "RESULT-TEMPLATE-VARIANCE-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "variance",
+    "method": "实际值减基准值",
+    "audience": "业务分析读者"
+  },
+  "representation": "variance-bar",
+  "claim": {
+    "kind": "calculation",
+    "text": "对象A相对基准的不利差异最大。",
+    "status": "verified"
+  },
+  "scope": {
+    "metric": "{指标名称}",
+    "dimensions": [
+      "{对象维度}"
+    ],
+    "filters": [
+      "{筛选条件}"
+    ],
+    "period": "{分析期间}",
+    "version": "{实际版本} vs {基准版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{对象粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "variance",
+      "type": "quantitative",
+      "scale": "diverging-zero"
+    },
+    "y": {
+      "field": "label",
+      "type": "nominal",
+      "scale": "sorted-ascending"
+    },
+    "color": {
+      "field": "direction",
+      "type": "nominal",
+      "scale": "business-favorable-direction"
+    }
+  },
+  "data": [
+    {
+      "label": "对象A",
+      "variance": -18,
+      "direction": "unfavorable"
+    },
+    {
+      "label": "对象B",
+      "variance": -6,
+      "direction": "unfavorable"
+    },
+    {
+      "label": "对象C",
+      "variance": 5,
+      "direction": "favorable"
+    },
+    {
+      "label": "对象D",
+      "variance": 11,
+      "direction": "favorable"
+    }
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "baseline-comparable",
+        "status": "pass",
+        "message": "实际和基准使用相同口径、范围和单位。"
+      },
+      {
+        "id": "favorable-direction-defined",
+        "status": "pass",
+        "message": "当前指标已定义数值增加为有利。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": [
+    "EVIDENCE-TEMPLATE-VARIANCE-01"
+  ],
+  "limitations": [
+    "有利与不利方向必须由指标定义提供，不能仅根据正负号推断。"
+  ],
+  "accessibleSummary": "相对基准的差异为：对象A负18不利，对象B负6不利，对象C正5有利，对象D正11有利；对象A不利差异最大。",
+  "dataTable": {
+    "columns": [
+      {
+        "key": "label",
+        "label": "{对象维度}"
+      },
+      {
+        "key": "variance",
+        "label": "差异",
+        "format": "{单位}"
+      },
+      {
+        "key": "direction",
+        "label": "业务方向"
+      }
+    ],
+    "rows": [
+      {
+        "label": "对象A",
+        "variance": -18,
+        "direction": "不利"
+      },
+      {
+        "label": "对象B",
+        "variance": -6,
+        "direction": "不利"
+      },
+      {
+        "label": "对象C",
+        "variance": 5,
+        "direction": "有利"
+      },
+      {
+        "label": "对象D",
+        "variance": 11,
+        "direction": "有利"
+      }
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": [
+      "explain",
+      "compare",
+      "filter",
+      "drill"
+    ]
+  }
+}

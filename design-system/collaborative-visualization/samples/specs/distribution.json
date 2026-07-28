@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-distribution-template",
+  "resultRef": "RESULT-TEMPLATE-DISTRIBUTION-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "distribution",
+    "method": "固定分箱宽度的单变量频数分布",
+    "audience": "业务分析读者"
+  },
+  "representation": "histogram",
+  "claim": {
+    "kind": "fact",
+    "text": "多数观察值集中在40到70之间，右侧存在少量高值。",
+    "status": "supported"
+  },
+  "scope": {
+    "metric": "{连续指标}",
+    "dimensions": ["{观察对象}"],
+    "filters": ["{筛选条件}"],
+    "period": "{分析期间}",
+    "version": "{数据版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{观察粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "fixed-bin-width"
+    },
+    "y": {
+      "field": "count",
+      "type": "quantitative",
+      "scale": "frequency"
+    }
+  },
+  "data": [
+    {"label": "样本01", "value": 18}, {"label": "样本02", "value": 27},
+    {"label": "样本03", "value": 34}, {"label": "样本04", "value": 39},
+    {"label": "样本05", "value": 43}, {"label": "样本06", "value": 46},
+    {"label": "样本07", "value": 49}, {"label": "样本08", "value": 52},
+    {"label": "样本09", "value": 54}, {"label": "样本10", "value": 57},
+    {"label": "样本11", "value": 61}, {"label": "样本12", "value": 63},
+    {"label": "样本13", "value": 66}, {"label": "样本14", "value": 69},
+    {"label": "样本15", "value": 72}, {"label": "样本16", "value": 78},
+    {"label": "样本17", "value": 86}, {"label": "样本18", "value": 96},
+    {"label": "样本19", "value": 44}, {"label": "样本20", "value": 74}
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "sample-size-sufficient",
+        "status": "pass",
+        "message": "样本数满足当前模板的描述性分布要求。"
+      },
+      {
+        "id": "bin-width-declared",
+        "status": "pass",
+        "message": "分箱宽度随结果记录。"
+      }
+    ],
+    "fallback": "distribution-table"
+  },
+  "evidenceRefs": ["EVIDENCE-TEMPLATE-DISTRIBUTION-01"],
+  "limitations": [
+    "分布形状会受分箱宽度影响；精确值请切换到数据表。"
+  ],
+  "accessibleSummary": "十八个观察值从18到96，多数集中在40到70之间，80以上有两个高值。",
+  "dataTable": {
+    "columns": [
+      {"key": "label", "label": "观察对象"},
+      {"key": "value", "label": "{连续指标}", "format": "{单位}"}
+    ],
+    "rows": [
+      {"label": "样本01", "value": 18}, {"label": "样本02", "value": 27},
+      {"label": "样本03", "value": 34}, {"label": "样本04", "value": 39},
+      {"label": "样本05", "value": 43}, {"label": "样本06", "value": 46},
+      {"label": "样本07", "value": 49}, {"label": "样本08", "value": 52},
+      {"label": "样本09", "value": 54}, {"label": "样本10", "value": 57},
+      {"label": "样本11", "value": 61}, {"label": "样本12", "value": 63},
+      {"label": "样本13", "value": 66}, {"label": "样本14", "value": 69},
+      {"label": "样本15", "value": 72}, {"label": "样本16", "value": 78},
+      {"label": "样本17", "value": 86}, {"label": "样本18", "value": 96},
+      {"label": "样本19", "value": 44}, {"label": "样本20", "value": 74}
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": ["explain", "filter", "drill"]
+  }
+}

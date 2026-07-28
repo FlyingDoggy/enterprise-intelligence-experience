@@ -1,0 +1,227 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-scatter-template",
+  "resultRef": "RESULT-TEMPLATE-SCATTER-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "relationship",
+    "method": "同粒度双变量关系",
+    "audience": "业务分析读者"
+  },
+  "representation": "scatter",
+  "claim": {
+    "kind": "hypothesis",
+    "text": "两个指标在当前样本中呈同向关系，仍需控制其他因素后验证。",
+    "status": "supported"
+  },
+  "scope": {
+    "metric": "{指标X} × {指标Y}",
+    "dimensions": [
+      "{观察对象}"
+    ],
+    "filters": [
+      "{筛选条件}"
+    ],
+    "period": "{分析期间}",
+    "version": "{数据版本}",
+    "unit": "{指标X单位} / {指标Y单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{观察粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "x",
+      "type": "quantitative",
+      "scale": "linear"
+    },
+    "y": {
+      "field": "y",
+      "type": "quantitative",
+      "scale": "linear"
+    },
+    "detail": {
+      "field": "label",
+      "type": "nominal",
+      "scale": "identity"
+    }
+  },
+  "data": [
+    {
+      "label": "样本01",
+      "x": 12,
+      "y": 19
+    },
+    {
+      "label": "样本02",
+      "x": 18,
+      "y": 24
+    },
+    {
+      "label": "样本03",
+      "x": 21,
+      "y": 28
+    },
+    {
+      "label": "样本04",
+      "x": 26,
+      "y": 25
+    },
+    {
+      "label": "样本05",
+      "x": 31,
+      "y": 36
+    },
+    {
+      "label": "样本06",
+      "x": 35,
+      "y": 32
+    },
+    {
+      "label": "样本07",
+      "x": 41,
+      "y": 44
+    },
+    {
+      "label": "样本08",
+      "x": 46,
+      "y": 47
+    },
+    {
+      "label": "样本09",
+      "x": 52,
+      "y": 49
+    },
+    {
+      "label": "样本10",
+      "x": 57,
+      "y": 59
+    },
+    {
+      "label": "样本11",
+      "x": 63,
+      "y": 61
+    },
+    {
+      "label": "样本12",
+      "x": 69,
+      "y": 72
+    }
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "grains-compatible",
+        "status": "pass",
+        "message": "两个指标使用同一观察粒度。"
+      },
+      {
+        "id": "sample-size-sufficient",
+        "status": "pass",
+        "message": "当前模板包含12个观察值。"
+      },
+      {
+        "id": "non-causal-label-present",
+        "status": "pass",
+        "message": "结论明确说明相关不代表因果。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": [
+    "EVIDENCE-TEMPLATE-SCATTER-01"
+  ],
+  "limitations": [
+    "当前关系为描述性相关，不代表因果；未控制{潜在混杂因素}。"
+  ],
+  "accessibleSummary": "十二个同粒度样本的指标X从12到69，指标Y从19到72，整体呈同向关系；该关系不代表因果。",
+  "dataTable": {
+    "columns": [
+      {
+        "key": "label",
+        "label": "观察对象"
+      },
+      {
+        "key": "x",
+        "label": "{指标X}",
+        "format": "{指标X单位}"
+      },
+      {
+        "key": "y",
+        "label": "{指标Y}",
+        "format": "{指标Y单位}"
+      }
+    ],
+    "rows": [
+      {
+        "label": "样本01",
+        "x": 12,
+        "y": 19
+      },
+      {
+        "label": "样本02",
+        "x": 18,
+        "y": 24
+      },
+      {
+        "label": "样本03",
+        "x": 21,
+        "y": 28
+      },
+      {
+        "label": "样本04",
+        "x": 26,
+        "y": 25
+      },
+      {
+        "label": "样本05",
+        "x": 31,
+        "y": 36
+      },
+      {
+        "label": "样本06",
+        "x": 35,
+        "y": 32
+      },
+      {
+        "label": "样本07",
+        "x": 41,
+        "y": 44
+      },
+      {
+        "label": "样本08",
+        "x": 46,
+        "y": 47
+      },
+      {
+        "label": "样本09",
+        "x": 52,
+        "y": 49
+      },
+      {
+        "label": "样本10",
+        "x": 57,
+        "y": 59
+      },
+      {
+        "label": "样本11",
+        "x": 63,
+        "y": 61
+      },
+      {
+        "label": "样本12",
+        "x": 69,
+        "y": 72
+      }
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": [
+      "explain",
+      "filter",
+      "drill"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EIX Live Specimen Sandbox</title>
+    <link rel="stylesheet" href="./design-system/tokens.generated.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./design-system/reference.css" />
+    <style>
+      html,
+      body {
+        min-width: 0;
+        min-height: 100%;
+        margin: 0;
+        background: var(--semantic-surface-canvas);
+      }
+
+      body {
+        display: grid;
+        padding: 0;
+      }
+
+      #specimenRoot {
+        min-width: 0;
+      }
+    </style>
+    <script src="./src/specimens/frame.js" type="module"></script>
+  </head>
+  <body data-theme="eix">
+    <main id="specimenRoot" aria-live="polite"></main>
+  </body>
+</html>

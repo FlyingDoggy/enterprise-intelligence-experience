@@ -1,0 +1,170 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-waterfall-template",
+  "resultRef": "RESULT-TEMPLATE-WATERFALL-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "contribution",
+    "method": "互斥且完备的加总贡献桥接",
+    "audience": "业务分析读者"
+  },
+  "representation": "waterfall",
+  "claim": {
+    "kind": "calculation",
+    "text": "因素A和因素B解释了大部分不利变化，因素C部分抵消。",
+    "status": "verified"
+  },
+  "scope": {
+    "metric": "{指标名称}",
+    "dimensions": [
+      "{驱动因素}"
+    ],
+    "filters": [
+      "{筛选条件}"
+    ],
+    "period": "{分析期间}",
+    "version": "{起点版本} → {终点版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{贡献粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "label",
+      "type": "nominal",
+      "scale": "bridge-order"
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "additive-bridge"
+    },
+    "color": {
+      "field": "direction",
+      "type": "nominal",
+      "scale": "business-favorable-direction"
+    }
+  },
+  "data": [
+    {
+      "id": "start",
+      "label": "起点",
+      "kind": "start",
+      "value": 100,
+      "direction": "neutral"
+    },
+    {
+      "id": "driver-a",
+      "label": "因素A",
+      "kind": "contribution",
+      "value": -18,
+      "direction": "unfavorable",
+      "evidenceRef": "EVIDENCE-WATERFALL-A"
+    },
+    {
+      "id": "driver-b",
+      "label": "因素B",
+      "kind": "contribution",
+      "value": -9,
+      "direction": "unfavorable",
+      "evidenceRef": "EVIDENCE-WATERFALL-B"
+    },
+    {
+      "id": "driver-c",
+      "label": "因素C",
+      "kind": "contribution",
+      "value": 6,
+      "direction": "favorable",
+      "evidenceRef": "EVIDENCE-WATERFALL-C"
+    },
+    {
+      "id": "end",
+      "label": "终点",
+      "kind": "end",
+      "value": 79,
+      "direction": "neutral"
+    }
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "contributions-mutually-exclusive",
+        "status": "pass",
+        "message": "贡献项互不重叠。"
+      },
+      {
+        "id": "contributions-exhaustive",
+        "status": "pass",
+        "message": "贡献项覆盖全部已认证变化。"
+      },
+      {
+        "id": "bridge-reconciles",
+        "status": "pass",
+        "message": "100 - 18 - 9 + 6 = 79。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": [
+    "EVIDENCE-WATERFALL-A",
+    "EVIDENCE-WATERFALL-B",
+    "EVIDENCE-WATERFALL-C"
+  ],
+  "limitations": [
+    "贡献项表示加总桥接，不自动证明业务因果。"
+  ],
+  "accessibleSummary": "指标从100下降到79。因素A贡献负18，因素B贡献负9，因素C贡献正6；三项合计负21，与总变化一致。",
+  "dataTable": {
+    "columns": [
+      {
+        "key": "label",
+        "label": "项目"
+      },
+      {
+        "key": "value",
+        "label": "值或贡献",
+        "format": "{单位}"
+      },
+      {
+        "key": "direction",
+        "label": "业务方向"
+      }
+    ],
+    "rows": [
+      {
+        "label": "起点",
+        "value": 100,
+        "direction": "基准"
+      },
+      {
+        "label": "因素A",
+        "value": -18,
+        "direction": "不利"
+      },
+      {
+        "label": "因素B",
+        "value": -9,
+        "direction": "不利"
+      },
+      {
+        "label": "因素C",
+        "value": 6,
+        "direction": "有利"
+      },
+      {
+        "label": "终点",
+        "value": 79,
+        "direction": "结果"
+      }
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": [
+      "explain",
+      "drill"
+    ]
+  }
+}

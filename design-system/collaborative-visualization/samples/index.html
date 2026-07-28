@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="zh-CN" data-mode="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="EIX Collaborative Intelligence 数据表达工作台：从分析问题和数据条件选择标准图形，并查看同源实现契约。"
+    />
+    <title>EIX · Collaborative Intelligence 图表规范</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="../../fonts.generated.css" />
+    <link rel="stylesheet" href="../../tokens.generated.css" />
+    <link rel="stylesheet" href="../eix-visualization.tokens.css" />
+    <link rel="stylesheet" href="../chart-components.css" />
+    <link rel="stylesheet" href="./gallery.css" />
+    <script type="module" src="./gallery.js"></script>
+  </head>
+  <body>
+    <a class="gallery-skip" href="#workbench">跳到图表规范工作台</a>
+
+    <header class="gallery-topbar">
+      <a
+        class="gallery-brand"
+        href="../../../#/design-system/foundations/data-display"
+        aria-label="返回 EIX Design System 数据表达"
+      >
+        <span aria-hidden="true">EIX</span>
+        <span>
+          <strong>企业智能体验规范</strong>
+          <small>Collaborative Intelligence · 数据表达</small>
+        </span>
+      </a>
+      <nav class="gallery-topbar__nav" aria-label="页面工具">
+        <a href="../../../#/design-system/foundations/data-display">返回 Design System</a>
+        <a href="#selection-reference">意图与选型</a>
+        <a href="#atlas">图形图谱</a>
+        <a href="#color-grammar">色彩规则</a>
+        <button id="modeButton" type="button" aria-pressed="false">
+          <span>预览主题</span>
+          <strong>浅色</strong>
+        </button>
+      </nav>
+    </header>
+
+    <main class="gallery-page">
+      <header class="gallery-intro">
+        <div>
+          <p class="gallery-eyebrow">数据表达标准 · 参考实现</p>
+          <h1>Collaborative Intelligence 图表规范</h1>
+          <p class="gallery-intro__lead">
+            14类工作问题、36种受治理表达和22种可视化样例。先判断是否需要图，再按数据条件、色彩职责和停止条件选择表达。
+          </p>
+        </div>
+        <dl class="gallery-intro__meta" aria-label="规范状态">
+          <div>
+            <dt>规范覆盖</dt>
+            <dd>选型 · 图谱 · 色彩 · 实现</dd>
+          </div>
+          <div>
+            <dt>交付状态</dt>
+            <dd>参考实现 · 不执行外部操作</dd>
+          </div>
+        </dl>
+      </header>
+
+      <section id="workbench" class="eix-viz-browser" aria-label="图表规范工作台" tabindex="-1">
+        <div class="eix-viz-browser__bar">
+          <span class="eix-viz-browser__traffic" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="eix-viz-browser__address">eix://数据表达/选图工作台</span>
+          <span class="eix-viz-browser__status">模拟 · 无外部操作</span>
+        </div>
+
+        <div class="gallery-app">
+          <aside class="gallery-nav" aria-label="分析问题目录">
+            <header>
+              <span>第一步</span>
+              <strong>选择分析问题</strong>
+              <p>不要先从图形样式开始。</p>
+            </header>
+            <div id="chartNav" role="list"></div>
+          </aside>
+
+          <div class="gallery-workspace">
+            <section class="gallery-decision" aria-labelledby="decisionHeading">
+              <header>
+                <p class="gallery-router__label">第二步 · 检查是否适用</p>
+                <h2 id="decisionHeading">当前选图判断</h2>
+                <p id="routeRationale">—</p>
+              </header>
+              <dl>
+                <div>
+                  <dt>分析问题</dt>
+                  <dd id="routeQuestion">—</dd>
+                </div>
+                <div>
+                  <dt>数据条件</dt>
+                  <dd id="routeConditions">—</dd>
+                </div>
+                <div>
+                  <dt>推荐表达</dt>
+                  <dd id="routeRepresentation">—</dd>
+                </div>
+                <div>
+                  <dt>条件不足时</dt>
+                  <dd id="routeFallback">—</dd>
+                </div>
+              </dl>
+              <div class="gallery-checks" aria-label="当前前置检查">
+                <strong>前置检查</strong>
+                <div id="routeChecks"></div>
+              </div>
+            </section>
+
+            <section class="gallery-result" aria-labelledby="resultHeading">
+              <div class="gallery-result__heading">
+                <div>
+                  <p class="gallery-router__label">第三步 · 查看标准表达</p>
+                  <h2 id="resultHeading">完整结果组件</h2>
+                </div>
+                <p>切换图形、数据表和解释，核对它们是否来自同一份结果定义。</p>
+              </div>
+              <div id="specimen" class="gallery-specimen">
+                <div class="gallery-loading" role="status">正在载入参考样例…</div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="selection-reference" class="gallery-rule-section" aria-labelledby="selectionHeading">
+        <header class="gallery-section-heading">
+          <div>
+            <p class="gallery-eyebrow">意图与选型</p>
+            <h2 id="selectionHeading">工作问题与数据条件共同决定默认图形。</h2>
+          </div>
+          <p>
+            Chart Router只接受工作问题和数据形状。LLM可以解释选型理由，但不能绕过停止条件或自行发明颜色编码。
+          </p>
+        </header>
+
+        <div class="gallery-selection-layout">
+          <article class="gallery-not-a-chart">
+            <header>
+              <span>表达载体</span>
+              <h3>先确定是否需要图形</h3>
+            </header>
+            <dl>
+              <div><dt>单个当前值</dt><dd>关键数字 + 趋势微图</dd></div>
+              <div><dt>几个头条数字</dt><dd>KPI行</dd></div>
+              <div><dt>逐位核对数字</dt><dd>交叉表</dd></div>
+              <div><dt>高基数类别</dt><dd>表格、筛选或下钻</dd></div>
+            </dl>
+            <p>不要用单柱图、拟物仪表盘或更多颜色把简单数字包装成图表。</p>
+          </article>
+
+          <div class="gallery-selection-table" role="region" aria-label="意图到图形选型矩阵" tabindex="0">
+            <table>
+              <thead>
+                <tr>
+                  <th>读者要做什么</th>
+                  <th>默认表达</th>
+                  <th>色彩职责</th>
+                  <th>停止条件</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>比较量级或找重点</td>
+                  <td>强调式条形图 / 点图</td>
+                  <td>1色相 + 灰</td>
+                  <td>对象不可比或类别过多</td>
+                </tr>
+                <tr>
+                  <td>实际相对基准差多少</td>
+                  <td>差异条 / 子弹图 / 哑铃图</td>
+                  <td>发散色或同色相深浅</td>
+                  <td>基准口径不一致</td>
+                </tr>
+                <tr>
+                  <td>看时间变化</td>
+                  <td>折线 / 小倍数 / 异常带 / 预测区间</td>
+                  <td>Actual实线 · Plan虚线 · Forecast点线</td>
+                  <td>时间点少、口径变更或历史不足</td>
+                </tr>
+                <tr>
+                  <td>解释构成或总变化</td>
+                  <td>堆叠条 / 瀑布图</td>
+                  <td>系列色或发散方向</td>
+                  <td>分类重叠、不可加总或无法核对</td>
+                </tr>
+                <tr>
+                  <td>看分布、网格量级或关系</td>
+                  <td>直方图 / 箱线图 / 热力图 / 散点图</td>
+                  <td>单一顺序色阶</td>
+                  <td>样本不足、粒度错配或单元格过多</td>
+                </tr>
+                <tr>
+                  <td>看流程、转化或任务时序</td>
+                  <td>桑基图 / 漏斗 / 路径图 / Case时间轴</td>
+                  <td>路径身份 + 状态叠加</td>
+                  <td>节点不守恒、队列不一致或路径过多</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="atlas" class="gallery-rule-section gallery-atlas" aria-labelledby="atlasHeading">
+        <header class="gallery-section-heading">
+          <div>
+            <p class="gallery-eyebrow">图形图谱</p>
+            <h2 id="atlasHeading">图形图谱覆盖常见分析任务与流程表达。</h2>
+          </div>
+          <p>
+            图谱包含Collaborative Intelligence分析表达与Process Intelligence流程表达。每张图都写明用途、色彩职责和不得出图的条件。
+          </p>
+        </header>
+        <div id="atlasFilters" class="gallery-atlas__filters" role="group" aria-label="筛选图形家族"></div>
+        <div id="atlasGrid" class="gallery-atlas__grid"></div>
+      </section>
+
+      <section id="color-grammar" class="gallery-rule-section" aria-labelledby="colorHeading">
+        <header class="gallery-section-heading">
+          <div>
+            <p class="gallery-eyebrow">色彩语法</p>
+            <h2 id="colorHeading">颜色一次只承担一种职责。</h2>
+          </div>
+          <p>
+            系列身份、连续量级、业务方向、时间版本和界面状态分别编码。Verified、Warning和Blocking状态色不作为普通系列色。
+          </p>
+        </header>
+
+        <div class="gallery-color-grid">
+          <article>
+            <header><strong>系列身份</strong><span>固定顺序 · 永不循环</span></header>
+            <div class="gallery-series-ramp" aria-label="五个系列色">
+              <span style="--swatch:#0078D6">1</span>
+              <span style="--swatch:#C25E12">2</span>
+              <span style="--swatch:#7A4FD4">3</span>
+              <span style="--swatch:#2F8F4E">4</span>
+              <span style="--swatch:#C0468C">5</span>
+            </div>
+            <p>超过5个系列时改为强调式、小倍数、筛选或“其他”，不生成第6种颜色。</p>
+          </article>
+          <article>
+            <header><strong>连续量级</strong><span>单一色相 · 浅到深</span></header>
+            <div class="gallery-sequential-ramp" aria-label="七阶顺序色阶">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p>热力图和分布使用顺序色阶并配刻度图例；不得使用彩虹色阶。</p>
+          </article>
+          <article>
+            <header><strong>相对基准的方向</strong><span>不利 ↔ 中性 ↔ 有利</span></header>
+            <div class="gallery-diverging-ramp" aria-label="七阶发散色阶">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p>中点必须是中性灰；同时显示正负号、F/U或“有利/不利”文字。</p>
+          </article>
+          <article>
+            <header><strong>时间版本</strong><span>线型优先于颜色</span></header>
+            <div class="gallery-time-grammar">
+              <span><i class="is-actual"></i>Actual · 实线</span>
+              <span><i class="is-plan"></i>Plan · 虚线</span>
+              <span><i class="is-forecast"></i>Forecast · 点线 + 区间</span>
+            </div>
+            <p>预测不可画成与事实相同的实线；异常状态还需形状和文字。</p>
+          </article>
+        </div>
+
+        <div class="gallery-hard-rules">
+          <strong>不可协商</strong>
+          <span>无约束双Y轴</span>
+          <span>3D图表</span>
+          <span>彩虹色阶</span>
+          <span>系列色循环</span>
+          <span>只靠红绿</span>
+          <span>相关写成因果</span>
+          <span>无数据表或等价摘要</span>
+        </div>
+      </section>
+
+      <section class="gallery-delivery gallery-rule-section" aria-labelledby="deliveryHeading">
+        <header>
+          <div>
+            <p class="gallery-router__label">交付契约</p>
+            <h2 id="deliveryHeading">同一规则如何交给设计与开发</h2>
+          </div>
+          <a id="deliverySource" href="../../../#/document?doc=visualization&amp;from=design-system">
+            打开完整文件
+          </a>
+        </header>
+        <div class="gallery-delivery__tabs" role="tablist" aria-label="交付内容">
+          <button type="button" role="tab" data-delivery-tab="usage" aria-selected="true">
+            使用规范
+          </button>
+          <button type="button" role="tab" data-delivery-tab="json" aria-selected="false">
+            Design JSON
+          </button>
+          <button type="button" role="tab" data-delivery-tab="tokens" aria-selected="false">
+            CSS Token
+          </button>
+          <button type="button" role="tab" data-delivery-tab="echarts" aria-selected="false">
+            ECharts
+          </button>
+          <button type="button" role="tab" data-delivery-tab="react" aria-selected="false">
+            React
+          </button>
+        </div>
+        <div id="deliveryPanel" class="gallery-delivery__panel" role="tabpanel"></div>
+      </section>
+
+      <footer class="gallery-footer">
+        <p>
+          本页是可交互的规范样例，不是业务报表。占位数据只用于说明选图、色彩、核验、降级和实现方式。
+        </p>
+        <span>
+          <a href="../../../#/document?doc=visualization&amp;from=design-system">阅读完整规范</a>
+          <a href="../../../#/design-system/foundations/data-display">返回数据表达基础规范</a>
+        </span>
+      </footer>
+    </main>
+  </body>
+</html>

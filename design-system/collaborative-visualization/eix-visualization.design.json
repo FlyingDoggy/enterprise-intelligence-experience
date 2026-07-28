@@ -1,0 +1,1150 @@
+{
+  "$schema": "./schema/visualization-design.schema.json",
+  "name": "EIX Collaborative Intelligence Visualization",
+  "version": "0.1.0",
+  "status": "candidate-extension",
+  "locale": "zh-CN",
+  "audiences": [
+    "UI设计师",
+    "用户体验设计师",
+    "数据产品经理",
+    "分析工程师",
+    "前端工程师"
+  ],
+  "boundary": {
+    "owns": [
+      "分析任务到表达形式的映射",
+      "图表结构、视觉编码、交互和无障碍降级",
+      "图表渲染前的数据充分性检查",
+      "图表、数据表、文字摘要与依据的同源引用"
+    ],
+    "doesNotOwn": [
+      "指标定义和语义层",
+      "数据权限",
+      "工作对象生命周期",
+      "发布、业务操作和规则变更状态",
+      "分析算法本身"
+    ]
+  },
+  "sourceReview": {
+    "evaluated": [
+      "GAX-Design-System.html V1–V6",
+      "chart-chapter-outline.md",
+      "gax-tokens.json",
+      "gax-tokens.css",
+      "gax-ui/src/domain.tsx",
+      "gax-ui/src/gax-ui.stories.tsx",
+      "MB-Design-System.html",
+      "mb-tokens.json"
+    ],
+    "adopted": [
+      "图表系列色与界面状态色隔离",
+      "确定性图表路由",
+      "图表口径行",
+      "图表停止条件",
+      "系列色固定顺序且不循环",
+      "强调式图表",
+    "提示气泡之外的等价数据表或文本摘要",
+    "点击默认只选中",
+    "瀑布、桑基、热力、异常带、哑铃等领域表达",
+    "意图、数据前提、色彩职责和停止条件的完整图谱"
+    ],
+    "adapted": [
+      "把ChartFrame扩展为引用Result与Evidence的ChartBlock",
+    "把GAX状态色映射改为EIX现有语义设计变量",
+    "把五个系列色上限写入路由和校验契约",
+    "把图表规则按Collaborative Intelligence工作问题组织",
+    "帕累托作为累计轴固定0–100%且由确定性代码计算的具名受控例外"
+    ],
+    "rejected": [
+      "复制@ gax/ui组件API或源码",
+      "把置信度、权限、自主程度和工作状态互相推导",
+      "无审查的双Y轴例外",
+      "把所有输出强制画成图表",
+      "在图表与叙事中分别保存数字"
+    ]
+  },
+  "principles": [
+    {
+      "id": "task-before-form",
+      "title": "先确定判断任务，再选择表达形式",
+      "designTest": "移除图表标题后，设计师仍能说清读者需要完成的判断。"
+    },
+    {
+      "id": "one-result-source",
+      "title": "图表、表格与文字引用同一个结果对象",
+      "designTest": "切换视图不会重新计算或复制数字。"
+    },
+    {
+      "id": "scope-always-visible",
+      "title": "口径与更新时间随结果出现",
+      "designTest": "截图脱离页面后仍能识别指标、范围、期间、版本、单位和更新时间。"
+    },
+    {
+      "id": "gates-before-marks",
+      "title": "数据条件不满足时先降级，不生成误导图形",
+      "designTest": "每种高级图表都有可自动检查的停止条件和替代表达。"
+    },
+    {
+      "id": "color-has-one-job",
+      "title": "一种颜色通道只承担一种语义职责",
+      "designTest": "系列身份、业务方向、界面状态和选中态不会使用同一颜色编码。"
+    },
+    {
+      "id": "interaction-does-not-rewrite",
+      "title": "选择、筛选、下钻和解释是不同操作",
+      "designTest": "点击标记不会静默改变全局范围或已发布结果。"
+    },
+    {
+      "id": "accessible-equivalence",
+      "title": "不依赖颜色、悬停或视觉图形也能完成核心判断",
+      "designTest": "图表具有等价摘要和数据表，键盘用户可以读取关键值。"
+    }
+  ],
+  "chartBlock": {
+    "fixedRegions": [
+      {
+        "id": "claim",
+        "label": "结论或分析问题",
+        "required": true
+      },
+      {
+        "id": "result-status",
+        "label": "结果状态与修订版本",
+        "required": true
+      },
+      {
+        "id": "scope",
+        "label": "指标、范围、期间、版本、单位、粒度和更新时间",
+        "required": true
+      },
+      {
+        "id": "view-switcher",
+        "label": "图表、数据表与解释视图",
+        "required": true
+      },
+      {
+        "id": "visual",
+        "label": "图形或表格主体",
+        "required": true
+      },
+      {
+        "id": "limitations",
+        "label": "限制与数据充分性",
+        "required": true
+      },
+      {
+        "id": "evidence",
+        "label": "依据、结果编号与数据来源",
+        "required": true
+      },
+      {
+        "id": "accessible-equivalent",
+        "label": "无障碍摘要与等价数据表",
+        "required": true
+      }
+    ],
+    "optionalRegions": [
+      "直接标注",
+      "基准线",
+      "预测或预期区间",
+      "方法说明",
+      "相关分析",
+      "选择后的解释、比较、筛选和下钻"
+    ],
+    "forbiddenRegions": [
+      "与结果对象无关的装饰插图",
+      "独立生成且无法回溯的叙事数字",
+      "只在提示气泡中出现的关键限制"
+    ]
+  },
+  "semanticEncoding": {
+    "categorical": {
+      "purpose": "区分稳定的数据身份",
+      "maxSeriesPerPanel": 5,
+      "rules": [
+        "颜色跟随身份，不跟随排序",
+        "超过五个系列时改用强调式、小倍数、折叠为其他或表格",
+        "单系列不显示图例",
+        "四到五个系列必须直接标注或提供稳定图例"
+      ]
+    },
+    "sequential": {
+      "purpose": "表达单向连续量级",
+      "rules": [
+        "使用单一色相从浅到深",
+        "必须提供刻度图例",
+        "不用于名义类别",
+        "不得使用彩虹色阶"
+      ]
+    },
+    "diverging": {
+      "purpose": "表达相对基准的正负方向和幅度",
+      "rules": [
+        "中点为中性灰并对应明确基准",
+        "有利和不利由符号、文字与颜色共同表达",
+        "方向由业务定义决定，不能假设数值增加总是有利"
+      ]
+    },
+    "timeLineStyle": {
+      "actual": "solid",
+      "planOrBaseline": "dashed",
+      "forecast": "dotted-with-band",
+      "reference": "thin-muted"
+    },
+    "uncertainty": {
+      "purpose": "表达预测区间、预期区间或抽样区间",
+      "rules": [
+        "区间必须说明方法或含义",
+        "不使用透明度暗示置信度高低而不提供数值",
+        "没有经过校准的区间不显示精确概率"
+      ]
+    },
+    "statusOverlay": {
+      "purpose": "表达缺失、受限、陈旧、异常候选或校验失败",
+      "rules": [
+        "状态色不得替代系列色",
+        "状态必须同时显示文字、符号或形状",
+        "受限数据与零值必须区分",
+        "异常候选不得只用红点表达"
+      ]
+    }
+  },
+  "router": [
+    {
+      "id": "status-single",
+      "workQuestion": "当前状态是什么",
+      "dataShape": {
+        "measures": 1,
+        "dimensions": 0,
+        "timePoints": {
+          "min": 1
+        }
+      },
+      "defaultRepresentation": "kpi",
+      "alternatives": [
+        "kpi-with-sparkline",
+        "crosstab"
+      ],
+      "requiredChecks": [
+        "scope-complete",
+        "unit-known"
+      ],
+      "fallback": "plain-number-with-scope"
+    },
+    {
+      "id": "status-multiple",
+      "workQuestion": "多个关键数字当前是什么",
+      "dataShape": {
+        "measures": {
+          "min": 2,
+          "max": 6
+        },
+        "dimensions": 0
+      },
+      "defaultRepresentation": "kpi-row",
+      "alternatives": [
+        "crosstab"
+      ],
+      "requiredChecks": [
+        "scope-complete",
+        "units-compatible-or-separated"
+      ],
+      "fallback": "crosstab"
+    },
+    {
+      "id": "compare-rank",
+      "workQuestion": "哪个对象最高、最低或差距最大",
+      "dataShape": {
+        "measures": 1,
+        "dimensions": 1,
+        "categories": {
+          "min": 2,
+          "max": 20
+        }
+      },
+      "defaultRepresentation": "horizontal-bar-emphasis",
+      "alternatives": [
+        "dot-plot",
+        "crosstab"
+      ],
+      "requiredChecks": [
+        "comparable-scope",
+        "stable-sort"
+      ],
+      "fallback": "ranked-table"
+    },
+    {
+      "id": "trend-single",
+      "workQuestion": "一个指标随时间如何变化",
+      "dataShape": {
+        "measures": 1,
+        "dimensions": 0,
+        "timePoints": {
+          "min": 3
+        }
+      },
+      "defaultRepresentation": "line",
+      "alternatives": [
+        "area",
+        "crosstab"
+      ],
+      "requiredChecks": [
+        "time-grain-consistent",
+        "definition-stable"
+      ],
+      "fallback": "time-table"
+    },
+    {
+      "id": "trend-multiple",
+      "workQuestion": "多个对象的趋势有何不同",
+      "dataShape": {
+        "measures": 1,
+        "dimensions": 1,
+        "categories": {
+          "min": 2
+        },
+        "timePoints": {
+          "min": 3
+        }
+      },
+      "defaultRepresentation": "small-multiples-line",
+      "alternatives": [
+        "multi-line",
+        "indexed-line"
+      ],
+      "requiredChecks": [
+        "time-grain-consistent",
+        "shared-scale-valid",
+        "definition-stable"
+      ],
+      "fallback": "time-table"
+    },
+    {
+      "id": "variance",
+      "workQuestion": "实际与计划或基准相差多少",
+      "dataShape": {
+        "measures": 1,
+        "comparison": "required"
+      },
+      "defaultRepresentation": "variance-bar",
+      "alternatives": [
+        "bullet",
+        "dumbbell",
+        "crosstab"
+      ],
+      "requiredChecks": [
+        "baseline-comparable",
+        "favorable-direction-defined"
+      ],
+      "fallback": "comparison-table"
+    },
+    {
+      "id": "contribution",
+      "workQuestion": "哪些因素贡献了总变化",
+      "dataShape": {
+        "measures": 1,
+        "dimensions": 1,
+        "additive": true
+      },
+      "defaultRepresentation": "waterfall",
+      "alternatives": [
+        "contribution-bar",
+        "crosstab"
+      ],
+      "requiredChecks": [
+        "contributions-mutually-exclusive",
+        "contributions-exhaustive",
+        "bridge-reconciles"
+      ],
+      "fallback": "ranked-contribution-table"
+    },
+    {
+      "id": "composition",
+      "workQuestion": "整体由什么构成或构成如何变化",
+      "dataShape": {
+        "measures": 1,
+        "dimensions": 1,
+        "additive": true
+      },
+      "defaultRepresentation": "stacked-bar",
+      "alternatives": [
+        "100-percent-stacked-bar",
+        "crosstab"
+      ],
+      "requiredChecks": [
+        "categories-mutually-exclusive",
+        "parts-compatible"
+      ],
+      "fallback": "composition-table"
+    },
+    {
+      "id": "distribution",
+      "workQuestion": "数据如何分布或是否存在离群点",
+      "dataShape": {
+        "measures": 1,
+        "rowCount": {
+          "min": 20
+        }
+      },
+      "defaultRepresentation": "histogram",
+      "alternatives": [
+        "box-plot",
+        "distribution-table"
+      ],
+      "requiredChecks": [
+        "sample-size-sufficient",
+        "binning-explained"
+      ],
+      "fallback": "summary-statistics"
+    },
+    {
+      "id": "relationship",
+      "workQuestion": "两个指标是否存在关系",
+      "dataShape": {
+        "measures": 2,
+        "rowCount": {
+          "min": 12
+        }
+      },
+      "defaultRepresentation": "scatter",
+      "alternatives": [
+        "small-multiples-scatter",
+        "relationship-table"
+      ],
+      "requiredChecks": [
+        "grains-compatible",
+        "sample-size-sufficient",
+        "non-causal-label-present"
+      ],
+      "fallback": "paired-value-table"
+    },
+    {
+      "id": "anomaly",
+      "workQuestion": "哪些点偏离经过认证的预期",
+      "dataShape": {
+        "measures": 1,
+        "timePoints": {
+          "min": 12
+        }
+      },
+      "defaultRepresentation": "anomaly-band",
+      "alternatives": [
+        "deviation-table"
+      ],
+      "requiredChecks": [
+        "baseline-certified",
+        "threshold-certified",
+        "seasonality-addressed"
+      ],
+      "fallback": "descriptive-deviation"
+    },
+    {
+      "id": "forecast",
+      "workQuestion": "未来可能如何变化",
+      "dataShape": {
+        "measures": 1,
+        "timePoints": {
+          "min": 12
+        }
+      },
+      "defaultRepresentation": "forecast-line-with-band",
+      "alternatives": [
+        "scenario-small-multiples",
+        "forecast-table"
+      ],
+      "requiredChecks": [
+        "history-sufficient",
+        "forecast-horizon-declared",
+        "interval-present",
+        "assumptions-present"
+      ],
+      "fallback": "trend-without-forecast"
+    },
+    {
+      "id": "audit",
+      "workQuestion": "需要逐位核对哪些数字",
+      "dataShape": {
+        "measures": {
+          "min": 1
+        },
+        "rowCount": {
+          "min": 1
+        }
+      },
+      "defaultRepresentation": "crosstab",
+      "alternatives": [
+        "table-with-inline-bars"
+      ],
+      "requiredChecks": [
+        "scope-complete",
+        "units-visible"
+      ],
+      "fallback": "plain-table"
+    },
+    {
+      "id": "flow",
+      "workQuestion": "任务如何在节点之间流转",
+      "dataShape": {
+        "measures": 1,
+        "nodes": {
+          "min": 2,
+          "max": 7
+        }
+      },
+      "defaultRepresentation": "sankey",
+      "alternatives": [
+        "crosstab"
+      ],
+      "requiredChecks": [
+        "flow-conservation",
+        "path-count-readable"
+      ],
+      "fallback": "flow-table"
+    }
+  ],
+  "chartFamilies": [
+    {
+      "id": "kpi",
+      "name": "关键数字",
+      "purpose": "回答一个当前值及其可选变化",
+      "mustShow": [
+        "值",
+        "单位",
+        "期间",
+        "比较基准",
+        "更新时间"
+      ],
+      "mustNot": [
+        "把单值画成单柱图",
+        "用大号数字隐藏口径"
+      ]
+    },
+    {
+      "id": "crosstab",
+      "name": "交叉表",
+      "purpose": "逐位核对、比较多个指标或高基数类别",
+      "mustShow": [
+        "表题和单位",
+        "排序",
+        "合计口径",
+        "缺失与受限状态"
+      ],
+      "mustNot": [
+        "把空值显示为零",
+        "使用不说明规则的截断"
+      ]
+    },
+    {
+      "id": "horizontal-bar-emphasis",
+      "name": "强调式横向条形图",
+      "purpose": "突出一个关键对象，其余作为比较背景",
+      "mustShow": [
+        "直接标签",
+        "稳定排序",
+        "重点选择理由"
+      ],
+      "mustNot": [
+        "给每根柱分配不同颜色",
+        "筛选后重新着色"
+      ]
+    },
+    {
+      "id": "line",
+      "name": "趋势折线图",
+      "purpose": "表达时间连续变化",
+      "mustShow": [
+        "时间粒度",
+        "口径变化",
+        "断点或缺失"
+      ],
+      "mustNot": [
+        "跨缺失点连线",
+        "把少于三个时间点画成趋势"
+      ]
+    },
+    {
+      "id": "small-multiples-line",
+      "name": "趋势小倍数",
+      "purpose": "在共享尺度下比较多个对象的趋势",
+      "mustShow": [
+        "共享尺度",
+        "每格直接标题",
+        "相同时间范围"
+      ],
+      "mustNot": [
+        "每格使用不同Y轴而不标明",
+        "超过十二格仍强行同屏"
+      ]
+    },
+    {
+      "id": "variance-bar",
+      "name": "差异条",
+      "purpose": "表达相对基准的方向和幅度",
+      "mustShow": [
+        "零基准",
+        "有利或不利定义",
+        "比较版本"
+      ],
+      "mustNot": [
+        "假设正值总是有利",
+        "省略基准口径"
+      ]
+    },
+    {
+      "id": "waterfall",
+      "name": "瀑布图",
+      "purpose": "从起点到终点拆解互斥且完备的贡献",
+      "mustShow": [
+        "起点和终点",
+        "每项贡献",
+        "重算差额",
+        "贡献依据"
+      ],
+      "mustNot": [
+        "贡献总和与总变化不一致",
+        "把相关项当作贡献项"
+      ]
+    },
+    {
+      "id": "stacked-bar",
+      "name": "堆叠条",
+      "purpose": "表达互斥部分的构成",
+      "mustShow": [
+        "整体定义",
+        "部分定义",
+        "排序规则"
+      ],
+      "mustNot": [
+        "重叠分类",
+        "过多难以识别的颜色"
+      ]
+    },
+    {
+      "id": "histogram",
+      "name": "直方图",
+      "purpose": "表达连续变量的分布形态",
+      "mustShow": [
+        "样本数",
+        "分箱规则",
+        "范围"
+      ],
+      "mustNot": [
+        "把类别柱形图叫直方图",
+        "用任意分箱制造形态"
+      ]
+    },
+    {
+      "id": "scatter",
+      "name": "散点图",
+      "purpose": "表达两个同粒度指标的关系",
+      "mustShow": [
+        "两个指标和单位",
+        "样本数",
+        "非因果说明",
+        "必要时的分组或趋势方法"
+      ],
+      "mustNot": [
+        "从相关直接推断因果",
+        "混合不同粒度"
+      ]
+    },
+    {
+      "id": "heatmap",
+      "name": "热力图",
+      "purpose": "表达二维网格上的连续量级",
+      "mustShow": [
+        "顺序或发散刻度",
+        "行列标签",
+        "缺失值"
+      ],
+      "mustNot": [
+        "使用彩虹色阶",
+        "把名义类别映射为深浅"
+      ]
+    },
+    {
+      "id": "anomaly-band",
+      "name": "预期区间与偏离点",
+      "purpose": "表达实际值相对认证预期区间的偏离",
+      "mustShow": [
+        "预期区间定义",
+        "阈值方法",
+        "偏离点文字或形状"
+      ],
+      "mustNot": [
+        "未经认证就称为异常",
+        "只用红点"
+      ]
+    },
+    {
+      "id": "forecast-line-with-band",
+      "name": "预测趋势与区间",
+      "purpose": "区分历史、预测和不确定性",
+      "mustShow": [
+        "历史实线",
+        "预测点线",
+        "区间",
+        "预测范围",
+        "假设"
+      ],
+      "mustNot": [
+        "只显示一条确定预测线",
+        "把预测写成事实"
+      ]
+    },
+    {
+      "id": "kpi-with-sparkline",
+      "name": "关键数字与趋势微图",
+      "purpose": "在当前值旁补充短期方向，不替代完整趋势分析",
+      "mustShow": [
+        "当前值与单位",
+        "微图时间范围",
+        "比较基准"
+      ],
+      "mustNot": [
+        "隐藏微图期间",
+        "把微图拐点写成原因"
+      ]
+    },
+    {
+      "id": "kpi-row",
+      "name": "关键数字行",
+      "purpose": "并列展示少量互不替代的头条指标",
+      "mustShow": [
+        "每个指标的单位",
+        "共同或独立期间",
+        "更新时间"
+      ],
+      "mustNot": [
+        "混合单位却不标注",
+        "超过六项仍维持头条密度"
+      ]
+    },
+    {
+      "id": "dot-plot",
+      "name": "点图",
+      "purpose": "以位置比较多个对象，减少柱形面积带来的视觉重量",
+      "mustShow": [
+        "共享刻度",
+        "直接标签",
+        "稳定排序"
+      ],
+      "mustNot": [
+        "用点大小重复编码同一数值",
+        "给每个点分配新颜色"
+      ]
+    },
+    {
+      "id": "area",
+      "name": "面积趋势图",
+      "purpose": "在零基准合理时强调单系列随时间的量级",
+      "mustShow": [
+        "零基准",
+        "时间粒度",
+        "缺失点"
+      ],
+      "mustNot": [
+        "截断基准夸大面积变化",
+        "叠加多个难以比较的面积"
+      ]
+    },
+    {
+      "id": "multi-line",
+      "name": "多系列折线图",
+      "purpose": "在系列较少且直接比较必要时共享时间轴",
+      "mustShow": [
+        "直接线尾标签",
+        "共享刻度",
+        "系列不超过五个"
+      ],
+      "mustNot": [
+        "循环复用系列色",
+        "依赖远离图形的图例追踪"
+      ]
+    },
+    {
+      "id": "indexed-line",
+      "name": "指数化趋势图",
+      "purpose": "把不同量级的系列统一到声明的基期比较相对变化",
+      "mustShow": [
+        "基期和指数值",
+        "原单位入口",
+        "指数化方法"
+      ],
+      "mustNot": [
+        "隐藏原始量级",
+        "在不同基期之间静默切换"
+      ]
+    },
+    {
+      "id": "bullet",
+      "name": "子弹图",
+      "purpose": "比较单个实际值、目标和经过定义的绩效区间",
+      "mustShow": [
+        "实际值",
+        "目标值",
+        "区间定义"
+      ],
+      "mustNot": [
+        "把背景区间当作风险状态",
+        "缺少目标仍绘制"
+      ]
+    },
+    {
+      "id": "dumbbell",
+      "name": "哑铃图",
+      "purpose": "比较多个对象的两个可比版本或期间",
+      "mustShow": [
+        "两个端点定义",
+        "差值",
+        "共享刻度"
+      ],
+      "mustNot": [
+        "比较超过两个端点",
+        "用线段方向替代有利不利文字"
+      ]
+    },
+    {
+      "id": "contribution-bar",
+      "name": "排序贡献条",
+      "purpose": "在贡献项较多时按绝对贡献排序，并保留总差异核对",
+      "mustShow": [
+        "贡献方向",
+        "总差异",
+        "未解释项"
+      ],
+      "mustNot": [
+        "暗示排序贡献自动构成因果",
+        "省略加总核对"
+      ]
+    },
+    {
+      "id": "100-percent-stacked-bar",
+      "name": "百分比堆叠条",
+      "purpose": "比较多个整体的构成比例",
+      "mustShow": [
+        "总量入口",
+        "百分比基数",
+        "一致的部分顺序"
+      ],
+      "mustNot": [
+        "用百分比隐藏总量显著差异",
+        "包含重叠分类"
+      ]
+    },
+    {
+      "id": "box-plot",
+      "name": "箱线图",
+      "purpose": "比较多个分组的中位数、离散程度和候选离群值",
+      "mustShow": [
+        "样本数",
+        "四分位定义",
+        "须线和离群值规则"
+      ],
+      "mustNot": [
+        "把候选离群值直接称为异常",
+        "在极小样本上使用"
+      ]
+    },
+    {
+      "id": "distribution-table",
+      "name": "分布支撑表",
+      "purpose": "在图形条件不足时列出分位数、范围、样本数和分组",
+      "mustShow": [
+        "样本数",
+        "范围",
+        "关键分位数"
+      ],
+      "mustNot": [
+        "把汇总表描述为分布形态证据",
+        "隐藏缺失样本"
+      ]
+    },
+    {
+      "id": "small-multiples-scatter",
+      "name": "散点小倍数",
+      "purpose": "在同一关系问题下分组比较多个同粒度样本",
+      "mustShow": [
+        "共享尺度",
+        "每组样本数",
+        "非因果说明"
+      ],
+      "mustNot": [
+        "让各面板自动缩放后直接比较斜率",
+        "混合观察粒度"
+      ]
+    },
+    {
+      "id": "relationship-table",
+      "name": "关系支撑表",
+      "purpose": "在样本不足或粒度不兼容时并列核对两个指标",
+      "mustShow": [
+        "观察对象",
+        "两个指标与单位",
+        "粒度"
+      ],
+      "mustNot": [
+        "计算或暗示不稳定相关性",
+        "删除不完整样本而不说明"
+      ]
+    },
+    {
+      "id": "deviation-table",
+      "name": "偏离支撑表",
+      "purpose": "在异常基线未认证时描述实际与参考值的差异",
+      "mustShow": [
+        "实际值",
+        "参考值",
+        "差异",
+        "未认证提示"
+      ],
+      "mustNot": [
+        "使用异常标签",
+        "用状态色制造告警"
+      ]
+    },
+    {
+      "id": "scenario-small-multiples",
+      "name": "情景预测小倍数",
+      "purpose": "并列展示多个具名假设下的预测路径与区间",
+      "mustShow": [
+        "每个情景假设",
+        "相同历史段",
+        "共享尺度与区间"
+      ],
+      "mustNot": [
+        "把情景当作概率",
+        "只突出一个情景却不说明选择理由"
+      ]
+    },
+    {
+      "id": "forecast-table",
+      "name": "预测支撑表",
+      "purpose": "逐期核对预测中位值、上下界和假设版本",
+      "mustShow": [
+        "预测期间",
+        "中位值与区间",
+        "模型或情景版本"
+      ],
+      "mustNot": [
+        "只给单点预测",
+        "把区间缺失显示为零"
+      ]
+    },
+    {
+      "id": "table-with-inline-bars",
+      "name": "带内嵌条的数据表",
+      "purpose": "保留精确数字的同时辅助扫描同一列内的相对量级",
+      "mustShow": [
+        "精确值",
+        "统一列尺度",
+        "排序规则"
+      ],
+      "mustNot": [
+        "让内嵌条遮挡数字",
+        "跨不同单位共用尺度"
+      ]
+    },
+    {
+      "id": "sankey",
+      "name": "桑基图",
+      "purpose": "表达守恒节点之间的流量、分支与汇合",
+      "mustShow": [
+        "节点数量",
+        "链路流量",
+        "未映射差额",
+        "筛选范围"
+      ],
+      "mustNot": [
+        "节点流入与流出不守恒",
+        "用链路宽度编码置信度",
+        "可见节点超过七个仍不折叠"
+      ]
+    },
+    {
+      "id": "funnel",
+      "name": "漏斗与阶段表",
+      "purpose": "表达同一队列依次通过阶段后的数量与转化率",
+      "mustShow": [
+        "同一队列定义",
+        "每阶段数量",
+        "分母与转化率"
+      ],
+      "mustNot": [
+        "混用不同队列或不同时间窗",
+        "只用面积暗示转化而不显示数字"
+      ]
+    },
+    {
+      "id": "process-map",
+      "name": "流程路径图",
+      "purpose": "表达实际发生的路径、分支和频次",
+      "mustShow": [
+        "节点语义",
+        "路径方向",
+        "路径频次",
+        "例外路径"
+      ],
+      "mustNot": [
+        "把理想流程当作实际流程",
+        "用颜色同时编码路径身份和状态"
+      ]
+    },
+    {
+      "id": "case-timeline",
+      "name": "任务时间轴",
+      "purpose": "表达单个任务的事件顺序、持续时间和服务时限",
+      "mustShow": [
+        "事件时间",
+        "事件顺序",
+        "服务时限",
+        "超时或等待"
+      ],
+      "mustNot": [
+        "事件时间不可比却强行等距",
+        "隐藏等待区间"
+      ]
+    },
+    {
+      "id": "pareto",
+      "name": "帕累托图",
+      "purpose": "在原因类别可加总时，同时显示降序贡献与派生累计占比",
+      "mustShow": [
+        "降序类别",
+        "贡献值",
+        "派生累计占比",
+        "固定0–100%累计刻度"
+      ],
+      "mustNot": [
+        "累计轴不从0到100%",
+        "由语言模型推导累计值",
+        "原因类别不可加总仍使用"
+      ]
+    }
+  ],
+  "interaction": {
+    "hover": {
+      "role": "提供精确值和补充口径",
+      "notAllowed": "承载唯一的关键值、限制或状态"
+    },
+    "select": {
+      "role": "建立当前数据选择",
+      "defaultEffect": "只改变局部选中状态",
+      "notAllowed": "静默改变全局筛选"
+    },
+    "selectionActions": [
+      "解释",
+      "比较",
+      "筛选",
+      "下钻"
+    ],
+    "rangeChange": {
+      "required": "生成变更预览",
+      "branchWhen": [
+        "修改已发布结果",
+        "改变分析方法",
+        "高阶分析可能产生独立结论"
+      ]
+    },
+    "viewSwitch": {
+      "views": [
+        "图表",
+        "数据表",
+        "解释"
+      ],
+      "invariant": "视图共享同一resultRef、数据范围和更新时间"
+    }
+  },
+  "storyPattern": {
+    "sequence": [
+      "发生了什么",
+      "发生在哪里",
+      "与什么比较",
+      "哪些因素可能相关",
+      "还有什么不知道",
+      "下一步值得做什么"
+    ],
+    "claimRules": [
+      "事实和计算可以直接陈述",
+      "假设使用可能、候选或待验证",
+      "预测必须带范围和假设",
+      "建议必须与业务操作分离",
+      "相关不得写成因果"
+    ],
+    "publicationGate": [
+      "叙事数字与resultRef一致",
+      "所有重要结论具有evidenceRefs",
+      "限制和更新时间可见",
+      "预测和高级分析通过数据充分性检查",
+      "陈旧或争议依据会使校验失效"
+    ]
+  },
+  "responsive": {
+    "wide": {
+      "minWidth": 1280,
+      "behavior": "图表、依据检查与支撑数据可以并列；同一图表块不超过五个系列。"
+    },
+    "medium": {
+      "minWidth": 768,
+      "maxWidth": 1279,
+      "behavior": "图表保持主栏，依据和支撑数据转为抽屉；小倍数改为两列或单列。"
+    },
+    "small": {
+      "maxWidth": 767,
+      "behavior": "优先结论、关键值、简化图形和数据表；复杂编辑与多面板比较不保留。"
+    }
+  },
+  "accessibility": [
+    "每个图表具有可理解的标题和口径",
+    "提供不依赖视觉图形的摘要",
+    "提供与图表同源的数据表",
+    "颜色至少与文字、形状、线型或位置之一共同编码",
+    "交互标记的命中区域不小于44 × 44px或提供等价列表",
+    "焦点顺序与视觉阅读顺序一致",
+    "减少动效时不丢失选择和状态变化",
+    "提示气泡内容可通过键盘和触控获得"
+  ],
+  "antiPatterns": [
+    {
+      "id": "dual-axis",
+      "label": "无具名约束的双Y轴",
+      "replacement": "两张共享X轴的图、小倍数或指数化到同一基准"
+    },
+    {
+      "id": "three-dimensional",
+      "label": "3D图表",
+      "replacement": "二维位置或长度编码"
+    },
+    {
+      "id": "rainbow-scale",
+      "label": "彩虹连续色阶",
+      "replacement": "单一色相顺序色阶或有中性中点的发散色阶"
+    },
+    {
+      "id": "decorative-map",
+      "label": "装饰性地图",
+      "replacement": "排名、表格或真实地理分析"
+    },
+    {
+      "id": "gauge",
+      "label": "拟物仪表盘",
+      "replacement": "关键数字、计量条或子弹图"
+    },
+    {
+      "id": "color-only",
+      "label": "只用颜色表达状态或身份",
+      "replacement": "直接标签、符号、形状、线型或数据表"
+    },
+    {
+      "id": "unsupported-causality",
+      "label": "从相关图形推断因果",
+      "replacement": "非因果说明和可验证的候选解释"
+    },
+    {
+      "id": "unsupported-advanced-analysis",
+      "label": "数据不足仍生成完整高级分析",
+      "replacement": "阻断该图表并保留已验证的基础结果"
+    }
+  ]
+}

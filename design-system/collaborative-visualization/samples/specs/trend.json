@@ -1,0 +1,219 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-trend-template",
+  "resultRef": "RESULT-TEMPLATE-TREND-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "trend",
+    "method": "同粒度时间序列比较",
+    "audience": "业务分析读者"
+  },
+  "representation": "line",
+  "claim": {
+    "kind": "fact",
+    "text": "实际值在后半段低于基准，并在最后一个期间扩大差距。",
+    "status": "supported"
+  },
+  "scope": {
+    "metric": "{指标名称}",
+    "dimensions": [],
+    "filters": [
+      "{筛选条件}"
+    ],
+    "period": "{起始期间}–{结束期间}",
+    "version": "{实际版本} vs {基准版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{时间粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "period",
+      "type": "temporal",
+      "scale": "continuous-time"
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "shared-linear"
+    },
+    "series": {
+      "field": "version",
+      "type": "nominal",
+      "scale": "actual-plan-line-style"
+    }
+  },
+  "data": [
+    {
+      "period": "期间1",
+      "version": "实际",
+      "value": 68
+    },
+    {
+      "period": "期间2",
+      "version": "实际",
+      "value": 72
+    },
+    {
+      "period": "期间3",
+      "version": "实际",
+      "value": 70
+    },
+    {
+      "period": "期间4",
+      "version": "实际",
+      "value": 65
+    },
+    {
+      "period": "期间5",
+      "version": "实际",
+      "value": 61
+    },
+    {
+      "period": "期间6",
+      "version": "实际",
+      "value": 55
+    },
+    {
+      "period": "期间1",
+      "version": "基准",
+      "value": 66
+    },
+    {
+      "period": "期间2",
+      "version": "基准",
+      "value": 69
+    },
+    {
+      "period": "期间3",
+      "version": "基准",
+      "value": 71
+    },
+    {
+      "period": "期间4",
+      "version": "基准",
+      "value": 70
+    },
+    {
+      "period": "期间5",
+      "version": "基准",
+      "value": 69
+    },
+    {
+      "period": "期间6",
+      "version": "基准",
+      "value": 68
+    }
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "time-grain-consistent",
+        "status": "pass",
+        "message": "全部时间点使用相同粒度。"
+      },
+      {
+        "id": "definition-stable",
+        "status": "pass",
+        "message": "指标定义在展示期间内未变更。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": [
+    "EVIDENCE-TEMPLATE-TREND-01"
+  ],
+  "limitations": [
+    "趋势只描述当前时间序列，不解释变化原因。"
+  ],
+  "accessibleSummary": "六个期间中，实际值从68变化到55；基准值从66变化到68。实际值从期间3开始低于基准，最后一个期间差距为负13。",
+  "dataTable": {
+    "columns": [
+      {
+        "key": "period",
+        "label": "期间"
+      },
+      {
+        "key": "version",
+        "label": "版本"
+      },
+      {
+        "key": "value",
+        "label": "{指标名称}",
+        "format": "{单位}"
+      }
+    ],
+    "rows": [
+      {
+        "period": "期间1",
+        "version": "实际",
+        "value": 68
+      },
+      {
+        "period": "期间2",
+        "version": "实际",
+        "value": 72
+      },
+      {
+        "period": "期间3",
+        "version": "实际",
+        "value": 70
+      },
+      {
+        "period": "期间4",
+        "version": "实际",
+        "value": 65
+      },
+      {
+        "period": "期间5",
+        "version": "实际",
+        "value": 61
+      },
+      {
+        "period": "期间6",
+        "version": "实际",
+        "value": 55
+      },
+      {
+        "period": "期间1",
+        "version": "基准",
+        "value": 66
+      },
+      {
+        "period": "期间2",
+        "version": "基准",
+        "value": 69
+      },
+      {
+        "period": "期间3",
+        "version": "基准",
+        "value": 71
+      },
+      {
+        "period": "期间4",
+        "version": "基准",
+        "value": 70
+      },
+      {
+        "period": "期间5",
+        "version": "基准",
+        "value": 69
+      },
+      {
+        "period": "期间6",
+        "version": "基准",
+        "value": 68
+      }
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": [
+      "explain",
+      "compare",
+      "filter"
+    ]
+  }
+}

@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Enterprise Intelligence Experience 2.0 Rev 0.3：Canonical架构、Core Design System与Intelligence UX Guidance。"
+    />
+    <link rel="icon" href="data:," />
+    <title>EIX 2.0 Rev 0.3 · Human–AI Work Experience</title>
+    <link rel="stylesheet" href="./design-system/tokens.generated.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./design-system/reference.css" />
+    <script src="./vendor/marked.umd.js" defer></script>
+    <script src="./app.js" type="module"></script>
+  </head>
+  <body data-density="brief" data-theme="eix">
+    <a class="skip-link" href="#mainContent">跳到正文</a>
+
+    <header class="topbar">
+      <button
+        id="menuButton"
+        class="menu-button"
+        type="button"
+        aria-label="打开导航"
+        aria-expanded="false"
+        aria-controls="sidebar"
+      >
+        <span></span><span></span><span></span>
+      </button>
+
+      <a class="brand" href="#/brief" aria-label="返回EIX 2.0首页">
+        <span class="brand-mark">EI</span>
+        <span class="brand-copy">
+          <strong>Enterprise Intelligence Experience</strong>
+          <small>Human–AI Work Architecture · Rev 0.3</small>
+        </span>
+      </a>
+
+      <nav class="route-nav" aria-label="主导航">
+        <a href="#/brief" data-route-link="brief">5分钟</a>
+        <a href="#/architecture" data-route-link="architecture">架构</a>
+        <a href="#/design-system" data-route-link="design-system">Design System</a>
+        <a href="#/guidance" data-route-link="guidance">UX Guidance</a>
+        <a href="#/journeys" data-route-link="journeys">Journeys</a>
+        <a href="#/acceptance" data-route-link="acceptance">验收</a>
+      </nav>
+
+      <div class="topbar-tools">
+        <span class="revision-badge">REV 0.3</span>
+        <div class="density-toggle" role="group" aria-label="阅读密度">
+          <button type="button" data-density-option="brief" aria-pressed="true">Brief</button>
+          <button type="button" data-density-option="deep" aria-pressed="false">Deep</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="kernel-trace" aria-label="Shared Experience Kernel">
+      <span class="trace-label">KERNEL TRACE</span>
+      <div id="kernelTraceItems" class="trace-items"></div>
+      <span class="trace-status">ONE CANONICAL SOURCE</span>
+    </div>
+
+    <div class="app-shell">
+      <aside id="sidebar" class="sidebar" aria-label="文档导航">
+        <section class="suite-identity">
+          <span class="micro-label">DOCUMENT SUITE</span>
+          <strong id="sidebarTitle">Experience Narrative</strong>
+          <p id="sidebarDescription">管理层与首次接触者的5分钟入口。</p>
+          <div id="sidebarStatus" class="doc-status companion">
+            <span></span>COMPANION
+          </div>
+        </section>
+
+        <nav id="sectionNav" class="section-nav" aria-label="当前页面目录"></nav>
+
+        <section class="suite-map">
+          <span class="micro-label">SOURCE OF TRUTH</span>
+          <a href="#/document?doc=charter&amp;from=brief" data-document-id="charter">
+            <b>Canonical Charter</b>
+            <small>架构与治理不变量</small>
+          </a>
+          <a href="#/document?doc=narrative&amp;from=brief" data-document-id="narrative">
+            <b>Experience Narrative</b>
+            <small>用户感受与Journey</small>
+          </a>
+          <a href="#/document?doc=design-system&amp;from=brief" data-document-id="design-system">
+            <b>Core Design System</b>
+            <small>视觉与组件契约</small>
+          </a>
+          <a href="#/document?doc=guidance&amp;from=brief" data-document-id="guidance">
+            <b>Intelligence UX Guidance</b>
+            <small>Process Intelligence与Collaborative Intelligence</small>
+          </a>
+          <a href="./archive/rev-0.2/index.html">
+            <b>Rev 0.2 Archive</b>
+            <small>Pattern Specimen Library</small>
+          </a>
+          <a href="./archive/rev-0.1/index.html">
+            <b>Rev 0.1 Archive</b>
+            <small>只读历史版本</small>
+          </a>
+        </section>
+      </aside>
+
+      <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
+
+      <main id="mainContent" class="main-content" tabindex="-1">
+        <!-- BRIEF -->
+        <div class="route-view" data-route-view="brief">
+          <section id="brief-thesis" class="page-section hero-section" data-section-title="核心判断">
+            <div class="section-marker">00 · EXPERIENCE THESIS</div>
+            <div class="hero-grid">
+              <div class="hero-copy">
+                <p class="eyebrow">ONE EXPERIENCE · TWO CONTRACTS · ONE HUMAN CONTROL LAYER</p>
+                <h1>让企业AI从<br /><em>会回答</em>走向<em>能共同工作</em>。</h1>
+                <p class="hero-lead">
+                  Chat适合表达问题，但真实工作需要Goal、Context、Evidence、Decision、Action与Outcome。
+                  EIX 2.0把这些隐藏对象变成用户能够理解、控制、恢复和复用的工作体验。
+                </p>
+                <div class="hero-actions">
+                  <a class="button primary" href="#/journeys">走一遍Reference Journey</a>
+                  <a class="button secondary" href="#/architecture">查看Canonical Architecture</a>
+                </div>
+              </div>
+
+              <div class="control-ledger" aria-label="Human Control Layer摘要">
+                <header>
+                  <span>HUMAN CONTROL LAYER</span>
+                  <b>What must become visible</b>
+                </header>
+                <ol>
+                  <li><span>01</span><b>Goal & Context</b><small>AI正在处理什么、依据什么</small></li>
+                  <li><span>02</span><b>Plan & Evidence</b><small>系统准备怎么做、能证明什么</small></li>
+                  <li><span>03</span><b>Decision & Action</b><small>谁作判断、什么会改变现实</small></li>
+                  <li><span>04</span><b>Outcome & Feedback</b><small>真实发生了什么、如何改进</small></li>
+                </ol>
+                <footer>UI/UX把Ontology、Context、Governance与Action转化为业务价值。</footer>
+              </div>
+            </div>
+
+            <div class="contract-strip" aria-label="两种Interaction Contract">
+              <article class="process-tone">
+                <span>PROCESS INTELLIGENCE</span>
+                <strong>系统推进，人处理授权、异常与边界。</strong>
+                <p>System-led · State-driven · Exception-first</p>
+              </article>
+              <div class="contract-bridge"><i></i><span>SHARED KERNEL</span><i></i></div>
+              <article class="collab-tone">
+                <span>COLLABORATIVE INTELLIGENCE</span>
+                <strong>人定义目标与判断，AI放大知识工作。</strong>
+                <p>Human-led · Goal-driven · Artifact-first</p>
+              </article>
+            </div>
+          </section>
+
+          <section id="brief-promises" class="page-section" data-section-title="体验承诺">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">01</span>
+                <p class="eyebrow">THE FELT LAYER</p>
+                <h2>看清当前状态、风险和下一步，<br />无需反复监督系统。</h2>
+              </div>
+              <p class="section-intro">
+                选择一种体验承诺，查看用户原始焦虑、设计机制和最终感受。
+              </p>
+            </div>
+            <div class="promise-workbench">
+              <div id="promiseTabs" class="promise-tabs" role="tablist" aria-label="六个体验承诺"></div>
+              <article id="promisePanel" class="promise-panel" role="tabpanel" aria-live="polite"></article>
+            </div>
+          </section>
+
+          <section id="brief-before-after" class="page-section" data-section-title="Before / After">
+            <div class="section-heading compact">
+              <div>
+                <span class="section-index">02</span>
+                <p class="eyebrow">BEFORE / AFTER</p>
+                <h2>对话结束后，<br />工作仍然可以继续。</h2>
+              </div>
+            </div>
+            <div class="before-after-grid">
+              <article class="before-card">
+                <header><span>BEFORE</span><strong>一个聪明的Chat</strong></header>
+                <ul>
+                  <li>答案、筛选器和图表各自维护状态</li>
+                  <li>用户通过结果猜测AI理解</li>
+                  <li>追问覆盖原结论</li>
+                  <li>建议、批准和执行含义模糊</li>
+                  <li>失败后人从头调查</li>
+                </ul>
+              </article>
+              <article class="after-card">
+                <header><span>AFTER</span><strong>一个稳定的Work Object</strong></header>
+                <ul>
+                  <li>Goal、Context、State和Owner常驻</li>
+                  <li>变更先成为可预览Patch</li>
+                  <li>Claim绑定Evidence，追问创建Branch</li>
+                  <li>Prepare、Approve、Execute和Outcome分开</li>
+                  <li>Handoff保留Context与Work Done</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section id="brief-next" class="page-section closing-callout" data-section-title="下一步">
+            <span class="section-index">03</span>
+            <p class="eyebrow">CHOOSE YOUR DEPTH</p>
+            <h2>先理解体验，再检查架构，最后操作Pattern。</h2>
+            <div class="next-grid">
+              <a href="#/architecture"><span>01</span><strong>Architecture</strong><p>一个Kernel、两种Contract与七个语义轴。</p></a>
+              <a href="#/design-system"><span>02</span><strong>Design System</strong><p>检查Token、Primitive与通用组件契约。</p></a>
+              <a href="#/guidance"><span>03</span><strong>UX Guidance</strong><p>选择Process Intelligence或Collaborative Intelligence的工作Pattern。</p></a>
+              <a href="#/journeys"><span>04</span><strong>Journeys</strong><p>从分析到行动、从Exception到规则改进。</p></a>
+            </div>
+          </section>
+        </div>
+
+        <!-- ARCHITECTURE -->
+        <div class="route-view" data-route-view="architecture" hidden>
+          <section id="architecture-model" class="page-section hero-section architecture-hero" data-section-title="五层架构">
+            <div class="section-marker">01 · CANONICAL ARCHITECTURE</div>
+            <p class="eyebrow">THE SOURCE OF TRUTH</p>
+            <h1>一个Kernel。<br />两种Contract。<br /><em>三套治理生命周期。</em></h1>
+            <p class="hero-lead">
+              技术架构决定AI能做什么；体验架构决定人如何理解、控制并对它负责。
+            </p>
+            <div id="architectureLayers" class="layer-stack"></div>
+          </section>
+
+          <section id="architecture-kernel" class="page-section" data-section-title="Shared Kernel">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">02</span>
+                <p class="eyebrow">SHARED EXPERIENCE KERNEL</p>
+                <h2>所有场景共享八个稳定对象。</h2>
+              </div>
+              <p class="section-intro deep-only">
+                Patch、Gate、Receipt、Revision和Handoff作用于这些对象，但不是第二套Kernel。
+              </p>
+            </div>
+            <div class="kernel-explorer">
+              <div id="kernelTabs" class="kernel-tabs" role="tablist" aria-label="Kernel对象"></div>
+              <article id="kernelPanel" class="kernel-panel" role="tabpanel" aria-live="polite"></article>
+            </div>
+          </section>
+
+          <section id="architecture-contracts" class="page-section" data-section-title="Interaction Contracts">
+            <div class="section-heading compact">
+              <div>
+                <span class="section-index">03</span>
+                <p class="eyebrow">TWO INTERACTION CONTRACTS</p>
+                <h2>共享核心对象，<br />分别定义发起、判断和推进责任。</h2>
+              </div>
+            </div>
+            <div class="contract-switcher" role="tablist" aria-label="选择Interaction Contract">
+              <button type="button" data-contract-option="process" role="tab" aria-selected="true">Process</button>
+              <button type="button" data-contract-option="collaborative" role="tab" aria-selected="false">Collaborative</button>
+            </div>
+            <article id="contractPanel" class="contract-panel" aria-live="polite"></article>
+          </section>
+
+          <section id="architecture-semantics" class="page-section" data-section-title="语义轴">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">04</span>
+                <p class="eyebrow">ORTHOGONAL SEMANTICS</p>
+                <h2>可信、允许、低风险和已执行，<br />从来不是同一件事。</h2>
+              </div>
+              <p class="section-intro">七个轴独立存储和表达。任何一个状态都不能自动推出另一个状态。</p>
+            </div>
+            <div id="semanticAxes" class="semantic-axis-grid"></div>
+          </section>
+
+          <section id="architecture-lifecycles" class="page-section" data-section-title="治理生命周期">
+            <div class="section-heading compact">
+              <div>
+                <span class="section-index">05</span>
+                <p class="eyebrow">THREE GOVERNED LIFECYCLES</p>
+                <h2>发布、行动和规则变更分别治理。</h2>
+              </div>
+            </div>
+            <div id="lifecycleTabs" class="lifecycle-tabs" role="tablist" aria-label="选择Lifecycle"></div>
+            <article id="lifecyclePanel" class="lifecycle-panel" aria-live="polite"></article>
+          </section>
+
+          <section id="architecture-families" class="page-section" data-section-title="Collaborative Families">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">06</span>
+                <p class="eyebrow">COLLABORATIVE INTELLIGENCE</p>
+                <h2>ChatBI只是其中一种分析Pattern，<br />协作还包括研究、规划与决策支持。</h2>
+              </div>
+            </div>
+            <div id="familyGrid" class="family-grid"></div>
+            <div class="analysis-coordinate deep-only">
+              <header>
+                <span>ANALYTICAL INTELLIGENCE · FIVE DIMENSIONS</span>
+                <p>Work Question × Initiation × Control Posture × Surface / Artifact × Action Authority</p>
+              </header>
+              <div id="analysisDimensions"></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- CORE DESIGN SYSTEM -->
+        <div class="route-view design-system-route" data-route-view="design-system" hidden>
+          <div id="designSystemApp" aria-live="polite" aria-busy="true">
+            <div class="ds-loading">正在读取Design System Registry与Token源…</div>
+          </div>
+        </div>
+
+        <!-- INTELLIGENCE UX GUIDANCE -->
+        <div class="route-view" data-route-view="guidance" hidden>
+          <section id="guidance-library" class="page-section hero-section pattern-hero" data-section-title="UX Guidance">
+            <div class="section-marker">03 · INTELLIGENCE UX GUIDANCE</div>
+            <p class="eyebrow">FROM CORE COMPONENTS TO GOVERNED WORK</p>
+            <h1>Core Design System规定界面怎么构建，<br />Guidance规定<em>人机如何协作</em>。</h1>
+            <p class="hero-lead">
+              本页收录Process Intelligence、Collaborative Intelligence和跨Contract Handoff的交互Pattern。
+              Button、Card等基础组件在Core Design System中定义。
+            </p>
+            <div id="guidanceRouteMeta" class="guidance-route-meta"></div>
+            <div class="pattern-filter" role="group" aria-label="Pattern分类">
+              <button type="button" data-pattern-filter="all" aria-pressed="true">All</button>
+              <button type="button" data-pattern-filter="shared" aria-pressed="false">Shared</button>
+              <button type="button" data-pattern-filter="process" aria-pressed="false">Process</button>
+              <button type="button" data-pattern-filter="collaborative" aria-pressed="false">Collaborative</button>
+              <button type="button" data-pattern-filter="handoff" aria-pressed="false">Handoff</button>
+            </div>
+            <div class="pattern-library-layout">
+              <div id="patternList" class="pattern-list" role="listbox" aria-label="Pattern列表"></div>
+              <article id="patternDetail" class="pattern-detail" aria-live="polite"></article>
+            </div>
+          </section>
+
+          <section id="guidance-specimens" class="page-section specimen-section" data-section-title="交互示例">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">02</span>
+                <p class="eyebrow">INTERACTIVE SPECIMENS</p>
+                <h2>通过交互示例检查状态、权限、<br />依据和恢复路径。</h2>
+              </div>
+              <div class="simulation-label"><span></span>SIMULATION · NO EXTERNAL ACTION</div>
+            </div>
+
+            <div id="specimenTabs" class="specimen-tabs" role="tablist" aria-label="选择交互示例"></div>
+            <div class="specimen-workspace">
+              <article id="specimenCanvas" class="specimen-canvas" aria-live="polite"></article>
+              <aside id="specimenInspector" class="specimen-inspector"></aside>
+            </div>
+          </section>
+
+          <section id="guidance-anatomy" class="page-section" data-section-title="Pattern Anatomy">
+            <div class="section-heading compact">
+              <div>
+                <span class="section-index">03</span>
+                <p class="eyebrow">PATTERN ANATOMY</p>
+                <h2>每个Pattern都必须回答同一组问题。</h2>
+              </div>
+            </div>
+            <div id="patternAnatomy" class="anatomy-grid"></div>
+          </section>
+        </div>
+
+        <!-- JOURNEYS -->
+        <div class="route-view" data-route-view="journeys" hidden>
+          <section id="journeys-reference" class="page-section hero-section journey-hero" data-section-title="Reference Journeys">
+            <div class="section-marker">03 · REFERENCE JOURNEYS</div>
+            <p class="eyebrow">CONTROLLED HANDOFFS</p>
+            <h1>对象通过Trace ID关联，<br /><em>类型和生命周期保持不变</em>。</h1>
+            <p class="hero-lead">
+              Analysis、Decision、Action和Case共享Root与Trace，同时保留自己的Owner、Revision和Lifecycle。
+            </p>
+            <div class="journey-switcher" role="tablist" aria-label="选择Reference Journey">
+              <button type="button" data-journey-option="collaborative" aria-selected="true">
+                分析 → 受控行动
+              </button>
+              <button type="button" data-journey-option="process" aria-selected="false">
+                Exception → 规则改进
+              </button>
+            </div>
+
+            <div class="journey-board">
+              <div id="journeyTrace" class="journey-trace" aria-label="Journey步骤"></div>
+              <article id="journeyStepPanel" class="journey-step-panel" aria-live="polite"></article>
+              <div class="journey-controls">
+                <button id="journeyPrev" class="button secondary" type="button">上一步</button>
+                <span id="journeyPosition" aria-live="polite"></span>
+                <button id="journeyNext" class="button primary" type="button">下一步</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="journeys-envelope" class="page-section" data-section-title="Handoff Envelope">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">02</span>
+                <p class="eyebrow">HANDOFF ENVELOPE</p>
+                <h2>交接时一并传递目标、上下文、<br />依据、待决问题和可用操作。</h2>
+              </div>
+            </div>
+            <div id="handoffEnvelope" class="handoff-envelope"></div>
+          </section>
+        </div>
+
+        <!-- ACCEPTANCE -->
+        <div class="route-view" data-route-view="acceptance" hidden>
+          <section id="acceptance-gates" class="page-section hero-section acceptance-hero" data-section-title="Experience Gate">
+            <div class="section-marker">04 · UX ACCEPTANCE</div>
+            <p class="eyebrow">FROM PRINCIPLES TO TESTS</p>
+            <h1>除功能测试外，<br />还要通过<em>Experience Gate</em>。</h1>
+            <p class="hero-lead">
+              企业AI需要稳定运行，也需要让用户正确理解状态、控制后果并在失败后继续工作。
+            </p>
+            <div id="acceptanceGrid" class="acceptance-grid"></div>
+          </section>
+
+          <section id="acceptance-reader" class="page-section" data-section-title="Reader Testing">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">02</span>
+                <p class="eyebrow">READER TESTING</p>
+                <h2>无上下文读者也应能<br />复述核心模型、区分关键状态。</h2>
+              </div>
+              <p class="section-intro">无上下文读者必须能够正确复述核心模型，并识别治理状态。</p>
+            </div>
+            <div id="readerMetrics" class="reader-metrics"></div>
+          </section>
+
+          <section id="acceptance-workstream" class="page-section" data-section-title="2027 Workstream">
+            <div class="section-heading compact">
+              <div>
+                <span class="section-index">03</span>
+                <p class="eyebrow">2027 UX WORKSTREAM</p>
+                <h2>UI/UX贯穿数据、流程、治理和模型能力。</h2>
+              </div>
+            </div>
+            <div id="workstreamGrid" class="workstream-grid"></div>
+            <div class="engineering-trigger">
+              <span>PRODUCTION DESIGN SYSTEM TRIGGER</span>
+              <p>
+                至少两个真实消费者、稳定的语义轴与Lifecycle、无领域分支的公共Schema，以及明确的API、Owner、Version和Migration。
+              </p>
+            </div>
+          </section>
+
+          <section id="acceptance-locked" class="page-section" data-section-title="Locked Decisions">
+            <div class="section-heading compact">
+              <div>
+                <span class="section-index">04</span>
+                <p class="eyebrow">LOCKED BY REV 0.3</p>
+                <h2>哪些决定不再由Prototype重新解释。</h2>
+              </div>
+            </div>
+            <ol id="lockedDecisions" class="locked-decisions"></ol>
+          </section>
+        </div>
+
+        <!-- MARKDOWN DOCUMENT READER -->
+        <div class="route-view document-route" data-route-view="document" hidden>
+          <section id="document-reader" class="document-reader" data-section-title="Document Reader">
+            <div class="document-toolbar">
+              <button id="documentBack" class="document-back" type="button">
+                <span aria-hidden="true">←</span>
+                <span id="documentBackLabel">返回EIX 2.0</span>
+              </button>
+              <div class="document-toolbar-meta">
+                <span id="documentRouteIdentity">CANONICAL SOURCE</span>
+                <span>Rendered from Markdown · UTF-8</span>
+              </div>
+            </div>
+
+            <header class="document-header">
+              <div>
+                <span id="documentIdentity" class="document-identity">CANONICAL · REV 0.3</span>
+                <h1 id="documentTitle">Loading document…</h1>
+                <p id="documentDescription">正在读取本地Markdown内容。</p>
+              </div>
+              <div class="document-source">
+                <span>SOURCE FILE</span>
+                <code id="documentPath">—</code>
+              </div>
+            </header>
+
+            <div class="document-reading-layout">
+              <article id="documentContent" class="markdown-body" aria-live="polite" aria-busy="true">
+                <p class="document-loading">正在加载文档…</p>
+              </article>
+              <aside class="document-toc-shell" aria-label="本文目录">
+                <span class="micro-label">ON THIS PAGE</span>
+                <nav id="documentToc" class="document-toc"></nav>
+              </aside>
+            </div>
+          </section>
+        </div>
+
+        <footer class="site-footer">
+          <div>
+            <span class="micro-label">ENTERPRISE INTELLIGENCE EXPERIENCE 2.0</span>
+            <strong>One canonical architecture. Multiple governed experiences.</strong>
+          </div>
+          <div>
+            <span>Rev 0.3 · 2026-07-25</span>
+            <a href="#/document?doc=charter&amp;from=brief" data-document-id="charter">Read Canonical Charter</a>
+          </div>
+        </footer>
+      </main>
+
+      <aside class="context-rail" aria-label="当前文档信息">
+        <section>
+          <span class="micro-label">CURRENT VIEW</span>
+          <strong id="railView">5分钟</strong>
+          <p id="railViewDescription">Experience Narrative</p>
+        </section>
+        <section>
+          <span class="micro-label">DENSITY</span>
+          <strong id="railDensity">BRIEF</strong>
+          <p>同一Revision，不同信息密度</p>
+        </section>
+        <section>
+          <span class="micro-label">NON-NEGOTIABLE</span>
+          <p id="railInvariant">Approve ≠ Execute</p>
+        </section>
+        <section class="rail-legend">
+          <span class="micro-label">SEMANTIC AXES</span>
+          <p><i class="axis-dot claim"></i>Claim</p>
+          <p><i class="axis-dot evidence"></i>Evidence</p>
+          <p><i class="axis-dot risk"></i>Risk</p>
+          <p><i class="axis-dot permission"></i>Permission</p>
+          <p><i class="axis-dot workflow"></i>Workflow</p>
+        </section>
+      </aside>
+    </div>
+  </body>
+</html>

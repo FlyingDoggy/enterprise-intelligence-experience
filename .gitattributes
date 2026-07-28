@@ -1,0 +1,10 @@
+design-system/fonts.generated.css linguist-generated=true
+design-system/tokens.generated.css linguist-generated=true
+design-system/collaborative-visualization/eix-visualization.tokens.css linguist-generated=true
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.otf binary
+*.woff binary
+*.woff2 binary

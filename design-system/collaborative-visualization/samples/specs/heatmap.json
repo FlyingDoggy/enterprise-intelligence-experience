@@ -1,0 +1,117 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-heatmap-template",
+  "resultRef": "RESULT-TEMPLATE-HEATMAP-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "compare",
+    "method": "两个离散维度上的顺序色阶量级比较",
+    "audience": "业务分析读者"
+  },
+  "representation": "heatmap",
+  "claim": {
+    "kind": "fact",
+    "text": "对象A在后半段持续处于较高量级，对象B整体较低。",
+    "status": "supported"
+  },
+  "scope": {
+    "metric": "{指标名称}",
+    "dimensions": ["{对象维度}", "{时间维度}"],
+    "filters": ["{筛选条件}"],
+    "period": "{期间1}–{期间6}",
+    "version": "{数据版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{对象} × {期间}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "period",
+      "type": "ordinal",
+      "scale": "stable-order"
+    },
+    "y": {
+      "field": "label",
+      "type": "nominal",
+      "scale": "stable-order"
+    },
+    "color": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "sequential-seven-step"
+    }
+  },
+  "data": [
+    {"label": "对象A", "period": "期间1", "value": 42},
+    {"label": "对象A", "period": "期间2", "value": 58},
+    {"label": "对象A", "period": "期间3", "value": 71},
+    {"label": "对象A", "period": "期间4", "value": 88},
+    {"label": "对象A", "period": "期间5", "value": 76},
+    {"label": "对象A", "period": "期间6", "value": 91},
+    {"label": "对象B", "period": "期间1", "value": 31},
+    {"label": "对象B", "period": "期间2", "value": 29},
+    {"label": "对象B", "period": "期间3", "value": 45},
+    {"label": "对象B", "period": "期间4", "value": 36},
+    {"label": "对象B", "period": "期间5", "value": 52},
+    {"label": "对象B", "period": "期间6", "value": 47},
+    {"label": "对象C", "period": "期间1", "value": 24},
+    {"label": "对象C", "period": "期间2", "value": 43},
+    {"label": "对象C", "period": "期间3", "value": 34},
+    {"label": "对象C", "period": "期间4", "value": 57},
+    {"label": "对象C", "period": "期间5", "value": 68},
+    {"label": "对象C", "period": "期间6", "value": 61}
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "matrix-complete",
+        "status": "pass",
+        "message": "对象和期间的组合完整。"
+      },
+      {
+        "id": "sequential-scale-declared",
+        "status": "pass",
+        "message": "使用带刻度图例的单一色相顺序色阶。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": ["EVIDENCE-TEMPLATE-HEATMAP-01"],
+  "limitations": [
+    "颜色只表达相对量级；精确值、单位和范围需通过数据表核对。"
+  ],
+  "accessibleSummary": "三类对象在六个期间的量级矩阵中，对象A后半段数值最高，对象B整体较低，对象C在期间5达到局部高点。",
+  "dataTable": {
+    "columns": [
+      {"key": "label", "label": "{对象维度}"},
+      {"key": "period", "label": "{时间维度}"},
+      {"key": "value", "label": "{指标名称}", "format": "{单位}"}
+    ],
+    "rows": [
+      {"label": "对象A", "period": "期间1", "value": 42},
+      {"label": "对象A", "period": "期间2", "value": 58},
+      {"label": "对象A", "period": "期间3", "value": 71},
+      {"label": "对象A", "period": "期间4", "value": 88},
+      {"label": "对象A", "period": "期间5", "value": 76},
+      {"label": "对象A", "period": "期间6", "value": 91},
+      {"label": "对象B", "period": "期间1", "value": 31},
+      {"label": "对象B", "period": "期间2", "value": 29},
+      {"label": "对象B", "period": "期间3", "value": 45},
+      {"label": "对象B", "period": "期间4", "value": 36},
+      {"label": "对象B", "period": "期间5", "value": 52},
+      {"label": "对象B", "period": "期间6", "value": 47},
+      {"label": "对象C", "period": "期间1", "value": 24},
+      {"label": "对象C", "period": "期间2", "value": 43},
+      {"label": "对象C", "period": "期间3", "value": 34},
+      {"label": "对象C", "period": "期间4", "value": 57},
+      {"label": "对象C", "period": "期间5", "value": 68},
+      {"label": "对象C", "period": "期间6", "value": 61}
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": ["explain", "compare", "filter", "drill"]
+  }
+}

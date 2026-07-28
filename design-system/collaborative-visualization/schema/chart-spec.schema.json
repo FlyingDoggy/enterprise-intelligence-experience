@@ -1,0 +1,405 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eix.internal/schema/chart-spec.schema.json",
+  "title": "EIX ChartSpec",
+  "description": "A deterministic, evidence-linked visualization contract for Collaborative Intelligence.",
+  "type": "object",
+  "required": [
+    "id",
+    "resultRef",
+    "revision",
+    "intent",
+    "representation",
+    "claim",
+    "scope",
+    "encoding",
+    "data",
+    "validation",
+    "evidenceRefs",
+    "accessibleSummary",
+    "dataTable",
+    "interactions"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "#/$defs/id"
+    },
+    "resultRef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "intent": {
+      "type": "object",
+      "required": [
+        "workQuestion",
+        "method"
+      ],
+      "properties": {
+        "workQuestion": {
+          "enum": [
+            "status",
+            "compare",
+            "rank",
+            "trend",
+            "variance",
+            "contribution",
+            "composition",
+            "distribution",
+            "relationship",
+            "anomaly",
+            "forecast",
+            "audit",
+            "flow",
+            "conversion",
+            "timeline"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "audience": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "representation": {
+      "enum": [
+        "kpi",
+        "kpi-with-sparkline",
+        "kpi-row",
+        "crosstab",
+        "table-with-inline-bars",
+        "horizontal-bar-emphasis",
+        "dot-plot",
+        "line",
+        "area",
+        "multi-line",
+        "indexed-line",
+        "small-multiples-line",
+        "variance-bar",
+        "bullet",
+        "dumbbell",
+        "waterfall",
+        "contribution-bar",
+        "stacked-bar",
+        "100-percent-stacked-bar",
+        "histogram",
+        "box-plot",
+        "distribution-table",
+        "scatter",
+        "small-multiples-scatter",
+        "relationship-table",
+        "heatmap",
+        "anomaly-band",
+        "deviation-table",
+        "scenario-small-multiples",
+        "forecast-table",
+        "forecast-line-with-band",
+        "sankey",
+        "funnel",
+        "process-map",
+        "case-timeline",
+        "pareto"
+      ]
+    },
+    "claim": {
+      "type": "object",
+      "required": [
+        "kind",
+        "text",
+        "status"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "fact",
+            "calculation",
+            "hypothesis",
+            "forecast",
+            "recommendation",
+            "question"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "unverified",
+            "supported",
+            "verified",
+            "contested",
+            "stale",
+            "insufficient"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "object",
+      "required": [
+        "metric",
+        "period",
+        "version",
+        "unit",
+        "grain",
+        "freshness"
+      ],
+      "properties": {
+        "metric": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "filters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "period": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "currency": {
+          "type": "string"
+        },
+        "grain": {
+          "type": "string",
+          "minLength": 1
+        },
+        "freshness": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "encoding": {
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "$ref": "#/$defs/channel"
+        },
+        "y": {
+          "$ref": "#/$defs/channel"
+        },
+        "color": {
+          "$ref": "#/$defs/channel"
+        },
+        "size": {
+          "$ref": "#/$defs/channel"
+        },
+        "detail": {
+          "$ref": "#/$defs/channel"
+        },
+        "series": {
+          "$ref": "#/$defs/channel"
+        }
+      },
+      "additionalProperties": false
+    },
+    "data": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object"
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "status",
+        "checks",
+        "fallback"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "pass",
+            "partial",
+            "blocked"
+          ]
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "status"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "pass",
+                  "warn",
+                  "fail"
+                ]
+              },
+              "message": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "fallback": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accessibleSummary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dataTable": {
+      "type": "object",
+      "required": [
+        "columns",
+        "rows"
+      ],
+      "properties": {
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "key",
+              "label"
+            ],
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "format": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "interactions": {
+      "type": "object",
+      "required": [
+        "select",
+        "actions"
+      ],
+      "properties": {
+        "select": {
+          "enum": [
+            "none",
+            "single",
+            "multiple"
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "explain",
+              "compare",
+              "filter",
+              "drill"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "channel": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "quantitative",
+            "nominal",
+            "ordinal",
+            "temporal"
+          ]
+        },
+        "scale": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

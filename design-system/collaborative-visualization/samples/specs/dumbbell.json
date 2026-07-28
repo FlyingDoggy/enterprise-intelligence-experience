@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-dumbbell-template",
+  "resultRef": "RESULT-TEMPLATE-DUMBBELL-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "compare",
+    "method": "同一对象的两个可比状态成对比较",
+    "audience": "业务分析读者"
+  },
+  "representation": "dumbbell",
+  "claim": {
+    "kind": "calculation",
+    "text": "对象A的前后差距最大，对象C基本保持稳定。",
+    "status": "verified"
+  },
+  "scope": {
+    "metric": "{指标名称}",
+    "dimensions": ["{对象维度}"],
+    "filters": ["{筛选条件}"],
+    "period": "{比较期间}",
+    "version": "{状态一} → {状态二}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{对象粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "before",
+      "type": "quantitative",
+      "scale": "shared-linear"
+    },
+    "y": {
+      "field": "label",
+      "type": "nominal",
+      "scale": "sorted-by-gap"
+    },
+    "detail": {
+      "field": "after",
+      "type": "quantitative",
+      "scale": "paired-endpoint"
+    }
+  },
+  "data": [
+    {"label": "对象A", "before": 64, "after": 92, "delta": 28},
+    {"label": "对象B", "before": 71, "after": 84, "delta": 13},
+    {"label": "对象C", "before": 76, "after": 79, "delta": 3}
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "paired-endpoints-comparable",
+        "status": "pass",
+        "message": "每个对象都有两个同口径、同单位的状态值。"
+      },
+      {
+        "id": "pair-identity-stable",
+        "status": "pass",
+        "message": "前后状态属于同一对象。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": ["EVIDENCE-TEMPLATE-DUMBBELL-01"],
+  "limitations": [
+    "连线只表示同一对象的前后差距，不表示时间过程或因果关系。"
+  ],
+  "accessibleSummary": "对象A从64变为92，增加28；对象B从71变为84，增加13；对象C从76变为79，增加3。对象A差距最大。",
+  "dataTable": {
+    "columns": [
+      {"key": "label", "label": "{对象维度}"},
+      {"key": "before", "label": "{状态一}", "format": "{单位}"},
+      {"key": "after", "label": "{状态二}", "format": "{单位}"},
+      {"key": "delta", "label": "差值", "format": "{单位}"}
+    ],
+    "rows": [
+      {"label": "对象A", "before": 64, "after": 92, "delta": 28},
+      {"label": "对象B", "before": 71, "after": 84, "delta": 13},
+      {"label": "对象C", "before": 76, "after": 79, "delta": 3}
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": ["explain", "compare", "filter", "drill"]
+  }
+}

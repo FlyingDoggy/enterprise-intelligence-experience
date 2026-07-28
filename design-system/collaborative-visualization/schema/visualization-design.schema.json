@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eix.internal/schema/visualization-design.schema.json",
+  "title": "EIX Visualization Design Source",
+  "type": "object",
+  "required": [
+    "name",
+    "version",
+    "status",
+    "boundary",
+    "principles",
+    "chartBlock",
+    "semanticEncoding",
+    "router",
+    "chartFamilies",
+    "interaction",
+    "storyPattern",
+    "responsive",
+    "accessibility",
+    "antiPatterns"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "status": {
+      "enum": [
+        "candidate-extension",
+        "validated",
+        "standard",
+        "deprecated"
+      ]
+    },
+    "boundary": {
+      "type": "object",
+      "required": [
+        "owns",
+        "doesNotOwn"
+      ],
+      "properties": {
+        "owns": {
+          "$ref": "#/$defs/stringList"
+        },
+        "doesNotOwn": {
+          "$ref": "#/$defs/stringList"
+        }
+      },
+      "additionalProperties": false
+    },
+    "principles": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "designTest"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "title": {
+            "type": "string"
+          },
+          "designTest": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "chartBlock": {
+      "type": "object",
+      "required": [
+        "fixedRegions",
+        "optionalRegions",
+        "forbiddenRegions"
+      ],
+      "properties": {
+        "fixedRegions": {
+          "type": "array",
+          "minItems": 6,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "required"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "label": {
+                "type": "string"
+              },
+              "required": {
+                "const": true
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "optionalRegions": {
+          "$ref": "#/$defs/stringList"
+        },
+        "forbiddenRegions": {
+          "$ref": "#/$defs/stringList"
+        }
+      },
+      "additionalProperties": false
+    },
+    "semanticEncoding": {
+      "type": "object",
+      "required": [
+        "categorical",
+        "sequential",
+        "diverging",
+        "timeLineStyle",
+        "uncertainty",
+        "statusOverlay"
+      ]
+    },
+    "router": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "$ref": "#/$defs/routerRule"
+      }
+    },
+    "chartFamilies": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "purpose",
+          "mustShow",
+          "mustNot"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "mustShow": {
+            "$ref": "#/$defs/stringList"
+          },
+          "mustNot": {
+            "$ref": "#/$defs/stringList"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "interaction": {
+      "type": "object"
+    },
+    "storyPattern": {
+      "type": "object"
+    },
+    "responsive": {
+      "type": "object"
+    },
+    "accessibility": {
+      "$ref": "#/$defs/stringList"
+    },
+    "antiPatterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "replacement"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "label": {
+            "type": "string"
+          },
+          "replacement": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "stringList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "routerRule": {
+      "type": "object",
+      "required": [
+        "id",
+        "workQuestion",
+        "dataShape",
+        "defaultRepresentation",
+        "alternatives",
+        "requiredChecks",
+        "fallback"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "workQuestion": {
+          "type": "string"
+        },
+        "dataShape": {
+          "type": "object"
+        },
+        "defaultRepresentation": {
+          "$ref": "#/$defs/id"
+        },
+        "alternatives": {
+          "$ref": "#/$defs/stringList"
+        },
+        "requiredChecks": {
+          "$ref": "#/$defs/stringList"
+        },
+        "fallback": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

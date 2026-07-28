@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-anomaly-template",
+  "resultRef": "RESULT-TEMPLATE-ANOMALY-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "anomaly",
+    "method": "实际序列与认证预期区间比较",
+    "audience": "业务分析读者"
+  },
+  "representation": "anomaly-band",
+  "claim": {
+    "kind": "calculation",
+    "text": "期间8低于已认证预期下界，标记为一个待解释异常点。",
+    "status": "supported"
+  },
+  "scope": {
+    "metric": "{指标名称}",
+    "dimensions": [],
+    "filters": ["{筛选条件}"],
+    "period": "{期间1}–{期间12}",
+    "version": "{数据版本} + {基线版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{时间粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "period",
+      "type": "temporal",
+      "scale": "continuous-time"
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "shared-linear"
+    },
+    "detail": {
+      "field": "anomaly",
+      "type": "nominal",
+      "scale": "shape-and-label"
+    }
+  },
+  "data": [
+    {"period": "期间1", "value": 66, "lower": 58, "upper": 73, "anomaly": false},
+    {"period": "期间2", "value": 68, "lower": 59, "upper": 74, "anomaly": false},
+    {"period": "期间3", "value": 65, "lower": 57, "upper": 72, "anomaly": false},
+    {"period": "期间4", "value": 70, "lower": 61, "upper": 76, "anomaly": false},
+    {"period": "期间5", "value": 67, "lower": 60, "upper": 75, "anomaly": false},
+    {"period": "期间6", "value": 71, "lower": 62, "upper": 78, "anomaly": false},
+    {"period": "期间7", "value": 69, "lower": 61, "upper": 77, "anomaly": false},
+    {"period": "期间8", "value": 47, "lower": 59, "upper": 75, "anomaly": true},
+    {"period": "期间9", "value": 72, "lower": 63, "upper": 79, "anomaly": false},
+    {"period": "期间10", "value": 70, "lower": 62, "upper": 78, "anomaly": false},
+    {"period": "期间11", "value": 73, "lower": 64, "upper": 80, "anomaly": false},
+    {"period": "期间12", "value": 71, "lower": 63, "upper": 79, "anomaly": false}
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "baseline-certified",
+        "status": "pass",
+        "message": "预期区间基线已认证。"
+      },
+      {
+        "id": "threshold-certified",
+        "status": "pass",
+        "message": "异常阈值已认证。"
+      },
+      {
+        "id": "seasonality-addressed",
+        "status": "pass",
+        "message": "当前基线已处理季节性。"
+      }
+    ],
+    "fallback": "line"
+  },
+  "evidenceRefs": ["EVIDENCE-TEMPLATE-ANOMALY-01", "BASELINE-TEMPLATE-v1"],
+  "limitations": [
+    "异常表示偏离已认证区间，不等于业务原因已经确定。"
+  ],
+  "accessibleSummary": "十二个期间中，期间8的实际值47低于预期下界59，因此标记为异常；其余期间均位于预期区间内。",
+  "dataTable": {
+    "columns": [
+      {"key": "period", "label": "期间"},
+      {"key": "value", "label": "实际值", "format": "{单位}"},
+      {"key": "lower", "label": "预期下界", "format": "{单位}"},
+      {"key": "upper", "label": "预期上界", "format": "{单位}"},
+      {"key": "anomaly", "label": "异常标记"}
+    ],
+    "rows": [
+      {"period": "期间1", "value": 66, "lower": 58, "upper": 73, "anomaly": "否"},
+      {"period": "期间2", "value": 68, "lower": 59, "upper": 74, "anomaly": "否"},
+      {"period": "期间3", "value": 65, "lower": 57, "upper": 72, "anomaly": "否"},
+      {"period": "期间4", "value": 70, "lower": 61, "upper": 76, "anomaly": "否"},
+      {"period": "期间5", "value": 67, "lower": 60, "upper": 75, "anomaly": "否"},
+      {"period": "期间6", "value": 71, "lower": 62, "upper": 78, "anomaly": "否"},
+      {"period": "期间7", "value": 69, "lower": 61, "upper": 77, "anomaly": "否"},
+      {"period": "期间8", "value": 47, "lower": 59, "upper": 75, "anomaly": "是"},
+      {"period": "期间9", "value": 72, "lower": 63, "upper": 79, "anomaly": "否"},
+      {"period": "期间10", "value": 70, "lower": 62, "upper": 78, "anomaly": "否"},
+      {"period": "期间11", "value": 73, "lower": 64, "upper": 80, "anomaly": "否"},
+      {"period": "期间12", "value": 71, "lower": 63, "upper": 79, "anomaly": "否"}
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": ["explain", "filter", "drill"]
+  }
+}

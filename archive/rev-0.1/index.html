@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Enterprise Intelligence Experience Principles 2.0 — Human–AI Work Experience Architecture Concept Charter"
+    />
+    <title>Enterprise Intelligence Experience 2.0</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23041a3a'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial' font-size='24' fill='white'%3EEI%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#mainContent">跳到正文</a>
+
+    <header class="topbar">
+      <button
+        id="menuButton"
+        class="menu-button"
+        type="button"
+        aria-label="打开文档目录"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+
+      <a class="brand" href="#thesis" aria-label="返回文档开头">
+        <span class="brand-mark">EI</span>
+        <span class="brand-copy">
+          <strong>Experience Principles</strong>
+          <small>Enterprise Intelligence · 2.0</small>
+        </span>
+      </a>
+
+      <div class="topbar-status" aria-label="文档状态">
+        <span>CONCEPT CHARTER</span>
+        <i></i>
+        <span>WORKING DRAFT v0.1</span>
+      </div>
+
+      <nav class="topbar-actions" aria-label="文档操作">
+        <a href="#locked">Locked Decisions</a>
+        <a class="source-link" href="./ENTERPRISE_INTELLIGENCE_EXPERIENCE_2.0_CONCEPT_CHARTER.md">
+          打开Markdown
+        </a>
+      </nav>
+    </header>
+
+    <div class="experience-spine" aria-label="共享体验内核">
+      <span>SHARED EXPERIENCE KERNEL</span>
+      <div id="topSpine" class="top-spine"></div>
+    </div>
+
+    <div class="page-layout">
+      <aside id="sidebar" class="sidebar" aria-label="文档目录">
+        <div class="sidebar-intro">
+          <span>NORTH STAR</span>
+          <strong>Human–AI Work Experience Architecture</strong>
+          <p>两种Interaction Contract，一个Enterprise Experience。</p>
+        </div>
+
+        <nav id="tableOfContents">
+          <a class="active" href="#thesis"><span>01</span>核心判断</a>
+          <a href="#architecture"><span>02</span>体验架构</a>
+          <a href="#kernel"><span>03</span>共享Kernel</a>
+          <a href="#contracts"><span>04</span>两种Contract</a>
+          <a href="#families"><span>05</span>协作场景</a>
+          <a href="#principles"><span>06</span>设计原则</a>
+          <a href="#patterns"><span>07</span>体验Patterns</a>
+          <a href="#visual"><span>08</span>视觉语义</a>
+          <a href="#acceptance"><span>09</span>UX验收</a>
+          <a href="#workstream"><span>10</span>SOW工作流</a>
+          <a href="#whitepaper"><span>11</span>白皮书结构</a>
+          <a href="#locked"><span>12</span>已锁定决定</a>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p>完整定义、Pattern模板和Open Questions以Markdown源文档为准。</p>
+          <a href="./ENTERPRISE_INTELLIGENCE_EXPERIENCE_2.0_CONCEPT_CHARTER.md">
+            阅读完整Charter →
+          </a>
+        </div>
+      </aside>
+
+      <main id="mainContent" class="main-content">
+        <section id="thesis" class="section hero" data-section>
+          <div class="section-index">01</div>
+          <p class="eyebrow">EXECUTIVE THESIS</p>
+          <h1>One enterprise experience.<br />Two interaction contracts.</h1>
+          <p class="hero-lead">
+            Process Intelligence与Collaborative Intelligence不是两个独立产品。
+            它们是同一套Enterprise Intelligence Experience中，人、AI、规则与工具协同工作的两种契约。
+          </p>
+
+          <div class="hero-axiom">
+            <span>FIRST PRINCIPLE</span>
+            <p>
+              工作可以结构化，也可以开放；交互可以由系统推进，也可以由人主导；
+              但Goal、Context、Evidence、Decision、Action与Feedback必须共享同一套体验内核。
+            </p>
+          </div>
+
+          <div class="target-picture" aria-label="两种Interaction Contract与共享体验内核">
+            <div class="foundation-band">
+              <span>ENTERPRISE INTELLIGENCE FOUNDATION</span>
+              <p>Dual Ontology · AI Models · Agents · Tools · Systems · Governance</p>
+            </div>
+
+            <div class="contract-pair">
+              <article class="contract-card process">
+                <header>
+                  <span>INTERACTION CONTRACT A</span>
+                  <strong>Process Intelligence</strong>
+                </header>
+                <p>System-led · State-driven · Exception-first</p>
+                <div>Interpret</div><i></i><div>Decide</div><i></i><div>Execute</div>
+                <footer>结构化工作 · 受控执行 · 人处理边界</footer>
+              </article>
+
+              <div class="shared-axis" aria-hidden="true">
+                <span>SHARED</span>
+                <i></i>
+                <span>KERNEL</span>
+              </div>
+
+              <article class="contract-card collaborative">
+                <header>
+                  <span>INTERACTION CONTRACT B</span>
+                  <strong>Collaborative Intelligence</strong>
+                </header>
+                <p>Human-led · Goal-driven · Artifact-first</p>
+                <div>Understand</div><i></i><div>Reason</div><i></i><div>Act</div>
+                <footer>开放式工作 · 人机协作 · 产出稳定Artifact</footer>
+              </article>
+            </div>
+
+            <div class="outcome-band">
+              <span>EXPERIENCE OUTCOMES</span>
+              <div>Clarity</div><div>Trust</div><div>Control</div><div>Momentum</div><div>Continuity</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="architecture" class="section" data-section>
+          <div class="section-index">02</div>
+          <p class="eyebrow">EXPERIENCE ARCHITECTURE</p>
+          <h2>技术架构决定AI能做什么；体验架构决定人如何理解和控制它。</h2>
+          <p class="section-lead">
+            五层模型把SOW中的Ontology、Agent、Tool与真实工作体验连接起来。
+            UIUX不是Foundation之上的包装，而是贯穿工作对象、责任边界和业务结果的Human Control Layer。
+          </p>
+
+          <div class="layer-stack">
+            <article>
+              <span>L5</span>
+              <div><strong>Experience Outcomes</strong><p>Clarity · Trust · Control · Momentum · Continuity</p></div>
+              <small>用户是否真正完成工作</small>
+            </article>
+            <article>
+              <span>L4</span>
+              <div><strong>Canonical Surfaces</strong><p>Home · Inbox · Case · Mission · Analysis · Decision · Control Tower</p></div>
+              <small>用户在哪里完成任务</small>
+            </article>
+            <article>
+              <span>L3</span>
+              <div><strong>Interaction Contracts</strong><p>Process Intelligence · Collaborative Intelligence</p></div>
+              <small>人和AI如何分工</small>
+            </article>
+            <article class="kernel-layer">
+              <span>L2</span>
+              <div><strong>Shared Experience Kernel</strong><p>Goal · Context · Plan · Evidence · Decision · Action · Outcome · Feedback</p></div>
+              <small>一份工作由什么构成</small>
+            </article>
+            <article>
+              <span>L1</span>
+              <div><strong>Enterprise Intelligence Foundation</strong><p>Dual Ontology · Models · Agents · Tools · Systems · Governance</p></div>
+              <small>AI知道什么、能做什么</small>
+            </article>
+          </div>
+        </section>
+
+        <section id="kernel" class="section wide-section" data-section>
+          <div class="section-index">03</div>
+          <p class="eyebrow">SHARED EXPERIENCE KERNEL</p>
+          <h2>所有场景共享八个稳定工作对象。</h2>
+          <p class="section-lead">
+            对话、表单、数据选择、系统事件和Agent结果都只是在创建、修改或推进这些对象。
+            选择一个对象，查看它必须回答什么、用户必须看见什么。
+          </p>
+
+          <div class="kernel-explorer">
+            <div id="kernelTabs" class="kernel-tabs" role="tablist" aria-label="体验内核对象"></div>
+            <article id="kernelPanel" class="kernel-panel" aria-live="polite">
+              <header>
+                <span id="kernelCode">K01</span>
+                <div>
+                  <h3 id="kernelName">Goal</h3>
+                  <p id="kernelQuestion"></p>
+                </div>
+              </header>
+              <div class="kernel-body">
+                <section>
+                  <span>DEFINITION</span>
+                  <p id="kernelDefinition"></p>
+                </section>
+                <section>
+                  <span>MUST BE VISIBLE</span>
+                  <ul id="kernelVisible"></ul>
+                </section>
+                <section>
+                  <span>GOVERNANCE</span>
+                  <p id="kernelGovernance"></p>
+                </section>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="contracts" class="section wide-section" data-section>
+          <div class="section-index">04</div>
+          <p class="eyebrow">TWO INTERACTION CONTRACTS</p>
+          <h2>同一个Kernel，两套清晰的人机责任约定。</h2>
+
+          <div class="contract-switcher" role="tablist" aria-label="Interaction Contract">
+            <button class="active" type="button" role="tab" data-contract="process" aria-selected="true">
+              <span>A</span>Process Intelligence
+            </button>
+            <button type="button" role="tab" data-contract="collaborative" aria-selected="false">
+              <span>B</span>Collaborative Intelligence
+            </button>
+          </div>
+
+          <article id="contractPanel" class="contract-panel process-mode" aria-live="polite">
+            <header>
+              <div>
+                <span id="contractMode">SYSTEM-LED · STATE-DRIVEN</span>
+                <h3 id="contractName">Process Intelligence</h3>
+                <p id="contractStatement"></p>
+              </div>
+              <div class="contract-object">
+                <span>PRIMARY WORK OBJECT</span>
+                <strong id="contractObject">Case</strong>
+              </div>
+            </header>
+
+            <div class="contract-flow" id="contractFlow"></div>
+
+            <div class="contract-details">
+              <section>
+                <span>SYSTEM DEFAULT</span>
+                <ul id="contractSystem"></ul>
+              </section>
+              <section>
+                <span>HUMAN DEFAULT</span>
+                <ul id="contractHuman"></ul>
+              </section>
+              <section>
+                <span>REQUIRED SURFACES</span>
+                <ul id="contractSurfaces"></ul>
+              </section>
+              <section class="anti-pattern">
+                <span>DO NOT</span>
+                <ul id="contractDont"></ul>
+              </section>
+            </div>
+          </article>
+
+          <div class="handoff-loop">
+            <article>
+              <span>COLLABORATIVE → PROCESS</span>
+              <strong>Insight成为受控Action</strong>
+              <p>Evidence → Decision → Action Preview → Permission Check → Process Case</p>
+            </article>
+            <i aria-hidden="true">↔</i>
+            <article>
+              <span>PROCESS → COLLABORATIVE</span>
+              <strong>Exception打开调查Mission</strong>
+              <p>Exception → Context Pack → Investigation → Decision → Resume Case</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="families" class="section wide-section" data-section>
+          <div class="section-index">05</div>
+          <p class="eyebrow">COLLABORATIVE INTELLIGENCE FAMILIES</p>
+          <h2>ChatBI只是其中一个Pattern，不是Collaborative Intelligence的全部。</h2>
+          <p class="section-lead">
+            五类知识工作共享Mission、Context、Plan、Artifact与Action，但使用不同的稳定产出和工作画布。
+          </p>
+
+          <div class="family-explorer">
+            <div id="familyTabs" class="family-tabs" role="tablist" aria-label="协作智能场景"></div>
+            <article class="family-panel">
+              <header>
+                <span id="familyCode"></span>
+                <div><h3 id="familyName"></h3><p id="familyQuestion"></p></div>
+              </header>
+              <div class="family-grid">
+                <section><span>TYPICAL TASKS</span><ul id="familyTasks"></ul></section>
+                <section><span>STABLE ARTIFACTS</span><ul id="familyArtifacts"></ul></section>
+                <section><span>PRIMARY SURFACES</span><ul id="familySurfaces"></ul></section>
+              </div>
+              <footer id="familyBoundary"></footer>
+            </article>
+          </div>
+
+          <div class="analysis-spectrum">
+            <header>
+              <span>ANALYTICAL INTELLIGENCE SPECTRUM</span>
+              <p>AI自助分析位于这一条连续谱中。</p>
+            </header>
+            <div id="analysisSpectrum"></div>
+          </div>
+        </section>
+
+        <section id="principles" class="section wide-section" data-section>
+          <div class="section-index">06</div>
+          <p class="eyebrow">HUMAN–AI DESIGN PRINCIPLES</p>
+          <h2>每条原则都必须能转化为Design Test。</h2>
+          <p class="section-lead">
+            原则不是价值观口号。它必须能够在PRD、Design Review、Prototype和PoC Acceptance中被检查。
+          </p>
+
+          <div class="principle-toolbar">
+            <span>FILTER</span>
+            <div id="principleFilters" role="group" aria-label="设计原则分类"></div>
+          </div>
+          <div id="principleGrid" class="principle-grid"></div>
+        </section>
+
+        <section id="patterns" class="section wide-section" data-section>
+          <div class="section-index">07</div>
+          <p class="eyebrow">CANONICAL EXPERIENCE PATTERNS</p>
+          <h2>PoC可以不同，Pattern语言必须一致。</h2>
+
+          <div class="pattern-columns">
+            <article>
+              <header><span>SHARED</span><strong>跨场景固定Pattern</strong></header>
+              <ul>
+                <li>Goal &amp; Scope Header</li>
+                <li>Context Inspector</li>
+                <li>Plan &amp; Progress</li>
+                <li>Evidence Receipt</li>
+                <li>Decision Record</li>
+                <li>Action Preview</li>
+                <li>Outcome Receipt</li>
+                <li>Branch &amp; Revision</li>
+                <li>Human Handoff</li>
+                <li>Feedback Capture</li>
+              </ul>
+            </article>
+            <article class="process-column">
+              <header><span>PROCESS</span><strong>结构化工作Pattern</strong></header>
+              <ul>
+                <li>Work Queue</li>
+                <li>Case Workspace</li>
+                <li>Decision Checkpoint</li>
+                <li>Approval Brief</li>
+                <li>Exception Center</li>
+                <li>Recovery &amp; Rollback</li>
+                <li>Process Control Tower</li>
+                <li>Execution Audit Timeline</li>
+              </ul>
+            </article>
+            <article class="collab-column">
+              <header><span>COLLABORATIVE</span><strong>知识工作Pattern</strong></header>
+              <ul>
+                <li>Mission Workspace</li>
+                <li>Research Board</li>
+                <li>Analysis Document</li>
+                <li>Decision Canvas</li>
+                <li>Creation Workspace</li>
+                <li>Planning Board</li>
+                <li>Audience Brief</li>
+                <li>Memory Library</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="pattern-rule">
+            <span>PATTERN CONTRACT</span>
+            <p>
+              每个Pattern必须声明User Goal、Work Object、Fixed Regions、Autonomy Policy、
+              Evidence Policy、Permission、Failure &amp; Recovery、Feedback和Acceptance Tests。
+            </p>
+          </div>
+        </section>
+
+        <section id="visual" class="section wide-section" data-section>
+          <div class="section-index">08</div>
+          <p class="eyebrow">VISUAL SEMANTICS</p>
+          <h2>视觉不是AI装饰，而是工作状态与责任边界的语言。</h2>
+
+          <div class="experience-qualities">
+            <article><span>CLARITY</span><strong>我知道正在处理什么</strong><p>Goal · State · Scope</p></article>
+            <article><span>TRUST</span><strong>我知道依据和限制</strong><p>Evidence · Source · Confidence</p></article>
+            <article><span>CONTROL</span><strong>我知道在哪里干预</strong><p>Preview · Approval · Undo</p></article>
+            <article><span>MOMENTUM</span><strong>我看到工作正在推进</strong><p>Plan · Progress · Partial Result</p></article>
+            <article><span>CONTINUITY</span><strong>我不需要每次重新开始</strong><p>Context · Memory · History</p></article>
+            <article><span>CALM</span><strong>自动化没有制造新焦虑</strong><p>Exception-first · Quiet Defaults</p></article>
+          </div>
+
+          <div class="semantic-table" role="table" aria-label="视觉语义类型">
+            <div class="semantic-row header" role="row">
+              <span role="columnheader">SEMANTIC TYPE</span>
+              <span role="columnheader">MEANING</span>
+              <span role="columnheader">VISUAL OBLIGATION</span>
+            </div>
+            <div class="semantic-row fact" role="row"><strong>Fact</strong><span>可验证事实</span><span>绑定Source，稳定表达</span></div>
+            <div class="semantic-row calculation" role="row"><strong>Calculation</strong><span>确定性结果</span><span>展示Formula或Method</span></div>
+            <div class="semantic-row hypothesis" role="row"><strong>Hypothesis</strong><span>候选解释</span><span>不使用确定性语气</span></div>
+            <div class="semantic-row forecast" role="row"><strong>Forecast</strong><span>未来判断</span><span>展示区间、条件和误差</span></div>
+            <div class="semantic-row action" role="row"><strong>Action</strong><span>改变外部状态</span><span>展示Impact、Permission和Recovery</span></div>
+            <div class="semantic-row exception" role="row"><strong>Exception</strong><span>偏离预期路径</span><span>展示Severity、Owner和Next Step</span></div>
+          </div>
+        </section>
+
+        <section id="acceptance" class="section wide-section" data-section>
+          <div class="section-index">09</div>
+          <p class="eyebrow">ENTERPRISE INTELLIGENCE UX ACCEPTANCE</p>
+          <h2>技术验收之外，增加Experience Gate。</h2>
+          <p class="section-lead">
+            目标值应通过基线研究设定，不在Concept Charter中虚构数字；但所有PoC必须覆盖以下八个验收维度。
+          </p>
+          <div id="acceptanceGrid" class="acceptance-grid"></div>
+        </section>
+
+        <section id="workstream" class="section" data-section>
+          <div class="section-index">10</div>
+          <p class="eyebrow">PROPOSED 2027 UX WORKSTREAM</p>
+          <h2>UIUX需要成为SOW的横向能力，而不是Front-end Development的附属项。</h2>
+
+          <div class="workstream-proposal">
+            <header>
+              <span>NEW CROSS-FUNCTIONAL WORKSTREAM</span>
+              <strong>Enterprise Intelligence Experience Architecture &amp; Design</strong>
+            </header>
+            <div>
+              <section>
+                <span>SCOPE</span>
+                <ul>
+                  <li>Shared Experience Kernel</li>
+                  <li>Interaction Contracts</li>
+                  <li>Canonical Pattern Library</li>
+                  <li>Semantic Visual Language</li>
+                  <li>Human Oversight &amp; Recovery</li>
+                  <li>UX Evaluation &amp; Acceptance</li>
+                </ul>
+              </section>
+              <section>
+                <span>CORE DELIVERABLES</span>
+                <ol>
+                  <li>Experience Principles 2.0 Whitepaper</li>
+                  <li>End-to-end Architecture Map</li>
+                  <li>Process &amp; Collaborative Pattern Libraries</li>
+                  <li>Cross-contract Handoff Specification</li>
+                  <li>Reference Prototypes</li>
+                  <li>UX Research &amp; Acceptance Kit</li>
+                </ol>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <section id="whitepaper" class="section wide-section" data-section>
+          <div class="section-index">11</div>
+          <p class="eyebrow">FULL WHITEPAPER ROADMAP</p>
+          <h2>Concept Charter确认后，再展开七个正式部分。</h2>
+          <div id="whitepaperParts" class="whitepaper-parts"></div>
+        </section>
+
+        <section id="locked" class="section closing-section" data-section>
+          <div class="section-index">12</div>
+          <p class="eyebrow">DECISIONS LOCKED</p>
+          <h2>这份Charter固定了八个产品级决定。</h2>
+          <ol class="locked-list">
+            <li><span>01</span>两种Interaction Contract，不是两套独立产品。</li>
+            <li><span>02</span>两者共享Kernel、Ontology、Context、Governance与Feedback。</li>
+            <li><span>03</span>Chat是输入方式，不是默认产品架构。</li>
+            <li><span>04</span>Work Object与Artifact是企业智能工作的核心载体。</li>
+            <li><span>05</span>AI自助分析只是Collaborative Intelligence的一部分。</li>
+            <li><span>06</span>Human Oversight、Evidence、Action与Recovery必须进入体验结构。</li>
+            <li><span>07</span>Visual Design必须表达语义、状态、风险和控制权。</li>
+            <li><span>08</span>UIUX进入2027 SOW独立工作流和验收维度。</li>
+          </ol>
+
+          <footer class="charter-footer">
+            <div>
+              <span>NEXT</span>
+              <strong>从Concept Charter进入正式Whitepaper共创</strong>
+            </div>
+            <a href="./ENTERPRISE_INTELLIGENCE_EXPERIENCE_2.0_CONCEPT_CHARTER.md">
+              查看完整Markdown与Open Questions →
+            </a>
+          </footer>
+        </section>
+      </main>
+
+      <aside class="context-rail" aria-label="文档关键信息">
+        <section>
+          <span>CORE AXIOM</span>
+          <p>Two contracts.<br />One kernel.<br />One enterprise truth.</p>
+        </section>
+        <section>
+          <span>CONTRACT A</span>
+          <strong>Process</strong>
+          <small>System-led</small>
+        </section>
+        <section>
+          <span>CONTRACT B</span>
+          <strong>Collaborative</strong>
+          <small>Human-led</small>
+        </section>
+        <section>
+          <span>SOURCE OF TRUTH</span>
+          <a href="./ENTERPRISE_INTELLIGENCE_EXPERIENCE_2.0_CONCEPT_CHARTER.md">
+            Markdown v0.1
+          </a>
+        </section>
+      </aside>
+    </div>
+
+    <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
+  </body>
+</html>

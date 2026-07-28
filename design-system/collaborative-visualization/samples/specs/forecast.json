@@ -1,0 +1,282 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-forecast-template",
+  "resultRef": "RESULT-TEMPLATE-FORECAST-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "forecast",
+    "method": "{预测方法}",
+    "audience": "业务分析读者"
+  },
+  "representation": "forecast-line-with-band",
+  "claim": {
+    "kind": "forecast",
+    "text": "在当前假设下，未来三个期间的中位预测继续下降，但区间明显扩大。",
+    "status": "supported"
+  },
+  "scope": {
+    "metric": "{指标名称}",
+    "dimensions": [],
+    "filters": [
+      "{筛选条件}"
+    ],
+    "period": "{历史期间} + {预测范围}",
+    "version": "{实际版本} + {预测版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{时间粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "period",
+      "type": "temporal",
+      "scale": "continuous-time"
+    },
+    "y": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "shared-linear"
+    },
+    "detail": {
+      "field": "kind",
+      "type": "nominal",
+      "scale": "actual-forecast-line-style"
+    }
+  },
+  "data": [
+    {
+      "period": "历史1",
+      "kind": "actual",
+      "value": 74
+    },
+    {
+      "period": "历史2",
+      "kind": "actual",
+      "value": 72
+    },
+    {
+      "period": "历史3",
+      "kind": "actual",
+      "value": 70
+    },
+    {
+      "period": "历史4",
+      "kind": "actual",
+      "value": 68
+    },
+    {
+      "period": "历史5",
+      "kind": "actual",
+      "value": 66
+    },
+    {
+      "period": "历史6",
+      "kind": "actual",
+      "value": 63
+    },
+    {
+      "period": "历史7",
+      "kind": "actual",
+      "value": 61
+    },
+    {
+      "period": "历史8",
+      "kind": "actual",
+      "value": 60
+    },
+    {
+      "period": "历史9",
+      "kind": "actual",
+      "value": 58
+    },
+    {
+      "period": "历史10",
+      "kind": "actual",
+      "value": 56
+    },
+    {
+      "period": "历史11",
+      "kind": "actual",
+      "value": 55
+    },
+    {
+      "period": "历史12",
+      "kind": "actual",
+      "value": 53
+    },
+    {
+      "period": "预测1",
+      "kind": "forecast",
+      "value": 51,
+      "lower": 47,
+      "upper": 55
+    },
+    {
+      "period": "预测2",
+      "kind": "forecast",
+      "value": 49,
+      "lower": 43,
+      "upper": 55
+    },
+    {
+      "period": "预测3",
+      "kind": "forecast",
+      "value": 47,
+      "lower": 39,
+      "upper": 55
+    }
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "history-sufficient",
+        "status": "pass",
+        "message": "历史长度满足当前预测方法的最低要求。"
+      },
+      {
+        "id": "forecast-horizon-declared",
+        "status": "pass",
+        "message": "预测范围为三个期间。"
+      },
+      {
+        "id": "interval-present",
+        "status": "pass",
+        "message": "每个预测点都具有上下界。"
+      },
+      {
+        "id": "assumptions-present",
+        "status": "pass",
+        "message": "方法和假设已随结果记录。"
+      }
+    ],
+    "fallback": "line"
+  },
+  "evidenceRefs": [
+    "EVIDENCE-TEMPLATE-FORECAST-01",
+    "MODEL-TEMPLATE-FORECAST-v1"
+  ],
+  "limitations": [
+    "预测区间来自{模型或情景方法}，不代表确定结果。",
+    "预测假设未来保持{关键假设}。"
+  ],
+  "accessibleSummary": "十二个历史期间的实际值从74下降到53。未来三个期间的中位预测为51、49和47；区间分别为47到55、43到55和39到55，预测越远区间越宽。",
+  "dataTable": {
+    "columns": [
+      {
+        "key": "period",
+        "label": "期间"
+      },
+      {
+        "key": "kind",
+        "label": "数据类型"
+      },
+      {
+        "key": "value",
+        "label": "值",
+        "format": "{单位}"
+      },
+      {
+        "key": "lower",
+        "label": "区间下界",
+        "format": "{单位}"
+      },
+      {
+        "key": "upper",
+        "label": "区间上界",
+        "format": "{单位}"
+      }
+    ],
+    "rows": [
+      {
+        "period": "历史1",
+        "kind": "实际",
+        "value": 74
+      },
+      {
+        "period": "历史2",
+        "kind": "实际",
+        "value": 72
+      },
+      {
+        "period": "历史3",
+        "kind": "实际",
+        "value": 70
+      },
+      {
+        "period": "历史4",
+        "kind": "实际",
+        "value": 68
+      },
+      {
+        "period": "历史5",
+        "kind": "实际",
+        "value": 66
+      },
+      {
+        "period": "历史6",
+        "kind": "实际",
+        "value": 63
+      },
+      {
+        "period": "历史7",
+        "kind": "实际",
+        "value": 61
+      },
+      {
+        "period": "历史8",
+        "kind": "实际",
+        "value": 60
+      },
+      {
+        "period": "历史9",
+        "kind": "实际",
+        "value": 58
+      },
+      {
+        "period": "历史10",
+        "kind": "实际",
+        "value": 56
+      },
+      {
+        "period": "历史11",
+        "kind": "实际",
+        "value": 55
+      },
+      {
+        "period": "历史12",
+        "kind": "实际",
+        "value": 53
+      },
+      {
+        "period": "预测1",
+        "kind": "预测",
+        "value": 51,
+        "lower": 47,
+        "upper": 55
+      },
+      {
+        "period": "预测2",
+        "kind": "预测",
+        "value": 49,
+        "lower": 43,
+        "upper": 55
+      },
+      {
+        "period": "预测3",
+        "kind": "预测",
+        "value": 47,
+        "lower": 39,
+        "upper": 55
+      }
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": [
+      "explain",
+      "compare"
+    ]
+  }
+}

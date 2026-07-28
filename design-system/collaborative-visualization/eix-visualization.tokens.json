@@ -1,0 +1,374 @@
+{
+  "name": "EIX Collaborative Intelligence Visualization Tokens",
+  "version": "0.1.0",
+  "namespace": "eix-viz",
+  "inherits": "../tokens.json",
+  "defaultMode": "light",
+  "supportedModes": [
+    "light",
+    "dark"
+  ],
+  "description": "图表专用设计变量。系列身份、连续量级、业务方向、时间版本、界面状态和交互选择使用彼此独立的视觉通道。",
+  "tokens": [
+    {
+      "path": "eix.visualization.series.1",
+      "cssVariable": "--eix-viz-series-1",
+      "type": "color",
+      "defaultValue": "#0078D6",
+      "darkValue": "#3B9AE8",
+      "description": "类别系列一；默认重点系列。"
+    },
+    {
+      "path": "eix.visualization.series.2",
+      "cssVariable": "--eix-viz-series-2",
+      "type": "color",
+      "defaultValue": "#C25E12",
+      "darkValue": "#E07A30",
+      "description": "类别系列二；与警告状态色保持感知差异。"
+    },
+    {
+      "path": "eix.visualization.series.3",
+      "cssVariable": "--eix-viz-series-3",
+      "type": "color",
+      "defaultValue": "#7A4FD4",
+      "darkValue": "#A98AE8",
+      "description": "类别系列三。"
+    },
+    {
+      "path": "eix.visualization.series.4",
+      "cssVariable": "--eix-viz-series-4",
+      "type": "color",
+      "defaultValue": "#2F8F4E",
+      "darkValue": "#63B97D",
+      "description": "类别系列四；不得被解释为校验成功。"
+    },
+    {
+      "path": "eix.visualization.series.5",
+      "cssVariable": "--eix-viz-series-5",
+      "type": "color",
+      "defaultValue": "#C0468C",
+      "darkValue": "#DE75B2",
+      "description": "类别系列五；系列色硬上限。"
+    },
+    {
+      "path": "eix.visualization.emphasis.primary",
+      "cssVariable": "--eix-viz-emphasis-primary",
+      "type": "color",
+      "defaultValue": "var(--eix-viz-series-1)",
+      "darkValue": "var(--eix-viz-series-1)",
+      "description": "强调式图表的重点标记。"
+    },
+    {
+      "path": "eix.visualization.emphasis.muted",
+      "cssVariable": "--eix-viz-emphasis-muted",
+      "type": "color",
+      "defaultValue": "#B7C0C8",
+      "darkValue": "#53606B",
+      "description": "强调式图表的背景标记。"
+    },
+    {
+      "path": "eix.visualization.sequential.1",
+      "cssVariable": "--eix-viz-sequential-1",
+      "type": "color",
+      "defaultValue": "#E3EFFA",
+      "darkValue": "#14283A",
+      "description": "顺序色阶最小量级。"
+    },
+    {
+      "path": "eix.visualization.sequential.2",
+      "cssVariable": "--eix-viz-sequential-2",
+      "type": "color",
+      "defaultValue": "#C2DDF4",
+      "darkValue": "#1D3B55",
+      "description": "顺序色阶二。"
+    },
+    {
+      "path": "eix.visualization.sequential.3",
+      "cssVariable": "--eix-viz-sequential-3",
+      "type": "color",
+      "defaultValue": "#93C4EC",
+      "darkValue": "#245576",
+      "description": "顺序色阶三。"
+    },
+    {
+      "path": "eix.visualization.sequential.4",
+      "cssVariable": "--eix-viz-sequential-4",
+      "type": "color",
+      "defaultValue": "#5EA6E2",
+      "darkValue": "#2D709B",
+      "description": "顺序色阶四。"
+    },
+    {
+      "path": "eix.visualization.sequential.5",
+      "cssVariable": "--eix-viz-sequential-5",
+      "type": "color",
+      "defaultValue": "#2C85D3",
+      "darkValue": "#3B8FC1",
+      "description": "顺序色阶五。"
+    },
+    {
+      "path": "eix.visualization.sequential.6",
+      "cssVariable": "--eix-viz-sequential-6",
+      "type": "color",
+      "defaultValue": "#0F63AC",
+      "darkValue": "#62A8D3",
+      "description": "顺序色阶六。"
+    },
+    {
+      "path": "eix.visualization.sequential.7",
+      "cssVariable": "--eix-viz-sequential-7",
+      "type": "color",
+      "defaultValue": "#0A4276",
+      "darkValue": "#8FC9EC",
+      "description": "顺序色阶最大量级。"
+    },
+    {
+      "path": "eix.visualization.diverging.unfavorable.strong",
+      "cssVariable": "--eix-viz-diverging-unfavorable-strong",
+      "type": "color",
+      "defaultValue": "#8C2823",
+      "darkValue": "#E0655E",
+      "description": "强不利方向；同时显示负号或不利文字。"
+    },
+    {
+      "path": "eix.visualization.diverging.unfavorable.medium",
+      "cssVariable": "--eix-viz-diverging-unfavorable-medium",
+      "type": "color",
+      "defaultValue": "#C23934",
+      "darkValue": "#C94F48",
+      "description": "中等不利方向。"
+    },
+    {
+      "path": "eix.visualization.diverging.unfavorable.soft",
+      "cssVariable": "--eix-viz-diverging-unfavorable-soft",
+      "type": "color",
+      "defaultValue": "#E8A9A4",
+      "darkValue": "#7C3E3A",
+      "description": "轻度不利方向。"
+    },
+    {
+      "path": "eix.visualization.diverging.neutral",
+      "cssVariable": "--eix-viz-diverging-neutral",
+      "type": "color",
+      "defaultValue": "#DCE2E8",
+      "darkValue": "#354150",
+      "description": "基准或零变化；必须保持中性。"
+    },
+    {
+      "path": "eix.visualization.diverging.favorable.soft",
+      "cssVariable": "--eix-viz-diverging-favorable-soft",
+      "type": "color",
+      "defaultValue": "#A8CDEE",
+      "darkValue": "#245A83",
+      "description": "轻度有利方向。"
+    },
+    {
+      "path": "eix.visualization.diverging.favorable.medium",
+      "cssVariable": "--eix-viz-diverging-favorable-medium",
+      "type": "color",
+      "defaultValue": "#0078D6",
+      "darkValue": "#3B9AE8",
+      "description": "中等有利方向。"
+    },
+    {
+      "path": "eix.visualization.diverging.favorable.strong",
+      "cssVariable": "--eix-viz-diverging-favorable-strong",
+      "type": "color",
+      "defaultValue": "#00437C",
+      "darkValue": "#6DB6EE",
+      "description": "强有利方向。"
+    },
+    {
+      "path": "eix.visualization.time.actual",
+      "cssVariable": "--eix-viz-time-actual",
+      "type": "color",
+      "defaultValue": "#171A1D",
+      "darkValue": "#F1F4F7",
+      "description": "实际值折线颜色；使用实线。"
+    },
+    {
+      "path": "eix.visualization.time.plan",
+      "cssVariable": "--eix-viz-time-plan",
+      "type": "color",
+      "defaultValue": "#53606B",
+      "darkValue": "#A8B2C0",
+      "description": "计划或基准折线颜色；使用虚线。"
+    },
+    {
+      "path": "eix.visualization.time.forecast",
+      "cssVariable": "--eix-viz-time-forecast",
+      "type": "color",
+      "defaultValue": "#0078D6",
+      "darkValue": "#3B9AE8",
+      "description": "预测折线颜色；使用点线并显示区间。"
+    },
+    {
+      "path": "eix.visualization.uncertainty.fill",
+      "cssVariable": "--eix-viz-uncertainty-fill",
+      "type": "color",
+      "defaultValue": "rgba(0, 120, 214, 0.14)",
+      "darkValue": "rgba(59, 154, 232, 0.18)",
+      "description": "预测或预期区间填充。"
+    },
+    {
+      "path": "eix.visualization.uncertainty.border",
+      "cssVariable": "--eix-viz-uncertainty-border",
+      "type": "color",
+      "defaultValue": "rgba(0, 120, 214, 0.48)",
+      "darkValue": "rgba(107, 182, 238, 0.56)",
+      "description": "预测或预期区间边界。"
+    },
+    {
+      "path": "eix.visualization.chrome.surface",
+      "cssVariable": "--eix-viz-surface",
+      "type": "color",
+      "defaultValue": "var(--semantic-surface-paper, #FFFFFF)",
+      "darkValue": "var(--semantic-surface-paper, #0F1B2E)",
+      "description": "图表绘制面。"
+    },
+    {
+      "path": "eix.visualization.chrome.surfaceSubtle",
+      "cssVariable": "--eix-viz-surface-subtle",
+      "type": "color",
+      "defaultValue": "var(--semantic-surface-subtle, #EDF2F5)",
+      "darkValue": "var(--semantic-surface-subtle, #0A1424)",
+      "description": "口径行、工具栏和支撑数据表面。"
+    },
+    {
+      "path": "eix.visualization.chrome.grid",
+      "cssVariable": "--eix-viz-grid",
+      "type": "color",
+      "defaultValue": "var(--semantic-border-subtle, #E4E8EC)",
+      "darkValue": "var(--semantic-border-subtle, #232B36)",
+      "description": "弱化网格线。"
+    },
+    {
+      "path": "eix.visualization.chrome.axis",
+      "cssVariable": "--eix-viz-axis",
+      "type": "color",
+      "defaultValue": "var(--semantic-border-strong, #B7C0C8)",
+      "darkValue": "var(--semantic-border-strong, #354150)",
+      "description": "坐标轴、零线和基准线。"
+    },
+    {
+      "path": "eix.visualization.chrome.label",
+      "cssVariable": "--eix-viz-label",
+      "type": "color",
+      "defaultValue": "var(--semantic-text-secondary, #53606B)",
+      "darkValue": "var(--semantic-text-secondary, #A8B2C0)",
+      "description": "坐标轴、图例和辅助标签。"
+    },
+    {
+      "path": "eix.visualization.chrome.value",
+      "cssVariable": "--eix-viz-value",
+      "type": "color",
+      "defaultValue": "var(--semantic-text-primary, #171A1D)",
+      "darkValue": "var(--semantic-text-primary, #F1F4F7)",
+      "description": "数据值和关键标注。"
+    },
+    {
+      "path": "eix.visualization.interaction.selectionRing",
+      "cssVariable": "--eix-viz-selection-ring",
+      "type": "color",
+      "defaultValue": "var(--semantic-focus-ring, #0078D6)",
+      "darkValue": "var(--semantic-focus-ring, #6DB6EE)",
+      "description": "选中或键盘焦点轮廓；不改变系列色。"
+    },
+    {
+      "path": "eix.visualization.interaction.hoverSurface",
+      "cssVariable": "--eix-viz-hover-surface",
+      "type": "color",
+      "defaultValue": "rgba(23, 26, 29, 0.06)",
+      "darkValue": "rgba(241, 244, 247, 0.08)",
+      "description": "标记或表格行的悬停反馈。"
+    },
+    {
+      "path": "eix.visualization.mark.lineWidth",
+      "cssVariable": "--eix-viz-mark-line-width",
+      "type": "dimension",
+      "defaultValue": "2px",
+      "darkValue": "2px",
+      "description": "折线和关键轮廓宽度。"
+    },
+    {
+      "path": "eix.visualization.mark.referenceLineWidth",
+      "cssVariable": "--eix-viz-reference-line-width",
+      "type": "dimension",
+      "defaultValue": "1px",
+      "darkValue": "1px",
+      "description": "参考线和区间边界宽度。"
+    },
+    {
+      "path": "eix.visualization.mark.dotSize",
+      "cssVariable": "--eix-viz-mark-dot-size",
+      "type": "dimension",
+      "defaultValue": "8px",
+      "darkValue": "8px",
+      "description": "可见数据点最小直径。"
+    },
+    {
+      "path": "eix.visualization.mark.hitTarget",
+      "cssVariable": "--eix-viz-mark-hit-target",
+      "type": "dimension",
+      "defaultValue": "44px",
+      "darkValue": "44px",
+      "description": "交互标记最小命中区域。"
+    },
+    {
+      "path": "eix.visualization.mark.gap",
+      "cssVariable": "--eix-viz-mark-gap",
+      "type": "dimension",
+      "defaultValue": "2px",
+      "darkValue": "2px",
+      "description": "相邻填充之间的最小间隙。"
+    },
+    {
+      "path": "eix.visualization.mark.radius",
+      "cssVariable": "--eix-viz-mark-radius",
+      "type": "dimension",
+      "defaultValue": "3px",
+      "darkValue": "3px",
+      "description": "柱端或可操作标记圆角。"
+    },
+    {
+      "path": "eix.visualization.frame.radius",
+      "cssVariable": "--eix-viz-frame-radius",
+      "type": "dimension",
+      "defaultValue": "4px",
+      "darkValue": "4px",
+      "description": "图表块圆角。"
+    },
+    {
+      "path": "eix.visualization.browser.radius",
+      "cssVariable": "--eix-viz-browser-radius",
+      "type": "dimension",
+      "defaultValue": "var(--foundation-radius-overlay, 7px)",
+      "darkValue": "var(--foundation-radius-overlay, 7px)",
+      "description": "界面样机浏览器框使用规范允许的最大圆角。"
+    },
+    {
+      "path": "eix.visualization.label.minimumSize",
+      "cssVariable": "--eix-viz-label-min-size",
+      "type": "dimension",
+      "defaultValue": "13px",
+      "darkValue": "13px",
+      "description": "坐标轴和图例最小字号。"
+    },
+    {
+      "path": "eix.visualization.value.minimumSize",
+      "cssVariable": "--eix-viz-value-min-size",
+      "type": "dimension",
+      "defaultValue": "15px",
+      "darkValue": "15px",
+      "description": "直接数值标注最小字号。"
+    },
+    {
+      "path": "eix.visualization.motion.duration",
+      "cssVariable": "--eix-viz-motion-duration",
+      "type": "duration",
+      "defaultValue": "180ms",
+      "darkValue": "180ms",
+      "description": "选择和视图切换的标准过渡时间。"
+    }
+  ]
+}

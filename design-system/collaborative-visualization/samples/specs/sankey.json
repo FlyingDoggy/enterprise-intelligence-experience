@@ -1,0 +1,99 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-sankey-template",
+  "resultRef": "RESULT-TEMPLATE-SANKEY-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "flow",
+    "method": "守恒节点之间的流量路径比较",
+    "audience": "流程分析读者"
+  },
+  "representation": "sankey",
+  "claim": {
+    "kind": "calculation",
+    "text": "进入的161个任务中，108个自动处理；最终131个完成，30个进入异常或升级路径。",
+    "status": "verified"
+  },
+  "scope": {
+    "metric": "{任务数量}",
+    "dimensions": ["{处理路径}"],
+    "filters": ["{筛选条件}"],
+    "period": "{分析期间}",
+    "version": "{流程版本}",
+    "unit": "件",
+    "currency": "不适用",
+    "grain": "{任务} × {流转节点}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "source",
+      "type": "nominal",
+      "scale": "flow-stage"
+    },
+    "y": {
+      "field": "target",
+      "type": "nominal",
+      "scale": "flow-stage"
+    },
+    "size": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "link-width"
+    },
+    "color": {
+      "field": "path",
+      "type": "nominal",
+      "scale": "fixed-series-palette"
+    }
+  },
+  "data": [
+    {"source": "进入", "target": "自动处理", "value": 108, "path": "自动路径"},
+    {"source": "进入", "target": "人工处理", "value": 53, "path": "人工路径"},
+    {"source": "自动处理", "target": "完成", "value": 96, "path": "自动路径"},
+    {"source": "自动处理", "target": "异常", "value": 12, "path": "异常路径"},
+    {"source": "人工处理", "target": "完成", "value": 35, "path": "人工路径"},
+    {"source": "人工处理", "target": "升级", "value": 18, "path": "升级路径"}
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "flow-conservation",
+        "status": "pass",
+        "message": "自动处理和人工处理节点的流入等于流出。"
+      },
+      {
+        "id": "path-count-readable",
+        "status": "pass",
+        "message": "可见节点和路径数量低于折叠阈值。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": ["EVIDENCE-TEMPLATE-SANKEY-01"],
+  "limitations": [
+    "链路宽度只编码数量，不编码质量、耗时或置信度。"
+  ],
+  "accessibleSummary": "161个任务进入流程，其中108个自动处理、53个人工处理。自动处理后96个完成、12个异常；人工处理后35个完成、18个升级。",
+  "dataTable": {
+    "columns": [
+      {"key": "source", "label": "来源节点"},
+      {"key": "target", "label": "目标节点"},
+      {"key": "value", "label": "数量", "format": "件"},
+      {"key": "path", "label": "路径类型"}
+    ],
+    "rows": [
+      {"source": "进入", "target": "自动处理", "value": 108, "path": "自动路径"},
+      {"source": "进入", "target": "人工处理", "value": 53, "path": "人工路径"},
+      {"source": "自动处理", "target": "完成", "value": 96, "path": "自动路径"},
+      {"source": "自动处理", "target": "异常", "value": 12, "path": "异常路径"},
+      {"source": "人工处理", "target": "完成", "value": 35, "path": "人工路径"},
+      {"source": "人工处理", "target": "升级", "value": 18, "path": "升级路径"}
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": ["explain", "filter", "drill"]
+  }
+}

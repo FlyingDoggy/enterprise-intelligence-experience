@@ -1,0 +1,99 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-composition-template",
+  "resultRef": "RESULT-TEMPLATE-COMPOSITION-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "composition",
+    "method": "互斥构成项按对象堆叠比较",
+    "audience": "业务分析读者"
+  },
+  "representation": "stacked-bar",
+  "claim": {
+    "kind": "calculation",
+    "text": "对象B的构成更偏向部分二，对象C主要由部分一构成。",
+    "status": "verified"
+  },
+  "scope": {
+    "metric": "{构成指标}",
+    "dimensions": ["{对象维度}", "{构成维度}"],
+    "filters": ["{筛选条件}"],
+    "period": "{分析期间}",
+    "version": "{数据版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{对象} × {构成项}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "zero-based"
+    },
+    "y": {
+      "field": "label",
+      "type": "nominal",
+      "scale": "stable-order"
+    },
+    "series": {
+      "field": "part",
+      "type": "nominal",
+      "scale": "fixed-series-palette"
+    }
+  },
+  "data": [
+    {"label": "对象A", "part": "部分一", "value": 48},
+    {"label": "对象A", "part": "部分二", "value": 31},
+    {"label": "对象A", "part": "部分三", "value": 21},
+    {"label": "对象B", "part": "部分一", "value": 34},
+    {"label": "对象B", "part": "部分二", "value": 45},
+    {"label": "对象B", "part": "部分三", "value": 21},
+    {"label": "对象C", "part": "部分一", "value": 62},
+    {"label": "对象C", "part": "部分二", "value": 23},
+    {"label": "对象C", "part": "部分三", "value": 15}
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "parts-mutually-exclusive",
+        "status": "pass",
+        "message": "构成项互不重叠。"
+      },
+      {
+        "id": "parts-reconcile",
+        "status": "pass",
+        "message": "每个对象的构成项均可核对到总量。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": ["EVIDENCE-TEMPLATE-COMPOSITION-01"],
+  "limitations": [
+    "堆叠条适合比较总量和主要构成；精确核对请切换到数据表。"
+  ],
+  "accessibleSummary": "对象A由48、31和21构成；对象B由34、45和21构成；对象C由62、23和15构成。对象B的部分二占比最高，对象C的部分一占比最高。",
+  "dataTable": {
+    "columns": [
+      {"key": "label", "label": "{对象维度}"},
+      {"key": "part", "label": "{构成项}"},
+      {"key": "value", "label": "{构成指标}", "format": "{单位}"}
+    ],
+    "rows": [
+      {"label": "对象A", "part": "部分一", "value": 48},
+      {"label": "对象A", "part": "部分二", "value": 31},
+      {"label": "对象A", "part": "部分三", "value": 21},
+      {"label": "对象B", "part": "部分一", "value": 34},
+      {"label": "对象B", "part": "部分二", "value": 45},
+      {"label": "对象B", "part": "部分三", "value": 21},
+      {"label": "对象C", "part": "部分一", "value": 62},
+      {"label": "对象C", "part": "部分二", "value": 23},
+      {"label": "对象C", "part": "部分三", "value": 15}
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": ["explain", "compare", "filter", "drill"]
+  }
+}

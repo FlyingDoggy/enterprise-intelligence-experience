@@ -1,0 +1,134 @@
+{
+  "$schema": "../../schema/chart-spec.schema.json",
+  "id": "chart-ranking-template",
+  "resultRef": "RESULT-TEMPLATE-RANKING-r1",
+  "revision": 1,
+  "intent": {
+    "workQuestion": "rank",
+    "method": "按当前值降序排列",
+    "audience": "业务分析读者"
+  },
+  "representation": "horizontal-bar-emphasis",
+  "claim": {
+    "kind": "fact",
+    "text": "对象A是当前范围内的最大值。",
+    "status": "verified"
+  },
+  "scope": {
+    "metric": "{指标名称}",
+    "dimensions": [
+      "{对象维度}"
+    ],
+    "filters": [
+      "{筛选条件}"
+    ],
+    "period": "{分析期间}",
+    "version": "{数据版本}",
+    "unit": "{单位}",
+    "currency": "{币种或不适用}",
+    "grain": "{对象粒度}",
+    "freshness": "{更新时间}"
+  },
+  "encoding": {
+    "x": {
+      "field": "value",
+      "type": "quantitative",
+      "scale": "zero-based"
+    },
+    "y": {
+      "field": "label",
+      "type": "nominal",
+      "scale": "sorted-descending"
+    },
+    "color": {
+      "field": "focus",
+      "type": "nominal",
+      "scale": "emphasis"
+    }
+  },
+  "data": [
+    {
+      "label": "对象A",
+      "value": 92,
+      "focus": "primary"
+    },
+    {
+      "label": "对象B",
+      "value": 71,
+      "focus": "background"
+    },
+    {
+      "label": "对象C",
+      "value": 58,
+      "focus": "background"
+    },
+    {
+      "label": "对象D",
+      "value": 43,
+      "focus": "background"
+    }
+  ],
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "comparable-scope",
+        "status": "pass",
+        "message": "所有对象使用同一指标、期间、版本和单位。"
+      },
+      {
+        "id": "stable-sort",
+        "status": "pass",
+        "message": "排序字段和值已记录。"
+      }
+    ],
+    "fallback": "crosstab"
+  },
+  "evidenceRefs": [
+    "EVIDENCE-TEMPLATE-RANKING-01"
+  ],
+  "limitations": [
+    "当前结论只覆盖{分析范围}，不代表范围外对象。"
+  ],
+  "accessibleSummary": "四个对象按值降序排列：对象A为92，对象B为71，对象C为58，对象D为43；对象A最高。",
+  "dataTable": {
+    "columns": [
+      {
+        "key": "label",
+        "label": "{对象维度}"
+      },
+      {
+        "key": "value",
+        "label": "{指标名称}",
+        "format": "{单位}"
+      }
+    ],
+    "rows": [
+      {
+        "label": "对象A",
+        "value": 92
+      },
+      {
+        "label": "对象B",
+        "value": 71
+      },
+      {
+        "label": "对象C",
+        "value": 58
+      },
+      {
+        "label": "对象D",
+        "value": 43
+      }
+    ]
+  },
+  "interactions": {
+    "select": "single",
+    "actions": [
+      "explain",
+      "compare",
+      "filter",
+      "drill"
+    ]
+  }
+}

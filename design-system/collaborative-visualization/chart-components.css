@@ -378,6 +378,37 @@
   font-size: var(--foundation-font-size-100);
 }
 
+/* Compact Profile keeps the complete result contract while reducing chrome. */
+.eix-chart-block--compact .eix-chart-block__header {
+  padding: var(--foundation-space-2) var(--foundation-space-3);
+}
+
+.eix-chart-block--compact .eix-chart-block__title {
+  font-size: clamp(20px, 1.7vw, 24px);
+}
+
+.eix-chart-block--compact .eix-chart-block__scope {
+  margin-top: var(--foundation-space-2);
+}
+
+.eix-chart-block--compact .eix-chart-block__toolbar {
+  padding-inline: var(--foundation-space-3);
+}
+
+.eix-chart-block--compact .eix-chart-block__view {
+  min-height: 280px;
+  padding: var(--foundation-space-2);
+}
+
+.eix-chart-block--compact .eix-chart-block__plot {
+  min-height: 240px;
+}
+
+.eix-chart-block--compact .eix-chart-block__annotation,
+.eix-chart-block--compact .eix-chart-block__footer {
+  padding-inline: var(--foundation-space-3);
+}
+
 .eix-chart-block button[data-triggered="true"] {
   border-color: var(--semantic-action-primary);
   color: var(--semantic-action-primary);

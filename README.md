@@ -19,7 +19,7 @@ Rev 0.5 采用“一套静态站点、三层职责”：
 - `design-system/fonts.generated.css`：从批准的showcase提取并内嵌的五个MB字体面；
 - `design-system/collaborative-visualization/`：设计JSON、CSS令牌、ChartSpec、确定性Chart Router、SVG/ECharts/React实现样例和交互参考；
 - `design-system/collaborative-visualization/CLAUDE_SOURCE_REVIEW.md`：Claude补充材料与EIX的逐项对照和取舍记录；
-- `src/specimens/`：30 个通用组件的独立交互示例；
+- `src/specimens/`：34 个通用组件的独立交互示例；
 - `src/guidance-specimens.js`：17 个智能体验交互模式的结构参考、状态示例或协作约定模拟；
 - `src/architecture-data.js` 和 `src/conformance-data.js`：任务投影和从任务到设计检查的追踪关系；
 - `specimen.html`：使用同源 `iframe` 隔离的交互示例环境；
@@ -88,9 +88,9 @@ node scripts/extract-showcase-fonts.mjs "/absolute/path/to/UI components showcas
 
 设计系统页面展示参考标记和实现约定，不代表 `@eix/ui` 已经发布。
 
-当前版本覆盖 30 个通用组件、9 个布局基础件和 17 个智能体验交互模式。自动化会检查非法状态组合、独立状态混用、业务操作与业务成效混用、无效 CSS 选择器、缺少 `type` 的按钮、事件监听器累积、模态层焦点错误和视口溢出。
+当前版本覆盖 34 个通用组件、9 个布局基础件和 17 个智能体验交互模式。自动化会检查非法状态组合、独立状态混用、业务操作与业务成效混用、无效 CSS 选择器、缺少 `type` 的按钮、事件监听器累积、模态层焦点错误和视口溢出。
 
-设计变量来源包含 139 个变量，并提供中性主题、EIX 主题、浅色和深色四种组合。主题只改变品牌表达，明暗模式只改变颜色映射，两者都不能改变组件行为或业务语义。
+设计变量来源包含 147 个变量，并提供中性主题、EIX 主题、浅色和深色四种组合。主题只改变品牌表达，明暗模式只改变颜色映射，两者都不能改变组件行为或业务语义。
 
 当前术语以 `UBIQUITOUS_LANGUAGE.md` 为准。历史归档保留原始用语，不参与当前中文版本的语言收敛。
 
@@ -105,6 +105,7 @@ python3 verification/test_eix_rev05.py
 ```
 
 浏览器验证需要 Python Playwright。最新验证记录位于 `verification/`。
+设计师输入吸收的专项结果见 `verification/DESIGNER_INPUT_ADOPTION_VERIFICATION.md`。
 
 ## 发布到 ECS
 

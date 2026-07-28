@@ -38,6 +38,15 @@ function tableContent(model) {
       </div>
     `;
   }
+  if (dataState === "error") {
+    return `
+      <div class="sp-table-error" role="alert">
+        <strong>支撑数据未能载入。</strong>
+        <p>图表结果保持原样；请重试数据表，不要把缺失行解释为零。</p>
+        <button type="button" data-sp-table-retry>重试载入</button>
+      </div>
+    `;
+  }
   const rows =
     sortDirection === "descending"
       ? [...tableRows].sort((a, b) => numericCellValue(b[1]) - numericCellValue(a[1]))
@@ -86,7 +95,7 @@ export const dataFeedbackDefinitions = [
     defaultModel: { dataState: "populated", sortDirection: "none", selection: "none" },
     controls: [
       { key: "variant", label: "变体", options: ["standard", "compact", "numeric"] },
-      { key: "dataState", label: "数据状态", options: ["populated", "loading", "empty"] },
+      { key: "dataState", label: "数据状态", options: ["populated", "loading", "empty", "error"] },
       { key: "sortDirection", label: "排序", options: ["none", "descending"] },
       {
         key: "selection",
@@ -100,6 +109,8 @@ export const dataFeedbackDefinitions = [
           ? "loading"
           : model.dataState === "empty"
             ? "empty"
+            : model.dataState === "error"
+              ? "error"
             : model.sortDirection === "descending"
               ? "sorted"
               : model.selection !== "none"
@@ -114,14 +125,20 @@ export const dataFeedbackDefinitions = [
       );
     },
     invalidReason() {
-      return "加载中或空表格既没有可排序数据，也不能包含已选行。";
+      return "加载中、空或错误表格既没有可排序数据，也不能包含已选行。";
     },
     render(model) {
       return previewFrame(model, tableContent(model), {
         label: "表格交互示例",
         status: stateReceipt(
           model,
-          model.dataState === "loading" ? "忙碌状态" : model.dataState === "empty" ? "零行数据" : "保留单位与新鲜度",
+          model.dataState === "loading"
+            ? "忙碌状态"
+            : model.dataState === "empty"
+              ? "零行数据"
+              : model.dataState === "error"
+                ? "载入失败且原结果保留"
+                : "保留单位与新鲜度",
         ),
       });
     },
@@ -129,6 +146,9 @@ export const dataFeedbackDefinitions = [
       if (model.dataState === "loading") return '<div role="status" aria-label="正在加载支撑数据">…</div>';
       if (model.dataState === "empty") {
         return '<div class="table-empty"><p>所选期间内没有数据行。</p><button type="button">清除筛选条件</button></div>';
+      }
+      if (model.dataState === "error") {
+        return '<div class="table-error" role="alert"><p>支撑数据未能载入；图表结果保持原样。</p><button type="button">重试载入</button></div>';
       }
       return stripIndent(`
         <div role="region" aria-label="可滚动的支撑数据" tabindex="0">
@@ -162,6 +182,9 @@ export const dataFeedbackDefinitions = [
           selectRow();
         });
       });
+      host.querySelector("[data-sp-table-retry]")?.addEventListener("click", () =>
+        setModel({ dataState: "loading", sortDirection: "none", selection: "none" }),
+      );
     },
   }),
 
@@ -283,7 +306,9 @@ export const dataFeedbackDefinitions = [
     render(model) {
       const content = {
         "first use": ["尚无分析", "从一个受治理的问题开始。", "创建分析"],
+        "no data": ["当前范围没有数据", "所选数据集和期间有效，但没有可用记录。", "调整分析范围"],
         "no results": ["没有匹配项", "没有组件符合当前筛选条件。", "清除筛选条件"],
+        error: ["内容未能载入", "请求失败，现有工作没有被删除。", "重试"],
         restricted: ["受限", "你无权访问该数据集。", "申请访问"],
         complete: ["当前已处理完毕", "没有需要你关注的异常。", "查看历史记录"],
       }[model.variant];
@@ -293,7 +318,13 @@ export const dataFeedbackDefinitions = [
           <div class="sp-empty-value">
             <span>${escapeHtml(content[0])}</span>
             <h3>${escapeHtml(content[1])}</h3>
-            <p>${model.variant === "restricted" ? "权限与可信程度分别判断。" : "页面解释空状态原因，并提供一个下一步。"}</p>
+            <p>${
+              model.variant === "restricted"
+                ? "权限与可信程度分别判断。"
+                : model.variant === "error"
+                  ? "错误不是空数据；重试前保留现有内容。"
+                  : "页面解释空状态原因，并提供一个下一步。"
+            }</p>
             <button type="button">${escapeHtml(content[2])}</button>
           </div>
         `,
@@ -303,11 +334,13 @@ export const dataFeedbackDefinitions = [
     markup(model) {
       const content = {
         "first use": ["从一个受治理的问题开始。", "创建分析"],
+        "no data": ["所选数据集和期间有效，但没有可用记录。", "调整分析范围"],
         "no results": ["没有组件符合当前筛选条件。", "清除筛选条件"],
+        error: ["请求失败，现有工作没有被删除。", "重试"],
         restricted: ["你无权访问该数据集。", "申请访问"],
         complete: ["没有需要你关注的异常。", "查看历史记录"],
       }[model.variant];
-      return `<section class="empty-state empty-state--${model.variant.replaceAll(" ", "-")}"><h2>${content[0]}</h2><p>${model.variant === "restricted" ? "权限与可信程度分别判断。" : "页面解释空状态原因，并提供一个下一步。"}</p><button type="button">${content[1]}</button></section>`;
+      return `<section class="empty-state empty-state--${model.variant.replaceAll(" ", "-")}"><h2>${content[0]}</h2><p>${model.variant === "restricted" ? "权限与可信程度分别判断。" : model.variant === "error" ? "错误不是空数据；重试前保留现有内容。" : "页面解释空状态原因，并提供一个下一步。"}</p><button type="button">${content[1]}</button></section>`;
     },
   }),
 

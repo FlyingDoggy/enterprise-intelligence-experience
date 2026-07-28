@@ -1,7 +1,19 @@
 import { validateChartSpec } from "./chart-validator.js";
+import { seriesProfile, seriesSlot } from "./series-registry.js";
 
 const defaultPalette = {
-  series: ["#0078D6", "#C25E12", "#7A4FD4", "#2F8F4E", "#C0468C"],
+  series: [
+    "#0078D6",
+    "#299C6E",
+    "#8A94A6",
+    "#C9A227",
+    "#B52D2A",
+    "#0A4276",
+    "#7A4FD4",
+    "#C25E12",
+    "#0E7C86",
+    "#C0468C",
+  ],
   actual: "#171A1D",
   plan: "#53606B",
   forecast: "#0078D6",
@@ -23,7 +35,7 @@ export function readVisualizationPalette(root = document.documentElement) {
   const style = getComputedStyle(root);
   const read = (name, fallback) => style.getPropertyValue(name).trim() || fallback;
   return {
-    series: [1, 2, 3, 4, 5].map((index) =>
+    series: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index) =>
       read(`--eix-viz-series-${index}`, defaultPalette.series[index - 1]),
     ),
     actual: read("--eix-viz-time-actual", defaultPalette.actual),
@@ -40,6 +52,16 @@ export function readVisualizationPalette(root = document.documentElement) {
       read(`--eix-viz-sequential-${index}`, defaultPalette.sequential[index - 1]),
     ),
   };
+}
+
+function seriesColor(spec, seriesId, palette) {
+  if (
+    seriesProfile(spec) === "emphasis" &&
+    !spec.encoding.series?.focusIds?.includes(String(seriesId))
+  ) {
+    return palette.muted;
+  }
+  return palette.series[seriesSlot(spec, seriesId) - 1];
 }
 
 function baseOption(spec, palette) {
@@ -93,7 +115,6 @@ function rankingOption(spec, palette) {
           value: row[valueField],
           itemStyle: {
             color: row.focus === "primary" ? palette.series[0] : palette.muted,
-            borderRadius: 3,
           },
         })),
         label: { show: true, position: "right", color: palette.text },
@@ -121,7 +142,6 @@ function varianceOption(spec, palette) {
           value: row[valueField],
           itemStyle: {
             color: row.direction === "unfavorable" ? palette.unfavorable : palette.favorable,
-            borderRadius: 3,
           },
           label: {
             show: true,
@@ -150,7 +170,13 @@ function lineOption(spec, palette) {
       axisLabel: { color: palette.secondaryText },
     },
     yAxis: { type: "value", scale: true, splitLine: { lineStyle: { color: palette.grid } } },
-    series: seriesNames.map((name, index) => {
+    legend: {
+      show: seriesNames.length > 1,
+      type: "scroll",
+      bottom: 0,
+      data: seriesNames,
+    },
+    series: seriesNames.map((name) => {
       const normalized = String(name).toLowerCase();
       const plan =
         normalized.includes("基准") || normalized.includes("计划") || normalized.includes("plan");
@@ -169,10 +195,10 @@ function lineOption(spec, palette) {
         lineStyle: {
           width: 2,
           type: plan ? "dashed" : forecast ? "dotted" : "solid",
-          color: plan ? palette.plan : forecast ? palette.forecast : palette.series[index],
+          color: plan ? palette.plan : forecast ? palette.forecast : seriesColor(spec, name, palette),
         },
         itemStyle: {
-          color: plan ? palette.plan : forecast ? palette.forecast : palette.series[index],
+          color: plan ? palette.plan : forecast ? palette.forecast : seriesColor(spec, name, palette),
         },
       };
     }),
@@ -226,7 +252,7 @@ function waterfallOption(spec, palette) {
         stack: "bridge",
         data: values.map((value, index) => ({
           value,
-          itemStyle: { color: colors[index], borderRadius: 3 },
+          itemStyle: { color: colors[index] },
           label: {
             show: true,
             position: "top",
@@ -395,11 +421,17 @@ function stackedOption(spec, palette) {
       data: labels,
       axisLabel: { color: palette.secondaryText },
     },
-    series: seriesNames.map((name, index) => ({
+    legend: {
+      show: seriesNames.length > 1,
+      type: "scroll",
+      bottom: 0,
+      data: seriesNames,
+    },
+    series: seriesNames.map((name) => ({
       name,
       type: "bar",
       stack: "total",
-      itemStyle: { color: palette.series[index] },
+      itemStyle: { color: seriesColor(spec, name, palette) },
       data: labels.map(
         (label) =>
           spec.data.find((row) => row[labelField] === label && row[seriesField] === name)?.[

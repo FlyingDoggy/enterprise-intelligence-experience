@@ -7,10 +7,15 @@
 :root,
 [data-mode="light"] {
   --eix-viz-series-1: #0078D6;
-  --eix-viz-series-2: #C25E12;
-  --eix-viz-series-3: #7A4FD4;
-  --eix-viz-series-4: #2F8F4E;
-  --eix-viz-series-5: #C0468C;
+  --eix-viz-series-2: #299C6E;
+  --eix-viz-series-3: #8A94A6;
+  --eix-viz-series-4: #C9A227;
+  --eix-viz-series-5: #B52D2A;
+  --eix-viz-series-6: #0A4276;
+  --eix-viz-series-7: #7A4FD4;
+  --eix-viz-series-8: #C25E12;
+  --eix-viz-series-9: #0E7C86;
+  --eix-viz-series-10: #C0468C;
   --eix-viz-emphasis-primary: var(--eix-viz-series-1);
   --eix-viz-emphasis-muted: #B7C0C8;
   --eix-viz-sequential-1: #E3EFFA;
@@ -32,6 +37,10 @@
   --eix-viz-time-forecast: #0078D6;
   --eix-viz-uncertainty-fill: rgba(0, 120, 214, 0.14);
   --eix-viz-uncertainty-border: rgba(0, 120, 214, 0.48);
+  --eix-viz-status-on-track: #1F7A46;
+  --eix-viz-status-attention: #9A6700;
+  --eix-viz-status-off-track: #B52D2A;
+  --eix-viz-status-unknown: #6B7684;
   --eix-viz-surface: var(--semantic-surface-paper, #FFFFFF);
   --eix-viz-surface-subtle: var(--semantic-surface-subtle, #EDF2F5);
   --eix-viz-grid: var(--semantic-border-subtle, #E4E8EC);
@@ -55,10 +64,15 @@
 
 [data-mode="dark"] {
   --eix-viz-series-1: #3B9AE8;
-  --eix-viz-series-2: #E07A30;
-  --eix-viz-series-3: #A98AE8;
-  --eix-viz-series-4: #63B97D;
-  --eix-viz-series-5: #DE75B2;
+  --eix-viz-series-2: #55B88B;
+  --eix-viz-series-3: #B2BAC8;
+  --eix-viz-series-4: #E2C64F;
+  --eix-viz-series-5: #E26762;
+  --eix-viz-series-6: #6DB6EE;
+  --eix-viz-series-7: #A98AE8;
+  --eix-viz-series-8: #E07A30;
+  --eix-viz-series-9: #55B2BA;
+  --eix-viz-series-10: #DE75B2;
   --eix-viz-emphasis-primary: var(--eix-viz-series-1);
   --eix-viz-emphasis-muted: #53606B;
   --eix-viz-sequential-1: #14283A;
@@ -80,6 +94,10 @@
   --eix-viz-time-forecast: #3B9AE8;
   --eix-viz-uncertainty-fill: rgba(59, 154, 232, 0.18);
   --eix-viz-uncertainty-border: rgba(107, 182, 238, 0.56);
+  --eix-viz-status-on-track: #63B97D;
+  --eix-viz-status-attention: #E2C64F;
+  --eix-viz-status-off-track: #E26762;
+  --eix-viz-status-unknown: #B2BAC8;
   --eix-viz-surface: var(--semantic-surface-paper, #0F1B2E);
   --eix-viz-surface-subtle: var(--semantic-surface-subtle, #0A1424);
   --eix-viz-grid: var(--semantic-border-subtle, #232B36);
@@ -104,10 +122,15 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-mode="light"]) {
   --eix-viz-series-1: #3B9AE8;
-  --eix-viz-series-2: #E07A30;
-  --eix-viz-series-3: #A98AE8;
-  --eix-viz-series-4: #63B97D;
-  --eix-viz-series-5: #DE75B2;
+  --eix-viz-series-2: #55B88B;
+  --eix-viz-series-3: #B2BAC8;
+  --eix-viz-series-4: #E2C64F;
+  --eix-viz-series-5: #E26762;
+  --eix-viz-series-6: #6DB6EE;
+  --eix-viz-series-7: #A98AE8;
+  --eix-viz-series-8: #E07A30;
+  --eix-viz-series-9: #55B2BA;
+  --eix-viz-series-10: #DE75B2;
   --eix-viz-emphasis-primary: var(--eix-viz-series-1);
   --eix-viz-emphasis-muted: #53606B;
   --eix-viz-sequential-1: #14283A;
@@ -129,6 +152,10 @@
   --eix-viz-time-forecast: #3B9AE8;
   --eix-viz-uncertainty-fill: rgba(59, 154, 232, 0.18);
   --eix-viz-uncertainty-border: rgba(107, 182, 238, 0.56);
+  --eix-viz-status-on-track: #63B97D;
+  --eix-viz-status-attention: #E2C64F;
+  --eix-viz-status-off-track: #E26762;
+  --eix-viz-status-unknown: #B2BAC8;
   --eix-viz-surface: var(--semantic-surface-paper, #0F1B2E);
   --eix-viz-surface-subtle: var(--semantic-surface-subtle, #0A1424);
   --eix-viz-grid: var(--semantic-border-subtle, #232B36);

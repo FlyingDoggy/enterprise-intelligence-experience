@@ -22,33 +22,73 @@
       "path": "eix.visualization.series.2",
       "cssVariable": "--eix-viz-series-2",
       "type": "color",
-      "defaultValue": "#C25E12",
-      "darkValue": "#E07A30",
-      "description": "类别系列二；与警告状态色保持感知差异。"
+      "defaultValue": "#299C6E",
+      "darkValue": "#55B88B",
+      "description": "类别系列二；系列身份色，不代表校验成功。"
     },
     {
       "path": "eix.visualization.series.3",
       "cssVariable": "--eix-viz-series-3",
       "type": "color",
-      "defaultValue": "#7A4FD4",
-      "darkValue": "#A98AE8",
+      "defaultValue": "#8A94A6",
+      "darkValue": "#B2BAC8",
       "description": "类别系列三。"
     },
     {
       "path": "eix.visualization.series.4",
       "cssVariable": "--eix-viz-series-4",
       "type": "color",
-      "defaultValue": "#2F8F4E",
-      "darkValue": "#63B97D",
-      "description": "类别系列四；不得被解释为校验成功。"
+      "defaultValue": "#C9A227",
+      "darkValue": "#E2C64F",
+      "description": "类别系列四；系列身份色，不代表业务提醒。"
     },
     {
       "path": "eix.visualization.series.5",
       "cssVariable": "--eix-viz-series-5",
       "type": "color",
+      "defaultValue": "#B52D2A",
+      "darkValue": "#E26762",
+      "description": "类别系列五；系列身份色，不代表请求失败。"
+    },
+    {
+      "path": "eix.visualization.series.6",
+      "cssVariable": "--eix-viz-series-6",
+      "type": "color",
+      "defaultValue": "#0A4276",
+      "darkValue": "#6DB6EE",
+      "description": "类别系列六；高密度候选模式使用。"
+    },
+    {
+      "path": "eix.visualization.series.7",
+      "cssVariable": "--eix-viz-series-7",
+      "type": "color",
+      "defaultValue": "#7A4FD4",
+      "darkValue": "#A98AE8",
+      "description": "类别系列七；高密度候选模式使用。"
+    },
+    {
+      "path": "eix.visualization.series.8",
+      "cssVariable": "--eix-viz-series-8",
+      "type": "color",
+      "defaultValue": "#C25E12",
+      "darkValue": "#E07A30",
+      "description": "类别系列八；高密度候选模式使用。"
+    },
+    {
+      "path": "eix.visualization.series.9",
+      "cssVariable": "--eix-viz-series-9",
+      "type": "color",
+      "defaultValue": "#0E7C86",
+      "darkValue": "#55B2BA",
+      "description": "类别系列九；跨视图稳定身份储备。"
+    },
+    {
+      "path": "eix.visualization.series.10",
+      "cssVariable": "--eix-viz-series-10",
+      "type": "color",
       "defaultValue": "#C0468C",
       "darkValue": "#DE75B2",
-      "description": "类别系列五；系列色硬上限。"
+      "description": "类别系列十；跨视图稳定身份储备。"
     },
     {
       "path": "eix.visualization.emphasis.primary",
@@ -217,6 +257,38 @@
       "defaultValue": "rgba(0, 120, 214, 0.48)",
       "darkValue": "rgba(107, 182, 238, 0.56)",
       "description": "预测或预期区间边界。"
+    },
+    {
+      "path": "eix.visualization.status.onTrack",
+      "cssVariable": "--eix-viz-status-on-track",
+      "type": "color",
+      "defaultValue": "#1F7A46",
+      "darkValue": "#63B97D",
+      "description": "业务状态达标；不得替代界面保存成功。"
+    },
+    {
+      "path": "eix.visualization.status.attention",
+      "cssVariable": "--eix-viz-status-attention",
+      "type": "color",
+      "defaultValue": "#9A6700",
+      "darkValue": "#E2C64F",
+      "description": "业务状态需关注；不得替代表单警告。"
+    },
+    {
+      "path": "eix.visualization.status.offTrack",
+      "cssVariable": "--eix-viz-status-off-track",
+      "type": "color",
+      "defaultValue": "#B52D2A",
+      "darkValue": "#E26762",
+      "description": "业务状态偏离；不得替代请求失败。"
+    },
+    {
+      "path": "eix.visualization.status.unknown",
+      "cssVariable": "--eix-viz-status-unknown",
+      "type": "color",
+      "defaultValue": "#6B7684",
+      "darkValue": "#B2BAC8",
+      "description": "业务状态未知或数据不足。"
     },
     {
       "path": "eix.visualization.chrome.surface",

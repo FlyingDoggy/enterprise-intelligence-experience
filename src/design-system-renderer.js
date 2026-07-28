@@ -846,7 +846,7 @@ function inspectorHtml(kind, spec, tokenSource) {
       <section><span>目录</span><p>${tokenSource.tokens.length} 个设计变量 · ${catalogSummary.total} 个条目</p></section>
       ${
         kind === "components"
-          ? `<section><span>交互示例覆盖</span><p>${specimenCoverage.components}/30 个受控示例 · ${specimenCoverage.variants} 个已声明变体 · ${specimenCoverage.states} 个已声明场景</p><small>完成度按合法状态覆盖、字段独立行为、键盘操作、响应式能力保留和标记一致性判断，不按数量判断。</small></section>`
+          ? `<section><span>交互示例覆盖</span><p>${specimenCoverage.components}/${components.length} 个受控示例 · ${specimenCoverage.variants} 个已声明变体 · ${specimenCoverage.states} 个已声明场景</p><small>完成度按合法状态覆盖、字段独立行为、键盘操作、响应式能力保留和标记一致性判断，不按数量判断。</small></section>`
           : ""
       }
     </aside>

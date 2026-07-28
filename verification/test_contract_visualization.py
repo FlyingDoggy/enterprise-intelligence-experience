@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from playwright.sync_api import Browser, FrameLocator, Page, expect
 
 
-BASE_URL = "http://127.0.0.1:4190"
+BASE_URL = os.environ.get("EIX_BASE_URL", "http://127.0.0.1:4190").rstrip("/")
 
 
 def require(condition: bool, message: str) -> None:
@@ -192,7 +193,7 @@ def test_component_contract_matrix(page: Page, output_dir: Path) -> None:
     component_ids = page.locator('[data-catalog-entry^="components:"]').evaluate_all(
         "(items) => items.map((item) => item.dataset.catalogEntry.split(':')[1])"
     )
-    require(len(component_ids) == 30, f"Expected 30 components, received {len(component_ids)}")
+    require(len(component_ids) == 34, f"Expected 34 components, received {len(component_ids)}")
 
     for component_id in component_ids:
         specimen = open_component(page, component_id)

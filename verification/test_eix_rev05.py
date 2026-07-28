@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 import re
 
@@ -15,7 +16,7 @@ from test_contract_visualization import (
 )
 
 
-BASE_URL = "http://127.0.0.1:4190"
+BASE_URL = os.environ.get("EIX_BASE_URL", "http://127.0.0.1:4190").rstrip("/")
 CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 OUTPUT_DIR = Path(__file__).parent / "rev-0.5"
 SPECIMEN_OUTPUT_DIR = OUTPUT_DIR / "specimens"
@@ -869,7 +870,7 @@ def test_full_detail_route_regression(browser) -> None:
     discovery = browser.new_page(viewport={"width": 1440, "height": 900})
     routes = collect_detail_routes(discovery)
     discovery.close()
-    require(len(routes) == 66, f"详情页目录应包含66条路由，实际为{len(routes)}")
+    require(len(routes) == 70, f"详情页目录应包含70条路由，实际为{len(routes)}")
 
     for width, height in [(1440, 900), (1024, 900), (390, 844)]:
         page = browser.new_page(viewport={"width": width, "height": height}, reduced_motion="reduce")

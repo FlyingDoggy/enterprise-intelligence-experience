@@ -3034,6 +3034,149 @@ body[data-route="design-system"] .main-content {
   background: var(--semantic-action-hover);
 }
 
+.sp-search-value,
+.sp-date-range-value {
+  display: grid;
+  gap: var(--semantic-space-2);
+  max-width: 620px;
+  margin: var(--semantic-space-4) auto var(--semantic-space-12);
+  padding: var(--semantic-space-6);
+  border: 1px solid var(--semantic-border-strong);
+  background: var(--semantic-surface-paper);
+}
+
+.sp-search-value > label,
+.sp-date-range-value legend,
+.sp-date-range-value label > span {
+  color: var(--semantic-text-primary);
+  font-size: var(--semantic-type-control);
+  font-weight: 700;
+}
+
+.sp-search-control {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: var(--component-field-height);
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-control);
+  background: var(--semantic-surface-paper);
+}
+
+.sp-search-control > span {
+  padding-left: var(--semantic-space-3);
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-lead);
+}
+
+.sp-search-control input {
+  min-width: 0;
+  min-height: calc(var(--component-field-height) - 2px);
+  padding: var(--semantic-space-2);
+  border: 0;
+  outline: 0;
+  color: var(--semantic-text-primary);
+  background: transparent;
+}
+
+.sp-search-control button {
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--semantic-text-secondary);
+}
+
+.sp-search-control:focus-within,
+.sp-search-field.is-focus .sp-search-control {
+  outline: 2px solid var(--semantic-focus-ring);
+  outline-offset: 3px;
+}
+
+.sp-search-control:has(input:disabled) {
+  background: var(--semantic-surface-subtle);
+  cursor: not-allowed;
+}
+
+.sp-search-results {
+  display: grid;
+  border: 1px solid var(--semantic-border-strong);
+  background: var(--semantic-surface-paper);
+  box-shadow: var(--semantic-elevation-raised);
+}
+
+.sp-search-results button {
+  min-height: 44px;
+  padding: var(--semantic-space-2) var(--semantic-space-3);
+  border: 0;
+  border-bottom: 1px solid var(--semantic-border-subtle);
+  background: transparent;
+  color: var(--semantic-text-primary);
+  text-align: left;
+}
+
+.sp-search-results button:hover,
+.sp-search-results button:focus-visible {
+  background: var(--semantic-action-hover);
+}
+
+.sp-search-results[role="status"] {
+  gap: var(--semantic-space-1);
+  padding: var(--semantic-space-4);
+}
+
+.sp-search-results span,
+.sp-search-value small,
+.sp-date-range-value small {
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-control);
+}
+
+.sp-date-range-value {
+  min-width: 0;
+}
+
+.sp-date-range-value > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: var(--semantic-space-3);
+  align-items: end;
+}
+
+.sp-date-range-value label {
+  display: grid;
+  gap: var(--semantic-space-1);
+}
+
+.sp-date-range-value input {
+  width: 100%;
+  min-height: var(--component-field-height);
+  padding: var(--semantic-space-2);
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-control);
+  color: var(--semantic-text-primary);
+  background: var(--semantic-surface-paper);
+}
+
+.sp-date-range-value input[aria-invalid="true"] {
+  border-color: var(--semantic-feedback-danger);
+  box-shadow: inset 3px 0 0 var(--semantic-feedback-danger);
+}
+
+.sp-date-range-value input:read-only,
+.sp-date-range-value input:disabled {
+  background: var(--semantic-surface-subtle);
+}
+
+.sp-date-range.is-focus .sp-date-range-value input:first-of-type {
+  outline: 2px solid var(--semantic-focus-ring);
+  outline-offset: 3px;
+}
+
+.sp-date-range-value small.is-error {
+  color: var(--semantic-feedback-danger);
+}
+
 .sp-checkbox-value {
   max-width: 480px;
   margin: var(--semantic-space-6) auto var(--semantic-space-12);
@@ -3252,6 +3395,7 @@ body[data-route="design-system"] .main-content {
 }
 
 .sp-table-empty,
+.sp-table-error,
 .sp-empty-value {
   max-width: 520px;
   margin: var(--semantic-space-8) auto var(--semantic-space-12);
@@ -3261,15 +3405,22 @@ body[data-route="design-system"] .main-content {
 }
 
 .sp-table-empty p,
+.sp-table-error p,
 .sp-empty-value p {
   color: var(--semantic-text-secondary);
 }
 
-.sp-table-empty button {
+.sp-table-empty button,
+.sp-table-error button {
   min-height: 44px;
   padding: var(--semantic-space-2) var(--semantic-space-3);
   border: 1px solid var(--semantic-border-strong);
   background: var(--semantic-surface-paper);
+}
+
+.sp-table-error,
+.sp-empty-state.variant-error .sp-empty-value {
+  border-left: 4px solid var(--semantic-feedback-danger);
 }
 
 .sp-progress-value {
@@ -3453,6 +3604,130 @@ body[data-route="design-system"] .main-content {
 .sp-empty-state.variant-complete .sp-empty-value {
   border-left: 4px solid var(--semantic-feedback-success);
 }
+
+.sp-empty-state.variant-no-data .sp-empty-value {
+  border-left: 4px solid var(--semantic-border-strong);
+}
+
+.sp-switch.is-pending .sp-switch-value {
+  border-color: var(--semantic-action-primary);
+}
+
+.sp-switch.is-pending .sp-switch-value > span::after {
+  position: absolute;
+  inset: -5px;
+  border: 2px solid var(--semantic-border-subtle);
+  border-top-color: var(--semantic-action-primary);
+  border-radius: 50%;
+  content: "";
+  animation: sp-spin 800ms linear infinite;
+}
+
+.sp-breadcrumb-value,
+.sp-pagination-value {
+  max-width: 760px;
+  margin: var(--semantic-space-4) auto var(--semantic-space-12);
+  padding: var(--semantic-space-4);
+  border: 1px solid var(--semantic-border-strong);
+  background: var(--semantic-surface-paper);
+}
+
+.sp-breadcrumb-value ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--semantic-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sp-breadcrumb-value li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.sp-breadcrumb-value li:not(:last-child)::after {
+  margin-left: var(--semantic-space-2);
+  color: var(--semantic-text-tertiary);
+  content: "/";
+}
+
+.sp-breadcrumb-value a,
+.sp-breadcrumb-value button {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--semantic-space-2);
+  border: 0;
+  background: transparent;
+  color: var(--semantic-action-primary);
+}
+
+.sp-breadcrumb-value [aria-current="page"] {
+  color: var(--semantic-text-primary);
+  font-weight: 700;
+}
+
+.sp-breadcrumb-value p {
+  margin: var(--semantic-space-2) 0 0;
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-control);
+}
+
+.sp-pagination-value {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--semantic-space-3);
+  align-items: center;
+}
+
+.sp-pagination-value p {
+  display: grid;
+  gap: var(--semantic-space-1);
+  margin: 0;
+}
+
+.sp-pagination-value p span,
+.sp-pagination-value > span {
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-control);
+}
+
+.sp-pagination-value > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--semantic-space-1);
+}
+
+.sp-pagination-value button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--semantic-space-2);
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-control);
+  background: var(--semantic-surface-paper);
+  color: var(--semantic-text-primary);
+}
+
+.sp-pagination-value button[aria-current="page"] {
+  border-color: var(--semantic-action-primary);
+  background: var(--semantic-action-primary);
+  color: var(--semantic-text-inverse);
+}
+
+.sp-pagination-value button:disabled {
+  color: var(--semantic-text-tertiary);
+  background: var(--semantic-surface-subtle);
+}
+
+.sp-pagination-value > span {
+  grid-column: 1 / -1;
+}
+
 
 .sp-toast-stage {
   position: relative;
@@ -5051,12 +5326,32 @@ body[data-route="design-system"] .main-content {
   .sp-callout-value,
   .sp-card-value,
   .sp-field-value,
+  .sp-search-value,
+  .sp-date-range-value,
   .sp-checkbox-value,
   .sp-switch-value,
   .sp-progress-value,
   .sp-table-empty,
+  .sp-table-error,
+  .sp-breadcrumb-value,
+  .sp-pagination-value,
   .sp-empty-value {
     margin-top: var(--semantic-space-2);
+  }
+
+  .sp-date-range-value > div,
+  .sp-pagination-value {
+    grid-template-columns: 1fr;
+  }
+
+  .sp-date-range-value > div > span {
+    display: none;
+  }
+
+  .sp-pagination-value > div {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: var(--semantic-space-1);
   }
 
   .sp-segmented-value {

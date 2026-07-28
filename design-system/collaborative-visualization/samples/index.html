@@ -235,14 +235,19 @@
         <div class="gallery-color-grid">
           <article>
             <header><strong>系列身份</strong><span>固定顺序 · 永不循环</span></header>
-            <div class="gallery-series-ramp" aria-label="五个系列色">
+            <div class="gallery-series-ramp" aria-label="十槽稳定系列色注册表">
               <span style="--swatch:#0078D6">1</span>
-              <span style="--swatch:#C25E12">2</span>
-              <span style="--swatch:#7A4FD4">3</span>
-              <span style="--swatch:#2F8F4E">4</span>
-              <span style="--swatch:#C0468C">5</span>
+              <span style="--swatch:#299C6E">2</span>
+              <span style="--swatch:#8A94A6">3</span>
+              <span class="has-dark-label" style="--swatch:#C9A227">4</span>
+              <span style="--swatch:#B52D2A">5</span>
+              <span style="--swatch:#0A4276">6</span>
+              <span style="--swatch:#7A4FD4">7</span>
+              <span style="--swatch:#C25E12">8</span>
+              <span style="--swatch:#0E7C86">9</span>
+              <span style="--swatch:#C0468C">10</span>
             </div>
-            <p>超过5个系列时改为强调式、小倍数、筛选或“其他”，不生成第6种颜色。</p>
+            <p>十色用于跨视图身份注册。常规单图最多5色；6–8色必须显式启用高密度模式；第9–10槽作为身份储备，不静默合并为“其他”。</p>
           </article>
           <article>
             <header><strong>连续量级</strong><span>单一色相 · 浅到深</span></header>
@@ -266,6 +271,26 @@
               <span><i class="is-forecast"></i>Forecast · 点线 + 区间</span>
             </div>
             <p>预测不可画成与事实相同的实线；异常状态还需形状和文字。</p>
+          </article>
+          <article>
+            <header><strong>业务状态</strong><span>状态名称始终可见</span></header>
+            <div class="gallery-status-grammar" aria-label="业务状态色">
+              <span class="is-on-track"><i></i>达标</span>
+              <span class="is-attention"><i></i>需关注</span>
+              <span class="is-off-track"><i></i>偏离</span>
+              <span class="is-unknown"><i></i>未知</span>
+            </div>
+            <p>业务状态色只描述指标或事项状态；它们不代表保存成功、表单警告或请求失败。</p>
+          </article>
+          <article>
+            <header><strong>选择与界面反馈</strong><span>不进入数据图例</span></header>
+            <div class="gallery-interface-grammar">
+              <span class="is-selected"><i></i>已选择</span>
+              <span class="is-success"><i></i>保存成功</span>
+              <span class="is-warning"><i></i>输入警告</span>
+              <span class="is-danger"><i></i>请求失败</span>
+            </div>
+            <p>选择态使用边框和焦点环；界面反馈属于操作回执，不能改变数据本身的颜色编码。</p>
           </article>
         </div>
 

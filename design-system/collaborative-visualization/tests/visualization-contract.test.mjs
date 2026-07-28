@@ -9,6 +9,7 @@ import { toEChartsOption } from "../src/echarts-adapter.js";
 import { routeChart } from "../src/chart-router.js";
 import { validateChartSpec } from "../src/chart-validator.js";
 import { renderChartSvg } from "../src/svg-renderer.js";
+import { seriesSlot } from "../src/series-registry.js";
 import { atlasFamilies, chartAtlas } from "../samples/atlas.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -91,7 +92,7 @@ test("forecast requires legal intervals and explicit assumptions", () => {
   assert.ok(result.issues.some((issue) => issue.id === "forecast-assumptions"));
 });
 
-test("series identity stops at five colors", () => {
+test("series registry exposes ten stable slots while normal charts stop at five visible colors", () => {
   const spec = clone(sample("trend"));
   const periods = ["期间1", "期间2", "期间3"];
   spec.data = Array.from({ length: 6 }, (_, seriesIndex) =>
@@ -104,7 +105,57 @@ test("series identity stops at five colors", () => {
   spec.dataTable.rows = clone(spec.data);
   const result = validateChartSpec(spec);
   assert.equal(result.status, "blocked");
-  assert.ok(result.issues.some((issue) => issue.id === "series-cap"));
+  assert.ok(result.issues.some((issue) => issue.id === "series-visible-cap"));
+
+  spec.encoding.series.paletteProfile = "dense";
+  spec.encoding.series.directLabels = true;
+  spec.encoding.series.registry = [
+    "系列1",
+    "系列2",
+    "系列3",
+    "系列4",
+    "系列5",
+    "系列6",
+    "系列7",
+    "系列8",
+    "系列9",
+    "系列10",
+  ];
+  assert.equal(validateChartSpec(spec).status, "pass");
+
+  const originalSlots = Object.fromEntries(
+    spec.encoding.series.registry.map((seriesId) => [seriesId, seriesSlot(spec, seriesId)]),
+  );
+  spec.data.reverse();
+  assert.deepEqual(
+    Object.fromEntries(
+      spec.encoding.series.registry.map((seriesId) => [seriesId, seriesSlot(spec, seriesId)]),
+    ),
+    originalSlots,
+  );
+});
+
+test("dense series mode requires direct labels and never silently creates Other", () => {
+  const spec = clone(sample("trend"));
+  const periods = ["期间1", "期间2", "期间3"];
+  spec.data = Array.from({ length: 7 }, (_, seriesIndex) =>
+    periods.map((period, periodIndex) => ({
+      period,
+      version: `系列${seriesIndex + 1}`,
+      value: 10 + seriesIndex + periodIndex,
+    })),
+  ).flat();
+  spec.dataTable.rows = clone(spec.data);
+  spec.encoding.series.paletteProfile = "dense";
+  spec.encoding.series.registry = Array.from({ length: 7 }, (_, index) => `系列${index + 1}`);
+  let result = validateChartSpec(spec);
+  assert.equal(result.status, "blocked");
+  assert.ok(result.issues.some((issue) => issue.id === "dense-series-labels"));
+  assert.ok(!spec.encoding.series.registry.includes("其他"));
+
+  spec.encoding.series.directLabels = true;
+  result = validateChartSpec(spec);
+  assert.equal(result.status, "pass");
 });
 
 test("SVG and ChartBlock preserve equivalent views and evidence", () => {
@@ -177,14 +228,14 @@ test("chart atlas exposes the full governed specimen set", () => {
 test("generated CSS exposes every token in light and dark modes", () => {
   const source = json(join(packageRoot, "eix-visualization.tokens.json"));
   const css = readFileSync(join(packageRoot, "eix-visualization.tokens.css"), "utf8");
-  assert.equal(source.tokens.length, 45);
+  assert.equal(source.tokens.length, 54);
   const variables = source.tokens.map((token) => token.cssVariable);
   assert.equal(new Set(variables).size, variables.length);
   for (const variable of variables) {
     const occurrences = css.split(`${variable}:`).length - 1;
     assert.ok(occurrences >= 2, `${variable} is missing a mode mapping`);
   }
-  assert.equal(new Set(source.tokens.slice(0, 5).map((token) => token.defaultValue)).size, 5);
+  assert.equal(new Set(source.tokens.slice(0, 10).map((token) => token.defaultValue)).size, 10);
 });
 
 test("reference CSS does not consume undefined custom properties", () => {

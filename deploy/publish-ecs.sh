@@ -38,6 +38,7 @@ ssh "${ssh_options[@]}" "${deploy_host}" \
 tar \
   --no-xattrs \
   --no-mac-metadata \
+  --exclude='./.git' \
   --exclude='./verification' \
   --exclude='./deploy' \
   --exclude='./scripts' \

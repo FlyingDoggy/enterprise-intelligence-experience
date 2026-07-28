@@ -5642,6 +5642,21 @@ body[data-density="deep"] .page-section {
   border: 1px solid var(--semantic-border-subtle);
 }
 
+.gx-run-context {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: var(--semantic-space-2);
+  align-items: stretch;
+  margin-bottom: var(--semantic-space-2);
+  padding-bottom: var(--semantic-space-2);
+  border-bottom: 1px solid var(--semantic-border-subtle);
+}
+
+.gx-run-context > button {
+  align-self: stretch;
+  white-space: nowrap;
+}
+
 .gx-case-list {
   display: grid;
   align-content: start;
@@ -5762,6 +5777,49 @@ body[data-density="deep"] .page-section {
   margin-top: var(--semantic-space-2);
 }
 
+.gx-analysis-scope {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.15fr) minmax(170px, 1fr) minmax(220px, 1.35fr) auto;
+  gap: var(--semantic-space-2);
+  align-items: stretch;
+  margin-bottom: var(--semantic-space-2);
+}
+
+.gx-analysis-scope > div {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--semantic-space-1);
+  padding: var(--semantic-space-2);
+  border: 1px solid var(--semantic-border-subtle);
+  background: var(--semantic-surface-subtle);
+}
+
+.gx-analysis-scope > div > span:first-child {
+  flex: 0 0 auto;
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-meta);
+}
+
+.gx-analysis-scope button {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  color: var(--semantic-action-primary);
+  background: transparent;
+  font-weight: 700;
+  text-align: left;
+  white-space: normal;
+}
+
+.gx-analysis-scope b {
+  padding: var(--semantic-space-optical-1) var(--semantic-space-1);
+  border: 1px solid var(--semantic-border-subtle);
+  background: var(--semantic-surface-base);
+  font-size: var(--semantic-type-meta);
+  white-space: nowrap;
+}
+
 .gx-intent-ribbon {
   display: flex;
   flex-wrap: wrap;
@@ -5809,6 +5867,69 @@ body[data-density="deep"] .page-section {
   align-items: center;
   justify-content: space-between;
   gap: var(--semantic-space-2);
+}
+
+.gx-chart-template {
+  display: grid;
+  gap: var(--semantic-space-2);
+  margin: var(--semantic-space-3) 0;
+  padding: var(--semantic-space-3);
+  border: 1px solid var(--semantic-border-subtle);
+  background: var(--semantic-surface-subtle);
+}
+
+.gx-chart-template > div {
+  display: grid;
+  grid-template-columns: minmax(86px, 0.45fr) minmax(120px, 1.55fr) minmax(70px, auto);
+  gap: var(--semantic-space-2);
+  align-items: center;
+}
+
+.gx-chart-template i {
+  grid-column: 2;
+  grid-row: 1;
+  width: var(--value);
+  height: 18px;
+  background: var(--eix-contract-collaborative-accent);
+}
+
+.gx-chart-template span {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-control);
+}
+
+.gx-chart-template b {
+  grid-column: 3;
+  grid-row: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.gx-chart-template em {
+  padding-top: var(--semantic-space-2);
+  border-top: 1px solid var(--semantic-border-subtle);
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-control);
+  font-style: normal;
+}
+
+.gx-evidence-inspector {
+  border-top: 1px solid var(--semantic-border-subtle);
+}
+
+.gx-evidence-inspector summary {
+  padding: var(--semantic-space-2) 0;
+  color: var(--eix-evidence-accent);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.gx-evidence-inspector > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--semantic-space-2);
+  padding-bottom: var(--semantic-space-2);
 }
 
 .gx-chart-placeholder {
@@ -5910,9 +6031,16 @@ body[data-density="deep"] .page-section {
   .gx-context-grid,
   .gx-action-preview,
   .gx-console-summary,
+  .gx-run-context,
+  .gx-analysis-scope,
   .gx-action-lanes,
   .gx-rule-lifecycle {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gx-run-context > button,
+  .gx-analysis-scope > div:nth-child(3) {
+    grid-column: 1 / -1;
   }
 
   .gx-wait-contract ul {
@@ -5965,6 +6093,8 @@ body[data-density="deep"] .page-section {
   .gx-clarification-budget,
   .gx-action-preview,
   .gx-console-summary,
+  .gx-run-context,
+  .gx-analysis-scope,
   .gx-plan,
   .gx-evidence,
   .gx-decision-options,
@@ -5980,6 +6110,24 @@ body[data-density="deep"] .page-section {
   .gx-action-lanes,
   .gx-rule-lifecycle {
     grid-template-columns: 1fr;
+  }
+
+  .gx-run-context > button,
+  .gx-analysis-scope > div:nth-child(3) {
+    grid-column: auto;
+  }
+
+  .gx-evidence-inspector > div {
+    grid-template-columns: 1fr;
+  }
+
+  .gx-chart-template > div {
+    grid-template-columns: minmax(72px, 0.55fr) minmax(90px, 1.45fr);
+  }
+
+  .gx-chart-template b {
+    grid-column: 2;
+    grid-row: 2;
   }
 
   .gx-clarification-budget > div,

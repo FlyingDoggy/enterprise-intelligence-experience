@@ -449,6 +449,13 @@ function p01(pattern, state) {
     state,
     `
       <section class="gx-console">
+        <div class="gx-run-context">
+          ${field("运行编号", "{RUN-000 · 当前实例}")}
+          ${field("模板", "{流程模板 · v4}")}
+          ${field("触发方式", "{定时 / 事件 / 人工}")}
+          ${field("开始时间", "{时间 · 时区}")}
+          <button type="button">查看运行历史</button>
+        </div>
         <div class="gx-console-summary">
           ${field("队列全集", "{全部事项 · 分母可见}")}
           ${field("正常", "{数量 / 比例}", "success")}
@@ -566,24 +573,41 @@ function c01(pattern, state) {
 
 function c02(pattern, state) {
   const partial = state === "Partial";
+  const running = state === "Running";
+  const validated = state === "Validated";
   return guidanceFrame(
     pattern,
     state,
     `
       <section class="gx-analysis-doc">
+        <div class="gx-analysis-scope">
+          <div><span>数据集</span><button type="button">{已确认的数据集} ↗</button></div>
+          <div><span>分析期间</span><button type="button">{开始日期} — {结束日期}</button></div>
+          <div><span>范围</span><b>{业务实体}</b><b>{版本}</b><b>{币种 / 单位}</b></div>
+          <div>${badge("新鲜度", "{更新时间}", "evidence")}</div>
+        </div>
         <div class="gx-intent-ribbon"><span>分析意图</span>${placeholder("指标")}${placeholder("拆分维度")}${placeholder("期间")}${placeholder("对比方式")}${placeholder("分析方法")}</div>
         <div class="gx-analysis-layout">
           <main>
-            <article class="gx-result-block verified">
-              <header><span>结果区块 · 已核验</span>${badge("结论", "事实", "claim")}</header>
-              <div class="gx-chart-placeholder">确定性可视化<br><small>{由工作结果对象生成的图表规格}</small></div>
+            <article class="gx-result-block ${running ? "running" : "verified"}">
+              <header><span>结果区块 · ${running ? "运行中" : "已核验"}</span>${badge("结论", running ? "待生成" : "事实", running ? "workflow" : "claim")}</header>
+              <div class="gx-chart-template" role="img" aria-label="由同一工作结果生成的图表占位结构">
+                <div><i style="--value:72%"></i><span>{对象 A}</span><b>{数值}</b></div>
+                <div><i style="--value:54%"></i><span>{对象 B}</span><b>{数值}</b></div>
+                <div><i style="--value:31%"></i><span>{对象 C}</span><b>{数值}</b></div>
+                ${running ? '<em role="status">正在生成基础结果；已完成内容会先返回。</em>' : ""}
+              </div>
               <p>${placeholder("数据叙事引用同一个工作结果对象")}</p>
-              <a href="#/guidance/shared/S04">依据回执 →</a>
+              <details class="gx-evidence-inspector" ${validated ? "open" : ""}>
+                <summary>依据检查器 · {依据数量}</summary>
+                <div>${field("工作结果", "{RESULT-000 · r1}")}${field("来源快照", "{数据集 · 查询哈希 · 时间}")}${field("校验", validated ? "已通过 · 当前快照" : "{状态}")}</div>
+              </details>
             </article>
             <article class="gx-result-block ${partial ? "partial" : ""}">
               <header><span>高阶区块 · ${partial ? "部分完成" : "按条件"}</span>${badge("依据", partial ? "依据不足" : "待处理", "warning")}</header>
               <p>${partial ? "高阶方法已停止：{缺少必需输入}。上方已核验基础结果继续保留。" : placeholder("方法要求与计划产出")}</p>
             </article>
+            <div class="gx-actions"><button type="button">添加分析区块</button><button type="button">调整范围</button><button type="button">整理为交付物</button></div>
           </main>
           <aside>
             <span>支撑数据 / 限制</span>
@@ -591,6 +615,7 @@ function c02(pattern, state) {
             ${field("新鲜度", "{时间}")}
             ${field("限制", "{不能得出什么结论}")}
             ${field("发布校验", state === "Validated" ? "已通过 · 尚未发布" : "{状态}")}
+            <button type="button">打开支撑数据</button>
           </aside>
         </div>
       </section>

@@ -163,18 +163,18 @@ for (const pattern of guidancePatterns) {
 const expected = {
   foundations: 10,
   primitives: 9,
-  components: 30,
+  components: 34,
   guidance: 11,
   compositions: 6,
-  total: 66,
+  total: 70,
 };
 
 for (const [key, value] of Object.entries(expected)) {
   if (catalogSummary[key] !== value) failures.push(`Expected ${key}=${value}, received ${catalogSummary[key]}`);
 }
 
-if (specimenCoverage.components !== 30 || specimenCoverage.uniqueDefinitions !== 30) {
-  failures.push(`Expected 30 unique SpecimenDefinitions, received ${specimenCoverage.uniqueDefinitions}`);
+if (specimenCoverage.components !== 34 || specimenCoverage.uniqueDefinitions !== 34) {
+  failures.push(`Expected 34 unique SpecimenDefinitions, received ${specimenCoverage.uniqueDefinitions}`);
 }
 if (new Set(specimenDefinitions.map((definition) => definition.render)).size !== specimenDefinitions.length) {
   failures.push("Each component must own a distinct render function");

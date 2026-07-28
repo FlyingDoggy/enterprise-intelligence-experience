@@ -6,6 +6,15 @@
  * interface can block one advanced result while preserving verified basics.
  */
 
+import {
+  DENSE_VISIBLE_SERIES,
+  SERIES_SLOT_COUNT,
+  declaredSeriesRegistry,
+  seriesProfile,
+  visibleSeriesIds,
+  visibleSeriesLimit,
+} from "./series-registry.js";
+
 const requiredScopeFields = ["metric", "period", "version", "unit", "grain", "freshness"];
 const allowedActions = new Set(["explain", "compare", "filter", "drill"]);
 const advancedRepresentations = new Set([
@@ -68,21 +77,73 @@ function validateViews(spec, issues) {
 }
 
 function validateSeries(spec, issues) {
-  const seriesField =
-    spec.encoding?.series?.field ||
-    (spec.encoding?.color?.type === "nominal" ? spec.encoding?.color?.field : null);
-  if (!seriesField) return;
-  const values = spec.data.map((row) => row[seriesField]).filter((value) => value !== undefined);
-  const seriesCount = new Set(values).size;
-  if (seriesCount > 5) {
+  const visibleIds = visibleSeriesIds(spec);
+  if (visibleIds.length === 0) return;
+
+  const registry = declaredSeriesRegistry(spec);
+  const profile = seriesProfile(spec);
+  const visibleLimit = visibleSeriesLimit(spec);
+
+  if (registry.length > SERIES_SLOT_COUNT) {
     issues.push(
       issue(
-        "series-cap",
+        "series-registry-cap",
         "fail",
-        `当前图表包含 ${seriesCount} 个系列，超过五个系列色上限。`,
+        `系列身份注册表包含 ${registry.length} 个身份，超过十个稳定色槽。`,
+        "crosstab",
+      ),
+    );
+    return;
+  }
+
+  if (visibleIds.some((id) => !registry.includes(id))) {
+    issues.push(
+      issue(
+        "series-registry-incomplete",
+        "fail",
+        "当前可见系列未全部进入稳定身份注册表。",
+        "crosstab",
+      ),
+    );
+  }
+
+  if (visibleIds.length > visibleLimit) {
+    const fallback = profile === "default" ? "small-multiples-line" : "crosstab";
+    issues.push(
+      issue(
+        "series-visible-cap",
+        "fail",
+        profile === "default"
+          ? `当前单图包含 ${visibleIds.length} 个彩色系列；常规模式最多同时显示五个。请选择重点、切换小倍数或显式启用高密度模式。`
+          : `当前单图包含 ${visibleIds.length} 个彩色系列；高密度模式最多同时显示 ${DENSE_VISIBLE_SERIES} 个。`,
+        fallback,
+      ),
+    );
+  }
+
+  if (profile === "dense" && visibleIds.length > 5 && spec.encoding?.series?.directLabels !== true) {
+    issues.push(
+      issue(
+        "dense-series-labels",
+        "fail",
+        "六至八个系列使用高密度模式时，必须启用直接标注或等价的可追踪图例。",
         "small-multiples-line",
       ),
     );
+  }
+
+  if (profile === "emphasis" && visibleIds.length > 1) {
+    const focusIds = spec.encoding?.series?.focusIds || [];
+    if (!Array.isArray(focusIds) || focusIds.length === 0 || focusIds.length > 2) {
+      issues.push(
+        issue(
+          "emphasis-series-focus",
+          "fail",
+          "强调模式必须明确一至两个重点系列，其余系列使用中性色。",
+          "small-multiples-line",
+        ),
+      );
+    }
   }
 }
 

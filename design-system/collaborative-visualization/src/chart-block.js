@@ -138,10 +138,12 @@ function blockedHtml(validation) {
 
 /**
  * @param {object} spec
+ * @param {{profile?: "standard"|"compact"}} [options]
  * @returns {string}
  */
-export function renderChartBlock(spec) {
+export function renderChartBlock(spec, options = {}) {
   const validation = validateChartSpec(spec);
+  const profile = options.profile === "compact" ? "compact" : "standard";
   const headingId = `${spec.id}-heading`;
   const scope = [
     spec.scope.metric,
@@ -162,9 +164,9 @@ export function renderChartBlock(spec) {
     .map((reference) => `<li><code>${escapeHtml(reference)}</code></li>`)
     .join("");
   return `
-    <article class="eix-chart-block" aria-labelledby="${headingId}" data-chart-block="${escapeHtml(
+    <article class="eix-chart-block eix-chart-block--${profile}" aria-labelledby="${headingId}" data-chart-block="${escapeHtml(
       spec.id,
-    )}" data-chart-representation="${escapeHtml(spec.representation)}">
+    )}" data-chart-representation="${escapeHtml(spec.representation)}" data-chart-profile="${profile}">
       <header class="eix-chart-block__header">
         <div>
           <span class="eix-chart-block__eyebrow">分析结果 · ${escapeHtml(

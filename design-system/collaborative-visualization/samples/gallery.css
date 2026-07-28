@@ -1121,6 +1121,10 @@ button {
   font-weight: 700;
 }
 
+.gallery-series-ramp span.has-dark-label {
+  color: var(--semantic-text-primary);
+}
+
 .gallery-sequential-ramp span,
 .gallery-diverging-ramp span {
   height: 48px;
@@ -1172,6 +1176,56 @@ button {
   border-top-color: var(--eix-viz-time-forecast);
   border-top-style: dotted;
 }
+
+.gallery-status-grammar,
+.gallery-interface-grammar {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--foundation-space-2);
+  margin-top: var(--foundation-space-6);
+}
+
+.gallery-status-grammar span,
+.gallery-interface-grammar span {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: var(--foundation-space-2);
+  padding: var(--foundation-space-2) var(--foundation-space-3);
+  border: 1px solid var(--semantic-border-subtle);
+  background: var(--semantic-surface-paper);
+  color: var(--semantic-text-secondary);
+  font-size: var(--foundation-font-size-200);
+}
+
+.gallery-status-grammar i,
+.gallery-interface-grammar i {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  border: 2px solid currentColor;
+  background: transparent;
+}
+
+.gallery-status-grammar .is-on-track { color: var(--eix-viz-status-on-track); }
+.gallery-status-grammar .is-attention { color: var(--eix-viz-status-attention); }
+.gallery-status-grammar .is-off-track { color: var(--eix-viz-status-off-track); }
+.gallery-status-grammar .is-unknown { color: var(--eix-viz-status-unknown); }
+
+.gallery-status-grammar span i {
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.gallery-interface-grammar .is-selected {
+  outline: 2px solid var(--eix-viz-selection-ring);
+  outline-offset: -3px;
+  color: var(--semantic-action-primary);
+}
+
+.gallery-interface-grammar .is-success { color: var(--semantic-feedback-success); }
+.gallery-interface-grammar .is-warning { color: var(--semantic-feedback-warning); }
+.gallery-interface-grammar .is-danger { color: var(--semantic-feedback-danger); }
 
 .gallery-hard-rules {
   display: flex;

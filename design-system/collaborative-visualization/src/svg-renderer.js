@@ -6,6 +6,8 @@
  * consumers may replace this renderer with ECharts without changing ChartSpec.
  */
 
+import { seriesColorVariable, seriesProfile } from "./series-registry.js";
+
 const WIDTH = 760;
 const HEIGHT = 300;
 const MARGIN = { top: 22, right: 42, bottom: 48, left: 96 };
@@ -101,7 +103,7 @@ function renderRanking(spec) {
           <text class="eix-chart-label" x="${x0 - 12}" y="${y + height / 2 + 4}" text-anchor="end">${escapeXml(
             row[labelField],
           )}</text>
-          <rect x="${left}" y="${y}" width="${width}" height="${height}" rx="3" fill="${fill}" />
+          <rect x="${left}" y="${y}" width="${width}" height="${height}" fill="${fill}" />
           <text class="eix-chart-value" x="${end + (value >= 0 ? 8 : -8)}" y="${
             y + height / 2 + 4
           }" text-anchor="${value >= 0 ? "start" : "end"}">${format(value)}</text>
@@ -147,7 +149,7 @@ function renderVariance(spec) {
           <text class="eix-chart-label" x="${x0 - 12}" y="${y + height / 2 + 4}" text-anchor="end">${escapeXml(
             row[labelField],
           )}</text>
-          <rect x="${left}" y="${y}" width="${width}" height="${height}" rx="3" fill="${fill}" />
+          <rect x="${left}" y="${y}" width="${width}" height="${height}" fill="${fill}" />
           <text class="eix-chart-value" x="${end}" y="${
             y - 7
           }" text-anchor="${value >= 0 ? "start" : "end"}">${value > 0 ? "+" : ""}${format(
@@ -204,14 +206,17 @@ function renderTrend(spec) {
           : normalized.includes("预测") || normalized.includes("forecast")
             ? "eix-chart-line--forecast"
             : "eix-chart-line--actual";
+      const seriesColor =
+        seriesProfile(spec) === "emphasis" &&
+        !spec.encoding.series?.focusIds?.includes(String(seriesName))
+          ? "var(--eix-viz-emphasis-muted)"
+          : seriesColorVariable(spec, seriesName);
       const dots = rows
         .map((row) =>
           markGroup({
             key: `${seriesName}-${row[xField]}`,
             label: `${seriesName}，${row[xField]}，${format(row[yField])} ${spec.scope.unit}`,
-            body: `<circle cx="${x(row[xField])}" cy="${y(row[yField])}" r="4.5" fill="var(--eix-viz-series-${
-              Math.min(seriesIndex + 1, 5)
-            })" />`,
+            body: `<circle cx="${x(row[xField])}" cy="${y(row[yField])}" r="4.5" fill="${seriesColor}" />`,
           }),
         )
         .join("");
@@ -326,7 +331,7 @@ function renderWaterfall(spec) {
           row.value,
         )} ${spec.scope.unit}`,
         body: `
-          <rect x="${x}" y="${top}" width="${width}" height="${height}" rx="3" fill="${fill}" />
+          <rect x="${x}" y="${top}" width="${width}" height="${height}" fill="${fill}" />
           <text class="eix-chart-value" x="${x + width / 2}" y="${top - 8}" text-anchor="middle">${
             row.kind === "contribution" && row.value > 0 ? "+" : ""
           }${format(row.value)}</text>
@@ -495,7 +500,7 @@ function renderStacked(spec) {
     .map(
       (name, index) => `
         <g transform="translate(${x0 + index * 150} 18)">
-          <rect width="12" height="12" rx="2" fill="var(--eix-viz-series-${index + 1})" />
+          <rect width="16" height="7" y="2" fill="${seriesColorVariable(spec, name)}" />
           <text class="eix-chart-label" x="19" y="11">${escapeXml(name)}</text>
         </g>
       `,
@@ -518,9 +523,10 @@ function renderStacked(spec) {
           return markGroup({
             key: `${label}-${seriesName}`,
             label: `${label}，${seriesName}，${format(value)} ${spec.scope.unit}`,
-            body: `<rect x="${start}" y="${y}" width="${Math.max(1, end - start - 1)}" height="${height}" rx="2" fill="var(--eix-viz-series-${
-              seriesIndex + 1
-            })" />`,
+            body: `<rect x="${start}" y="${y}" width="${Math.max(1, end - start - 1)}" height="${height}" fill="${seriesColorVariable(
+              spec,
+              seriesName,
+            )}" />`,
           });
         })
         .join("");
@@ -613,7 +619,7 @@ function renderHeatmap(spec) {
         label: `${row[rowField]}，${row[columnField]}，${format(row[valueField])} ${spec.scope.unit}`,
         body: `<rect x="${x + 2}" y="${y + 2}" width="${cellWidth - 4}" height="${
           cellHeight - 4
-        }" rx="2" fill="var(--eix-viz-sequential-${level(row[valueField])})" />`,
+        }" fill="var(--eix-viz-sequential-${level(row[valueField])})" />`,
       });
     })
     .join("");

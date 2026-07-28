@@ -98,12 +98,12 @@ const samples = [
     index: "07",
     label: "构成与结构",
     question: "整体由哪些互斥部分构成？",
-    conditions: "构成项互斥、可加总；系列不超过5个",
+    conditions: "构成项互斥、可加总；常规模式不超过5个系列",
     fallback: "构成项重叠或单位不一致时使用数据表",
     usage: [
       "系列色只用于稳定的构成身份，跨图表保持同一顺序。",
       "需要比较比例时使用100%堆叠，需要比较总量时保留绝对值堆叠。",
-      "构成项超过5个时合并尾部为“其他”或提供筛选，不循环颜色。",
+      "构成项超过5个时使用筛选、小倍数或显式高密度模式；不得静默合并为“其他”。",
     ],
     request: {
       workQuestion: "composition",
@@ -459,7 +459,7 @@ function renderActive() {
   document.querySelector("#routeRationale").textContent = decision.rationale;
   renderChecks(decision.requiredChecks);
 
-  specimen.innerHTML = renderChartBlock(spec);
+  specimen.innerHTML = renderChartBlock(spec, { profile: "compact" });
   updateNavigation();
   renderDelivery();
 }

@@ -40,9 +40,9 @@ const previews = {
         <text class="atlas-label" x="28" y="58">对象A</text>
         <text class="atlas-label" x="28" y="96">对象B</text>
         <text class="atlas-label" x="28" y="134">对象C</text>
-        <rect class="atlas-fill-muted" x="102" y="45" width="168" height="12" rx="2" />
-        <rect class="atlas-fill-muted" x="102" y="83" width="119" height="12" rx="2" />
-        <rect class="atlas-fill-muted" x="102" y="121" width="82" height="12" rx="2" />
+        <rect class="atlas-fill-muted" x="102" y="45" width="168" height="12" />
+        <rect class="atlas-fill-muted" x="102" y="83" width="119" height="12" />
+        <rect class="atlas-fill-muted" x="102" y="121" width="82" height="12" />
         <text class="atlas-value" x="312" y="57" text-anchor="end">92</text>
         <text class="atlas-value" x="312" y="95" text-anchor="end">71</text>
         <text class="atlas-value" x="312" y="133" text-anchor="end">58</text>
@@ -57,10 +57,10 @@ const previews = {
         <text class="atlas-label" x="78" y="75" text-anchor="end">对象B</text>
         <text class="atlas-label" x="78" y="107" text-anchor="end">对象C</text>
         <text class="atlas-label" x="78" y="139" text-anchor="end">对象D</text>
-        <rect class="atlas-fill-s1" x="88" y="29" width="206" height="18" rx="2" />
-        <rect class="atlas-fill-muted" x="88" y="61" width="147" height="18" rx="2" />
-        <rect class="atlas-fill-muted" x="88" y="93" width="111" height="18" rx="2" />
-        <rect class="atlas-fill-muted" x="88" y="125" width="76" height="18" rx="2" />
+        <rect class="atlas-fill-s1" x="88" y="29" width="206" height="18" />
+        <rect class="atlas-fill-muted" x="88" y="61" width="147" height="18" />
+        <rect class="atlas-fill-muted" x="88" y="93" width="111" height="18" />
+        <rect class="atlas-fill-muted" x="88" y="125" width="76" height="18" />
         <text class="atlas-value" x="304" y="43">92</text>
       `,
     ),
@@ -88,9 +88,9 @@ const previews = {
         <text class="atlas-label" x="68" y="43" text-anchor="end">对象A</text>
         <text class="atlas-label" x="68" y="83" text-anchor="end">对象B</text>
         <text class="atlas-label" x="68" y="123" text-anchor="end">对象C</text>
-        <rect class="atlas-fill-negative" x="104" y="28" width="86" height="18" rx="2" />
-        <rect class="atlas-fill-positive" x="190" y="68" width="54" height="18" rx="2" />
-        <rect class="atlas-fill-negative" x="151" y="108" width="39" height="18" rx="2" />
+        <rect class="atlas-fill-negative" x="104" y="28" width="86" height="18" />
+        <rect class="atlas-fill-positive" x="190" y="68" width="54" height="18" />
+        <rect class="atlas-fill-negative" x="151" y="108" width="39" height="18" />
         <text class="atlas-value atlas-negative" x="96" y="42" text-anchor="end">−18 U</text>
         <text class="atlas-value atlas-positive" x="252" y="82">+9 F</text>
       `,
@@ -103,7 +103,7 @@ const previews = {
         <rect class="atlas-seq-1" x="24" y="58" width="294" height="34" />
         <rect class="atlas-seq-2" x="24" y="58" width="214" height="34" />
         <rect class="atlas-seq-3" x="24" y="58" width="146" height="34" />
-        <rect class="atlas-fill-s1" x="24" y="68" width="194" height="14" rx="2" />
+        <rect class="atlas-fill-s1" x="24" y="68" width="194" height="14" />
         <line class="atlas-target" x1="242" y1="50" x2="242" y2="101" />
         <text class="atlas-value" x="218" y="126" text-anchor="end">实际 74</text>
         <text class="atlas-label" x="248" y="126">目标 82</text>

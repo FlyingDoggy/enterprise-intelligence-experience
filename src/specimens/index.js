@@ -3,11 +3,13 @@ import { contentActionDefinitions } from "./content-action.js";
 import { dataFeedbackDefinitions } from "./data-feedback.js";
 import { formDefinitions } from "./forms.js";
 import { navigationOverlayDefinitions } from "./navigation-overlay.js";
+import { navigationExtensionDefinitions } from "./navigation-extension.js";
 import { shellDefinitions } from "./shell.js";
 
 export const specimenDefinitions = [
   ...contentActionDefinitions,
   ...navigationOverlayDefinitions,
+  ...navigationExtensionDefinitions,
   ...formDefinitions,
   ...dataFeedbackDefinitions,
   ...shellDefinitions,

@@ -874,6 +874,33 @@ def test_design_system_regression(page) -> None:
     expect(page.locator("[data-elevation-modal]")).to_be_hidden()
     expect(page.locator('[data-elevation-open="modal"]')).to_be_focused()
 
+    page.goto(
+        f"{BASE_URL}/#/design-system/foundations/accessibility-localization",
+        wait_until="domcontentloaded",
+    )
+    page.locator("[data-a11y-start]").click()
+    first_target = page.locator('[data-a11y-target][data-focus-label="筛选条件"]')
+    expect(first_target).to_be_focused()
+    expect(page.locator("[data-a11y-focus-status]")).to_contain_text("当前焦点：筛选条件")
+    require(
+        first_target.evaluate("(element) => getComputedStyle(element).outlineWidth === '3px'"),
+        "Accessibility keyboard specimen does not expose a strong visible focus ring",
+    )
+    page.keyboard.press("Tab")
+    expect(page.locator('[data-focus-label="业务范围输入框"]')).to_be_focused()
+    expect(page.locator("[data-a11y-focus-status]")).to_contain_text("第2项，共3项")
+    page.keyboard.press("Tab")
+    expect(page.locator('[data-focus-label="查看依据"]')).to_be_focused()
+    page.keyboard.press("Tab")
+    require(
+        page.evaluate(
+            "() => !document.activeElement.closest('[data-a11y-keyboard]')"
+        ),
+        "Accessibility keyboard specimen traps focus after its final control",
+    )
+    page.locator("[data-a11y-announce]").click()
+    expect(page.locator("[data-a11y-announcement]")).to_contain_text("数据已更新")
+
 
 def test_foundation_specimen_mobile(browser) -> None:
     page = browser.new_page(viewport={"width": 390, "height": 844}, reduced_motion="reduce")
@@ -894,6 +921,15 @@ def test_foundation_specimen_mobile(browser) -> None:
         assert_no_overflow(page, f"elevation/{mode}@390")
         page.keyboard.press("Escape")
         expect(page.locator(f"[data-elevation-{mode}]")).to_be_hidden()
+
+    page.goto(
+        f"{BASE_URL}/#/design-system/foundations/accessibility-localization",
+        wait_until="domcontentloaded",
+    )
+    page.locator("[data-a11y-start]").click()
+    page.keyboard.press("Tab")
+    expect(page.locator('[data-focus-label="业务范围输入框"]')).to_be_focused()
+    assert_no_overflow(page, "accessibility-localization/keyboard@390")
 
     require(not errors, f"Foundation specimens produce mobile browser errors: {errors}")
     page.close()

@@ -1597,10 +1597,9 @@ body[data-route="design-system"] .main-content {
 
 .ds-accessibility-specimen {
   display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
   gap: var(--semantic-space-4);
-  padding: var(--semantic-space-6);
-  background: var(--semantic-surface-paper);
-  border: 1px solid var(--semantic-border-strong);
+  width: min(100%, 920px);
 }
 
 @media (max-width: 767px) {
@@ -1620,15 +1619,174 @@ body[data-route="design-system"] .main-content {
   }
 }
 
-.ds-accessibility-specimen button {
-  width: fit-content;
+.ds-a11y-keyboard-card,
+.ds-a11y-localization-card {
+  display: grid;
+  align-content: start;
+  border: 1px solid var(--semantic-border-strong);
+  background: var(--semantic-surface-paper);
 }
 
-.ds-accessibility-specimen [role="status"] {
+.ds-a11y-keyboard-card > header,
+.ds-a11y-localization-card > header {
+  display: grid;
+  gap: var(--semantic-space-1);
+  padding: var(--semantic-space-4);
+  border-bottom: 1px solid var(--semantic-border-subtle);
+}
+
+.ds-a11y-keyboard-card > header span,
+.ds-a11y-localization-card > header span {
+  color: var(--semantic-action-primary);
+  font-family: var(--semantic-font-utility);
+  font-size: var(--semantic-type-meta);
+}
+
+.ds-a11y-keyboard-card > header strong,
+.ds-a11y-localization-card > header strong {
+  font-family: var(--semantic-font-heading);
+  font-size: var(--semantic-type-section);
+  line-height: 1.25;
+}
+
+.ds-a11y-keyboard-card > p {
+  margin: 0;
+  padding: var(--semantic-space-4);
+  color: var(--semantic-text-secondary);
+}
+
+.ds-a11y-start-row {
+  display: flex;
+  align-items: center;
+  gap: var(--semantic-space-3);
+  padding: 0 var(--semantic-space-4) var(--semantic-space-4);
+}
+
+.ds-a11y-start-row > span {
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-meta);
+}
+
+.ds-a11y-start-row kbd {
+  display: inline-flex;
+  min-width: 28px;
+  min-height: 26px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--semantic-space-1);
+  border: 1px solid var(--semantic-border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--semantic-radius-control);
+  color: var(--semantic-text-primary);
+  background: var(--semantic-surface-paper);
+  font-family: var(--semantic-font-utility);
+}
+
+.ds-a11y-targets {
+  display: grid;
+  grid-template-columns: auto minmax(150px, 1fr) auto;
+  gap: var(--semantic-space-2);
+  align-items: end;
+  padding: var(--semantic-space-4);
+  border-top: 1px solid var(--semantic-border-subtle);
+  background: var(--semantic-surface-subtle);
+}
+
+.ds-a11y-targets label {
+  display: grid;
+  gap: var(--semantic-space-1);
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-meta);
+}
+
+.ds-a11y-targets input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--semantic-space-3);
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-control);
+  color: var(--semantic-text-primary);
+  background: var(--semantic-surface-paper);
+  font: inherit;
+}
+
+.ds-accessibility-specimen .ds-a11y-targets button {
+  border-color: var(--semantic-border-strong);
+  color: var(--semantic-text-primary);
+  background: var(--semantic-surface-paper);
+}
+
+.ds-a11y-keyboard-card button:focus-visible,
+.ds-a11y-keyboard-card input:focus-visible,
+.ds-a11y-localization-card button:focus-visible {
+  outline: 3px solid var(--semantic-focus-ring);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--semantic-surface-paper);
+}
+
+.ds-a11y-focus-status,
+.ds-a11y-announcement {
   padding: var(--semantic-space-2) var(--semantic-space-3);
   border-left: 3px solid var(--semantic-action-primary);
   background: var(--semantic-surface-subtle);
   font-size: var(--semantic-type-control);
+}
+
+.ds-a11y-focus-status {
+  margin: var(--semantic-space-4);
+}
+
+.ds-a11y-localization-card dl {
+  display: grid;
+  margin: 0;
+}
+
+.ds-a11y-localization-card dl > div {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  min-height: 52px;
+  align-items: center;
+  padding: 0 var(--semantic-space-4);
+  border-bottom: 1px solid var(--semantic-border-subtle);
+}
+
+.ds-a11y-localization-card dt {
+  color: var(--semantic-text-secondary);
+}
+
+.ds-a11y-localization-card dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: var(--semantic-font-weight-bold);
+}
+
+.ds-a11y-localization-card > button {
+  width: fit-content;
+  margin: var(--semantic-space-4);
+}
+
+.ds-a11y-announcement {
+  margin: 0 var(--semantic-space-4) var(--semantic-space-4);
+}
+
+@media (max-width: 767px) {
+  .ds-accessibility-specimen {
+    grid-template-columns: 1fr;
+  }
+
+  .ds-a11y-start-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ds-a11y-targets {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .ds-a11y-targets button {
+    width: 100%;
+  }
 }
 
 .ds-two-column h3,

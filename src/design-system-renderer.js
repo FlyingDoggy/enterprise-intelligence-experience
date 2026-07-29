@@ -509,9 +509,43 @@ function foundationPreview(spec, tokenSource) {
   if (spec.id === "accessibility-localization") {
     return `
       <div class="ds-accessibility-specimen">
-        <button type="button">按 Tab 键到这里查看焦点</button>
-        <p lang="zh-CN">2027财年至今实际值为 <strong>1,248.50&nbsp;MRMB</strong>，更新于2027年7月25日。</p>
-        <div role="status">状态变化会通过实时播报区域同步给辅助技术。</div>
+        <section class="ds-a11y-keyboard-card" data-a11y-keyboard>
+          <header>
+            <span>键盘路径</span>
+            <strong>焦点移动到哪里，界面就明确显示到哪里。</strong>
+          </header>
+          <p id="a11yKeyboardInstructions">先选择“开始键盘检查”，再使用Tab和Shift + Tab移动；样章不会困住焦点。</p>
+          <div class="ds-a11y-start-row">
+            <button type="button" data-a11y-start aria-describedby="a11yKeyboardInstructions">开始键盘检查</button>
+            <span><kbd>Tab</kbd> 下一项　<kbd>Shift</kbd> + <kbd>Tab</kbd> 上一项</span>
+          </div>
+          <div class="ds-a11y-targets" aria-label="键盘检查控件">
+            <button type="button" data-a11y-target data-focus-label="筛选条件">筛选条件</button>
+            <label>
+              <span>业务范围</span>
+              <input type="text" value="中国市场" aria-label="业务范围" data-a11y-target data-focus-label="业务范围输入框" />
+            </label>
+            <button type="button" data-a11y-target data-focus-label="查看依据">查看依据</button>
+          </div>
+          <div class="ds-a11y-focus-status" role="status" aria-live="polite" data-a11y-focus-status>
+            尚未开始键盘检查。
+          </div>
+        </section>
+        <section class="ds-a11y-localization-card">
+          <header>
+            <span>本地化格式</span>
+            <strong>数字、日期和语言标签共同保留业务含义。</strong>
+          </header>
+          <dl lang="zh-CN">
+            <div><dt>金额</dt><dd>1,248.50&nbsp;MRMB</dd></div>
+            <div><dt>日期</dt><dd><time datetime="2027-07-25">2027年7月25日</time></dd></div>
+            <div><dt>分析期间</dt><dd>2027财年至今</dd></div>
+          </dl>
+          <button type="button" data-a11y-announce>模拟状态更新</button>
+          <div class="ds-a11y-announcement" role="status" aria-live="polite" data-a11y-announcement>
+            等待状态变化。
+          </div>
+        </section>
       </div>
     `;
   }
@@ -1027,6 +1061,33 @@ function bindSpecimenInteractions(container, spec) {
 }
 
 function bindLiveControls(container) {
+  const accessibilityKeyboard = container.querySelector("[data-a11y-keyboard]");
+  const accessibilityStart = container.querySelector("[data-a11y-start]");
+  const accessibilityTargets = [...container.querySelectorAll("[data-a11y-target]")];
+  const accessibilityFocusStatus = container.querySelector("[data-a11y-focus-status]");
+  const updateAccessibilityFocus = (target) => {
+    if (!accessibilityFocusStatus || !target) return;
+    const position = accessibilityTargets.indexOf(target) + 1;
+    const label = target.dataset.focusLabel || target.getAttribute("aria-label") || target.textContent.trim();
+    accessibilityFocusStatus.textContent = `当前焦点：${label}（第${position}项，共${accessibilityTargets.length}项）。`;
+  };
+  accessibilityStart?.addEventListener("click", () => {
+    accessibilityTargets[0]?.focus();
+    updateAccessibilityFocus(accessibilityTargets[0]);
+  });
+  accessibilityKeyboard?.addEventListener("focusin", (event) => {
+    if (event.target.matches("[data-a11y-target]")) updateAccessibilityFocus(event.target);
+  });
+  accessibilityTargets.forEach((target) => {
+    target.addEventListener("click", () => {
+      updateAccessibilityFocus(target);
+    });
+  });
+  container.querySelector("[data-a11y-announce]")?.addEventListener("click", () => {
+    const announcement = container.querySelector("[data-a11y-announcement]");
+    if (announcement) announcement.textContent = "数据已更新：更新时间为2027年7月25日15:42。";
+  });
+
   const borderModeButtons = [...container.querySelectorAll("[data-border-mode]")];
   borderModeButtons.forEach((button) => {
     button.addEventListener("click", () => {

@@ -849,6 +849,55 @@ def test_design_system_regression(page) -> None:
     page.locator('[data-specimen-control="variant"][data-specimen-value="selection"]').click()
     expect(page.frame_locator("[data-specimen-frame]").locator('[role="menuitemradio"]')).to_have_count(3)
 
+    page.goto(f"{BASE_URL}/#/design-system/foundations/borders-radius", wait_until="domcontentloaded")
+    expect(page.locator(".ds-border-radius-specimen")).to_be_visible()
+    expect(page.locator(".ds-elevation-specimen")).to_have_count(0)
+    page.locator('[data-border-mode="control"]').click()
+    expect(page.locator('[data-border-panel="control"]')).to_be_visible()
+    expect(page.locator('[data-border-panel="structure"]')).to_be_hidden()
+    page.locator('[data-border-mode="overlay"]').click()
+    expect(page.locator('[data-border-panel="overlay"]')).to_be_visible()
+
+    page.goto(f"{BASE_URL}/#/design-system/foundations/elevation", wait_until="domcontentloaded")
+    expect(page.locator(".ds-elevation-specimen")).to_be_visible()
+    expect(page.locator(".ds-border-radius-specimen")).to_have_count(0)
+    page.locator('[data-elevation-open="menu"]').click()
+    expect(page.locator("[data-elevation-menu]")).to_be_visible()
+    expect(page.locator("[data-elevation-status]")).to_contain_text("菜单层级")
+    page.keyboard.press("Escape")
+    expect(page.locator("[data-elevation-menu]")).to_be_hidden()
+    expect(page.locator('[data-elevation-open="menu"]')).to_be_focused()
+    page.locator('[data-elevation-open="modal"]').click()
+    expect(page.locator("[data-elevation-modal]")).to_be_visible()
+    expect(page.locator("[data-elevation-status]")).to_contain_text("模态层级")
+    page.locator('[data-elevation-close="modal"]').click()
+    expect(page.locator("[data-elevation-modal]")).to_be_hidden()
+    expect(page.locator('[data-elevation-open="modal"]')).to_be_focused()
+
+
+def test_foundation_specimen_mobile(browser) -> None:
+    page = browser.new_page(viewport={"width": 390, "height": 844}, reduced_motion="reduce")
+    errors: list[str] = []
+    page.on("console", lambda message: errors.append(message.text) if message.type == "error" else None)
+    page.on("pageerror", lambda error: errors.append(str(error)))
+
+    page.goto(f"{BASE_URL}/#/design-system/foundations/borders-radius", wait_until="domcontentloaded")
+    for mode in ["structure", "control", "overlay"]:
+        page.locator(f'[data-border-mode="{mode}"]').click()
+        expect(page.locator(f'[data-border-panel="{mode}"]')).to_be_visible()
+        assert_no_overflow(page, f"borders-radius/{mode}@390")
+
+    page.goto(f"{BASE_URL}/#/design-system/foundations/elevation", wait_until="domcontentloaded")
+    for mode in ["menu", "modal"]:
+        page.locator(f'[data-elevation-open="{mode}"]').click()
+        expect(page.locator(f"[data-elevation-{mode}]")).to_be_visible()
+        assert_no_overflow(page, f"elevation/{mode}@390")
+        page.keyboard.press("Escape")
+        expect(page.locator(f"[data-elevation-{mode}]")).to_be_hidden()
+
+    require(not errors, f"Foundation specimens produce mobile browser errors: {errors}")
+    page.close()
+
 
 def collect_detail_routes(page) -> list[str]:
     page.goto(f"{BASE_URL}/#/design-system", wait_until="networkidle")
@@ -933,6 +982,7 @@ def run() -> None:
         page.close()
 
         test_routes_and_viewports(browser)
+        test_foundation_specimen_mobile(browser)
         test_contract_responsive(browser)
         test_full_detail_route_regression(browser)
         browser.close()

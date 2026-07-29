@@ -387,12 +387,83 @@ function foundationPreview(spec, tokenSource) {
       <p class="ds-note">缩小视口时上下文先转为抽屉，主要工作区保持连续。</p>
     `;
   }
-  if (spec.id === "borders-radius" || spec.id === "elevation") {
+  if (spec.id === "borders-radius") {
     return `
-      <div class="ds-box-specimen">
-        <div class="flat"><span>无层级</span><p>结构内容</p></div>
-        <div class="outlined"><span>描边</span><p>可操作区域</p></div>
-        <div class="raised"><span>浮起</span><p>临时浮层</p></div>
+      <div class="ds-border-radius-specimen">
+        <div class="ds-foundation-controlbar" role="group" aria-label="选择边界类型">
+          <button type="button" data-border-mode="structure" aria-pressed="true">结构分隔</button>
+          <button type="button" data-border-mode="control" aria-pressed="false">控件边界</button>
+          <button type="button" data-border-mode="overlay" aria-pressed="false">浮层轮廓</button>
+        </div>
+        <div class="ds-border-radius-stage">
+          <section data-border-panel="structure">
+            <div class="ds-boundary-table" aria-label="使用细分隔线组织的工作列表">
+              <header><span>工作对象</span><span>状态</span><span>负责人</span></header>
+              <div><strong>分析修订版</strong><span>待检查</span><span>负责人A</span></div>
+              <div><strong>行动提案</strong><span>已准备</span><span>负责人B</span></div>
+            </div>
+            <p><b>0px圆角</b> · 连续内容使用分隔线，不把每一行做成卡片。</p>
+          </section>
+          <section data-border-panel="control" hidden>
+            <div class="ds-boundary-controls">
+              <label>分析期间<input value="2027财年至今" readonly /></label>
+              <button type="button">应用范围</button>
+            </div>
+            <p><b>3px圆角</b> · 控件通过轮廓说明可操作性，不依靠阴影。</p>
+          </section>
+          <section data-border-panel="overlay" hidden>
+            <div class="ds-boundary-overlay">
+              <span>范围检查</span>
+              <strong>将筛选条件应用到当前修订版？</strong>
+              <p>浮层仍保留清晰轮廓；是否产生阴影由层级规范决定。</p>
+              <div><button type="button">取消</button><button type="button">确认</button></div>
+            </div>
+            <p><b>7px圆角</b> · 仅临时浮层使用系统允许的最大圆角。</p>
+          </section>
+        </div>
+        <footer>
+          <span><i></i>结构：0px</span>
+          <span><i></i>控件：3px</span>
+          <span><i></i>浮层：7px</span>
+        </footer>
+      </div>
+    `;
+  }
+  if (spec.id === "elevation") {
+    return `
+      <div class="ds-elevation-specimen">
+        <div class="ds-foundation-controlbar" role="group" aria-label="查看层级示例">
+          <button type="button" data-elevation-open="flat" aria-pressed="true">页面内容</button>
+          <button type="button" data-elevation-open="menu" aria-pressed="false">打开菜单</button>
+          <button type="button" data-elevation-open="modal" aria-pressed="false">打开对话框</button>
+        </div>
+        <div class="ds-elevation-workspace">
+          <header>
+            <div><span>分析工作区</span><strong>已核验结果</strong></div>
+            <button type="button" data-elevation-menu-trigger aria-expanded="false">更多操作</button>
+            <div class="ds-elevation-menu" data-elevation-menu role="menu" hidden>
+              <button type="button" role="menuitem">创建分支</button>
+              <button type="button" role="menuitem">查看历史</button>
+              <button type="button" role="menuitem" data-elevation-close="menu">关闭菜单</button>
+            </div>
+          </header>
+          <main>
+            <article><span>当前状态</span><strong>等待负责人检查</strong></article>
+            <article><span>依据</span><strong>3项已核验</strong></article>
+          </main>
+          <div class="ds-elevation-modal-layer" data-elevation-modal hidden>
+            <section role="dialog" aria-modal="true" aria-labelledby="elevation-dialog-title">
+              <span>受控操作</span>
+              <strong id="elevation-dialog-title">发布当前修订版？</strong>
+              <p>对话框使用遮罩、浮层阴影和焦点约束表达临时最高层级。</p>
+              <div><button type="button" data-elevation-close="modal">返回</button><button type="button">继续检查</button></div>
+            </section>
+          </div>
+        </div>
+        <div class="ds-elevation-contract" aria-live="polite" data-elevation-status>
+          <strong>页面层级 · 无阴影</strong>
+          <span>普通内容依靠布局、背景和分隔线建立结构。</span>
+        </div>
       </div>
     `;
   }
@@ -956,6 +1027,69 @@ function bindSpecimenInteractions(container, spec) {
 }
 
 function bindLiveControls(container) {
+  const borderModeButtons = [...container.querySelectorAll("[data-border-mode]")];
+  borderModeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const mode = button.dataset.borderMode;
+      borderModeButtons.forEach((item) => {
+        item.setAttribute("aria-pressed", String(item === button));
+      });
+      container.querySelectorAll("[data-border-panel]").forEach((panel) => {
+        panel.hidden = panel.dataset.borderPanel !== mode;
+      });
+    });
+  });
+
+  const elevationMenu = container.querySelector("[data-elevation-menu]");
+  const elevationModal = container.querySelector("[data-elevation-modal]");
+  const elevationMenuTrigger = container.querySelector("[data-elevation-menu-trigger]");
+  const elevationStatus = container.querySelector("[data-elevation-status]");
+  let elevationReturnTarget = null;
+  const elevationCopy = {
+    flat: ["页面层级 · 无阴影", "普通内容依靠布局、背景和分隔线建立结构。"],
+    menu: ["菜单层级 · 浮层阴影", "菜单临时遮挡页面内容，使用raised阴影说明前后关系。"],
+    modal: ["模态层级 · 遮罩与浮层阴影", "高影响任务同时使用遮罩、阴影和焦点约束。"],
+  };
+  const setElevationMode = (mode, trigger, moveFocus = true) => {
+    const safeMode = ["menu", "modal"].includes(mode) ? mode : "flat";
+    if (trigger) elevationReturnTarget = trigger;
+    if (elevationMenu) elevationMenu.hidden = safeMode !== "menu";
+    if (elevationModal) elevationModal.hidden = safeMode !== "modal";
+    elevationMenuTrigger?.setAttribute("aria-expanded", String(safeMode === "menu"));
+    container.querySelectorAll("[data-elevation-open]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.elevationOpen === safeMode));
+    });
+    if (elevationStatus) {
+      const [title, description] = elevationCopy[safeMode];
+      elevationStatus.innerHTML = `<strong>${title}</strong><span>${description}</span>`;
+    }
+    if (moveFocus && safeMode === "menu") elevationMenu?.querySelector("[role=menuitem]")?.focus();
+    if (moveFocus && safeMode === "modal") elevationModal?.querySelector("button")?.focus();
+  };
+  container.querySelectorAll("[data-elevation-open]").forEach((button) => {
+    button.addEventListener("click", () => setElevationMode(button.dataset.elevationOpen, button));
+  });
+  elevationMenuTrigger?.addEventListener("click", () => {
+    const nextMode = elevationMenu?.hidden === false ? "flat" : "menu";
+    setElevationMode(nextMode, elevationMenuTrigger);
+  });
+  container.querySelectorAll("[data-elevation-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      setElevationMode("flat", null, false);
+      elevationReturnTarget?.focus();
+    });
+  });
+  if (elevationMenu || elevationModal) {
+    container.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (elevationMenu?.hidden !== false && elevationModal?.hidden !== false) return;
+      event.preventDefault();
+      setElevationMode("flat", null, false);
+      elevationReturnTarget?.focus();
+    });
+    setElevationMode("flat", null, false);
+  }
+
   container.querySelector("[data-motion-demo]")?.addEventListener("click", () => {
     const target = container.querySelector("[data-motion-target]");
     target?.classList.remove("replay");

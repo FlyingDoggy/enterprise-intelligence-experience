@@ -1028,6 +1028,344 @@ body[data-route="design-system"] .main-content {
   box-shadow: var(--semantic-elevation-raised);
 }
 
+.ds-border-radius-specimen,
+.ds-elevation-specimen {
+  width: min(100%, 820px);
+  border: 1px solid var(--semantic-border-strong);
+  background: var(--semantic-surface-paper);
+}
+
+.ds-foundation-controlbar {
+  display: flex;
+  min-height: 52px;
+  padding: var(--semantic-space-1);
+  border-bottom: 1px solid var(--semantic-border-subtle);
+  background: var(--semantic-surface-subtle);
+}
+
+.ds-foundation-controlbar button {
+  min-height: 44px;
+  padding: var(--semantic-space-2) var(--semantic-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--semantic-radius-control);
+  color: var(--semantic-text-secondary);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ds-foundation-controlbar button[aria-pressed="true"] {
+  border-color: var(--semantic-border-strong);
+  color: var(--semantic-text-primary);
+  background: var(--semantic-surface-paper);
+}
+
+.ds-foundation-controlbar button:focus-visible {
+  outline: 2px solid var(--semantic-focus-ring);
+  outline-offset: 2px;
+}
+
+.ds-border-radius-stage {
+  display: grid;
+  min-height: 330px;
+  padding: var(--semantic-space-8);
+  background: var(--semantic-surface-canvas);
+}
+
+.ds-border-radius-stage > section {
+  display: grid;
+  align-content: center;
+  gap: var(--semantic-space-4);
+}
+
+.ds-border-radius-stage > section[hidden],
+.ds-elevation-specimen [hidden] {
+  display: none;
+}
+
+.ds-border-radius-stage > section > p {
+  margin: 0;
+  color: var(--semantic-text-secondary);
+}
+
+.ds-boundary-table {
+  border: 1px solid var(--semantic-border-strong);
+  background: var(--semantic-surface-paper);
+}
+
+.ds-boundary-table > * {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(110px, 0.7fr) minmax(110px, 0.7fr);
+  min-height: 54px;
+  align-items: center;
+  border-bottom: 1px solid var(--semantic-border-subtle);
+}
+
+.ds-boundary-table > *:last-child {
+  border-bottom: 0;
+}
+
+.ds-boundary-table header {
+  min-height: 40px;
+  color: var(--semantic-text-secondary);
+  background: var(--semantic-surface-subtle);
+  font-size: var(--semantic-type-meta);
+}
+
+.ds-boundary-table span,
+.ds-boundary-table strong {
+  min-width: 0;
+  padding: var(--semantic-space-2) var(--semantic-space-4);
+  border-right: 1px solid var(--semantic-border-subtle);
+}
+
+.ds-boundary-table span:last-child {
+  border-right: 0;
+}
+
+.ds-boundary-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--semantic-space-3);
+  align-items: end;
+  padding: var(--semantic-space-6);
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-control);
+  background: var(--semantic-surface-paper);
+}
+
+.ds-boundary-controls label {
+  display: grid;
+  gap: var(--semantic-space-2);
+  color: var(--semantic-text-secondary);
+}
+
+.ds-boundary-controls input,
+.ds-boundary-controls button,
+.ds-boundary-overlay button,
+.ds-elevation-workspace button {
+  min-height: 44px;
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-control);
+  color: var(--semantic-text-primary);
+  background: var(--semantic-surface-paper);
+  font: inherit;
+}
+
+.ds-boundary-controls input {
+  width: 100%;
+  padding: 0 var(--semantic-space-3);
+}
+
+.ds-boundary-controls button,
+.ds-boundary-overlay button,
+.ds-elevation-workspace button {
+  padding: var(--semantic-space-2) var(--semantic-space-4);
+  cursor: pointer;
+}
+
+.ds-boundary-controls button,
+.ds-boundary-overlay button:last-child,
+.ds-elevation-modal-layer section > div button:last-child {
+  border-color: var(--semantic-action-primary);
+  color: var(--semantic-text-inverse);
+  background: var(--semantic-action-primary);
+}
+
+.ds-boundary-overlay {
+  display: grid;
+  gap: var(--semantic-space-3);
+  padding: var(--semantic-space-6);
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-overlay);
+  background: var(--semantic-surface-paper);
+}
+
+.ds-boundary-overlay > span {
+  color: var(--semantic-action-primary);
+  font-family: var(--semantic-font-utility);
+  font-size: var(--semantic-type-meta);
+}
+
+.ds-boundary-overlay > strong {
+  font-family: var(--semantic-font-heading);
+  font-size: var(--semantic-type-section);
+}
+
+.ds-boundary-overlay > p {
+  margin: 0;
+  color: var(--semantic-text-secondary);
+}
+
+.ds-boundary-overlay > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--semantic-space-2);
+}
+
+.ds-border-radius-specimen > footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--semantic-border-subtle);
+}
+
+.ds-border-radius-specimen > footer span {
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  gap: var(--semantic-space-2);
+  padding: var(--semantic-space-3) var(--semantic-space-4);
+  border-right: 1px solid var(--semantic-border-subtle);
+  font-family: var(--semantic-font-utility);
+  font-size: var(--semantic-type-meta);
+}
+
+.ds-border-radius-specimen > footer span:last-child {
+  border-right: 0;
+}
+
+.ds-border-radius-specimen > footer i {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--semantic-border-strong);
+}
+
+.ds-border-radius-specimen > footer span:nth-child(2) i {
+  border-radius: var(--semantic-radius-control);
+}
+
+.ds-border-radius-specimen > footer span:nth-child(3) i {
+  border-radius: var(--semantic-radius-overlay);
+}
+
+.ds-elevation-workspace {
+  position: relative;
+  min-height: 350px;
+  overflow: hidden;
+  background: var(--semantic-surface-canvas);
+}
+
+.ds-elevation-workspace > header {
+  position: relative;
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--semantic-space-4) var(--semantic-space-6);
+  border-bottom: 1px solid var(--semantic-border-subtle);
+  background: var(--semantic-surface-paper);
+}
+
+.ds-elevation-workspace > header > div:first-child {
+  display: grid;
+  gap: var(--semantic-space-1);
+}
+
+.ds-elevation-workspace > header span,
+.ds-elevation-workspace article span {
+  color: var(--semantic-text-secondary);
+  font-size: var(--semantic-type-meta);
+}
+
+.ds-elevation-workspace > main {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--semantic-space-4);
+  padding: var(--semantic-space-8) var(--semantic-space-6);
+}
+
+.ds-elevation-workspace article {
+  display: grid;
+  gap: var(--semantic-space-2);
+  min-height: 120px;
+  align-content: center;
+  padding: var(--semantic-space-4);
+  border: 1px solid var(--semantic-border-subtle);
+  background: var(--semantic-surface-paper);
+}
+
+.ds-elevation-menu {
+  position: absolute;
+  z-index: 2;
+  top: 60px;
+  right: var(--semantic-space-6);
+  display: grid;
+  min-width: 190px;
+  padding: var(--semantic-space-1);
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-overlay);
+  background: var(--semantic-surface-paper);
+  box-shadow: var(--semantic-elevation-raised);
+}
+
+.ds-elevation-menu button {
+  width: 100%;
+  border-color: transparent;
+  text-align: left;
+}
+
+.ds-elevation-menu button:hover,
+.ds-elevation-menu button:focus-visible {
+  background: var(--semantic-action-hover);
+}
+
+.ds-elevation-modal-layer {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--semantic-space-6);
+  background: rgb(4 26 58 / 0.34);
+}
+
+.ds-elevation-modal-layer section {
+  display: grid;
+  gap: var(--semantic-space-3);
+  width: min(100%, 460px);
+  padding: var(--semantic-space-6);
+  border: 1px solid var(--semantic-border-strong);
+  border-radius: var(--semantic-radius-overlay);
+  background: var(--semantic-surface-paper);
+  box-shadow: var(--semantic-elevation-raised);
+}
+
+.ds-elevation-modal-layer section > span {
+  color: var(--semantic-action-primary);
+  font-family: var(--semantic-font-utility);
+  font-size: var(--semantic-type-meta);
+}
+
+.ds-elevation-modal-layer section > strong {
+  font-family: var(--semantic-font-heading);
+  font-size: var(--semantic-type-section);
+}
+
+.ds-elevation-modal-layer section > p {
+  margin: 0;
+  color: var(--semantic-text-secondary);
+}
+
+.ds-elevation-modal-layer section > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--semantic-space-2);
+}
+
+.ds-elevation-contract {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.5fr) minmax(0, 1.5fr);
+  min-height: 64px;
+  align-items: center;
+  gap: var(--semantic-space-4);
+  padding: var(--semantic-space-3) var(--semantic-space-6);
+  border-top: 1px solid var(--semantic-border-subtle);
+}
+
+.ds-elevation-contract span {
+  color: var(--semantic-text-secondary);
+}
+
 .ds-motion-specimen {
   display: grid;
   grid-template-columns: 170px minmax(0, 1fr);
@@ -5485,6 +5823,82 @@ body[data-route="design-system"] .main-content {
 
   .pattern-filter button {
     flex-basis: 96px;
+  }
+}
+
+@media (max-width: 560px) {
+  .ds-foundation-controlbar {
+    overflow-x: auto;
+  }
+
+  .ds-foundation-controlbar button {
+    flex: 0 0 auto;
+  }
+
+  .ds-border-radius-stage {
+    min-height: 360px;
+    padding: var(--semantic-space-4);
+  }
+
+  .ds-boundary-table {
+    overflow-x: auto;
+  }
+
+  .ds-boundary-table > * {
+    min-width: 520px;
+  }
+
+  .ds-boundary-controls {
+    grid-template-columns: 1fr;
+    padding: var(--semantic-space-4);
+  }
+
+  .ds-boundary-overlay {
+    padding: var(--semantic-space-4);
+  }
+
+  .ds-border-radius-specimen > footer {
+    grid-template-columns: 1fr;
+  }
+
+  .ds-border-radius-specimen > footer span {
+    border-right: 0;
+    border-bottom: 1px solid var(--semantic-border-subtle);
+  }
+
+  .ds-border-radius-specimen > footer span:last-child {
+    border-bottom: 0;
+  }
+
+  .ds-elevation-workspace > header {
+    padding: var(--semantic-space-3) var(--semantic-space-4);
+  }
+
+  .ds-elevation-workspace > main {
+    grid-template-columns: 1fr;
+    padding: var(--semantic-space-4);
+  }
+
+  .ds-elevation-workspace article {
+    min-height: 92px;
+  }
+
+  .ds-elevation-menu {
+    right: var(--semantic-space-4);
+  }
+
+  .ds-elevation-modal-layer {
+    padding: var(--semantic-space-3);
+  }
+
+  .ds-elevation-modal-layer section {
+    padding: var(--semantic-space-4);
+  }
+
+  .ds-elevation-contract {
+    grid-template-columns: 1fr;
+    gap: var(--semantic-space-1);
+    padding: var(--semantic-space-3) var(--semantic-space-4);
   }
 }
 

@@ -607,10 +607,56 @@
             </div>
           </section>
 
-          <section id="guidance-library" class="page-section pattern-hero" data-section-title="模式拆解">
+          <section id="guidance-scenario" class="page-section guidance-scenario-section" data-section-title="真实场景">
             <div class="section-heading">
               <div>
                 <span class="section-index">02</span>
+                <p class="eyebrow">真实 Agent 场景 · Staff Claim</p>
+                <h2>一个流程型 Agent，<br />在不同工作阶段打开不同视图。</h2>
+              </div>
+              <p class="section-intro">
+                这条演示把抽象模式放回一项完整工作：理赔 Agent 自动校验申请，异常时交给人；
+                政策不明确时另建协作调查，决定完成后再恢复原流程，并把重复判断沉淀为待验证的规则候选。
+              </p>
+            </div>
+            <div class="guidance-scenario-explainer" aria-label="场景中的角色与界面模式">
+              <article>
+                <span>主流程 Agent</span>
+                <strong>Staff Claim Processing Agent</strong>
+                <p>P01、P02、P03 是同一个流程型 Agent 的异常、规则治理和恢复视图，不是三个独立 Agent。</p>
+              </article>
+              <article>
+                <span>按需协作能力</span>
+                <strong>Policy Investigation Assistant</strong>
+                <p>只有政策含义需要研究时才创建独立调查任务；它提供有依据的建议，不接管理赔事项。</p>
+              </article>
+              <article>
+                <span>人工责任</span>
+                <strong>Staff Claim Controller</strong>
+                <p>人在边界情形做决定。决定可以恢复当前事项，也可以产生只影响未来事项的规则候选。</p>
+              </article>
+            </div>
+            <div class="guidance-scenario-workbench">
+              <div class="guidance-scenario-heading">
+                <div>
+                  <span class="micro-label">端到端可交互场景</span>
+                  <h3>从员工提交，到异常调查、人工决定、规则候选与失败恢复</h3>
+                </div>
+                <p>演示数据 · 不连接理赔、支付、权限或政策系统</p>
+              </div>
+              <article id="guidanceScenarioCanvas" class="guidance-scenario-canvas" aria-live="polite"></article>
+            </div>
+            <div class="guidance-scenario-reading">
+              <article><span>看工作对象</span><p>流程事项、政策调查和规则候选分别建档，但共用同一个追踪编号。</p></article>
+              <article><span>看人机责任</span><p>系统负责校验、准备和记录；人负责政策边界、批准和接管。</p></article>
+              <article><span>看状态变化</span><p>已调查不等于已批准，已批准不等于已执行，恢复也不会删除原失败记录。</p></article>
+            </div>
+          </section>
+
+          <section id="guidance-library" class="page-section pattern-hero" data-section-title="模式拆解">
+            <div class="section-heading">
+              <div>
+                <span class="section-index">03</span>
                 <p class="eyebrow">从完整界面拆解交互模式</p>
                 <h2>按任务类型选择协作约定，<br />再复用对应的界面模式。</h2>
               </div>
@@ -619,31 +665,40 @@
               </p>
             </div>
             <div class="guidance-contract-chooser" aria-label="选择适用的人机协作规则">
+              <a href="#/guidance/shared/S01">
+                <span>所有 Agent 共用的界面能力</span>
+                <strong>目标、依据、决定、授权和结果必须用一致方式表达。</strong>
+                <dl>
+                  <div><dt>它是什么</dt><dd>两类 Agent 都会复用的界面模式</dd></div>
+                  <div><dt>它不是什么</dt><dd>不是一个独立 Agent，也不是第三类产品</dd></div>
+                  <div><dt>典型模式</dt><dd>目标页头、依据回执、决策记录、业务操作预览</dd></div>
+                </dl>
+              </a>
               <a href="#/guidance/process/P01">
-                <span>人机协作约定 · Process Intelligence</span>
-                <strong>系统按规则推进流程事项，人处理决定、异常与边界。</strong>
+                <span>流程型 Agent 的三个工作视图</span>
+                <strong>系统推进正常事项，在异常、规则治理和恢复时打开对应视图。</strong>
                 <dl>
                   <div><dt>主对象</dt><dd>流程事项</dd></div>
-                  <div><dt>适用任务</dt><dd>持续、可重复、状态驱动的业务流程</dd></div>
-                  <div><dt>控制重点</dt><dd>准备、审批、执行、核验和恢复分别记录</dd></div>
+                  <div><dt>三个视图</dt><dd>P01异常处理、P02规则治理、P03失败恢复</dd></div>
+                  <div><dt>真实例子</dt><dd>Staff Claim、GL 对账、月结协调</dd></div>
                 </dl>
               </a>
               <a href="#/guidance/collaborative/C01">
-                <span>人机协作约定 · Collaborative Intelligence</span>
+                <span>协作型 Agent 的任务与交付界面</span>
                 <strong>人定义目标与判断边界，人工智能交付可核验的工作结果。</strong>
                 <dl>
                   <div><dt>主对象</dt><dd>协作任务</dd></div>
-                  <div><dt>适用任务</dt><dd>分析、研究、规划、创作与决策支持</dd></div>
-                  <div><dt>控制重点</dt><dd>依据、限制、修订版本、工作分支与合法停止点</dd></div>
+                  <div><dt>三个视图</dt><dd>C01任务工作区、C02分析研究、C03受众简报</dd></div>
+                  <div><dt>真实例子</dt><dd>ChatBI、政策调查、管理层简报</dd></div>
                 </dl>
               </a>
               <a href="#/guidance/handoff/S10">
-                <span>共同机制 · 工作交接</span>
-                <strong>关联两个工作对象，并保留来源、责任与控制约束。</strong>
+                <span>Agent 与人之间的受控连接</span>
+                <strong>工作交接关联两个独立对象，并保留来源、责任与控制约束。</strong>
                 <dl>
-                  <div><dt>对象关系</dt><dd>来源对象 → 目标对象</dd></div>
-                  <div><dt>适用时机</dt><dd>分析进入行动，或异常交给人工处理</dd></div>
-                  <div><dt>必须保留</dt><dd>目标、上下文、依据、修订版本、负责人和追踪编号</dd></div>
+                  <div><dt>它是什么</dt><dd>跨对象、跨 Agent 或跨人工责任的连接</dd></div>
+                  <div><dt>它不是什么</dt><dd>不是第三类 Intelligence，也不静默改变对象类型</dd></div>
+                  <div><dt>真实例子</dt><dd>理赔异常转政策调查；ChatBI建议转行动事项</dd></div>
                 </dl>
               </a>
             </div>
@@ -651,10 +706,10 @@
               <div id="guidanceRouteMeta" class="guidance-route-meta"></div>
               <div class="pattern-filter" role="group" aria-label="交互模式分类">
                 <button type="button" data-pattern-filter="all" aria-pressed="true">全部</button>
-                <button type="button" data-pattern-filter="shared" aria-pressed="false">共享模式</button>
+                <button type="button" data-pattern-filter="shared" aria-pressed="false">所有 Agent 共用</button>
                 <button type="button" data-pattern-filter="process" aria-pressed="false">Process Intelligence</button>
                 <button type="button" data-pattern-filter="collaborative" aria-pressed="false">Collaborative Intelligence</button>
-                <button type="button" data-pattern-filter="handoff" aria-pressed="false">工作交接</button>
+                <button type="button" data-pattern-filter="handoff" aria-pressed="false">受控工作交接</button>
               </div>
               <div class="pattern-library-layout">
                 <div id="patternList" class="pattern-list" role="listbox" aria-label="交互模式列表"></div>

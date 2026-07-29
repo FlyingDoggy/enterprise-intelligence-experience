@@ -20,7 +20,7 @@ Rev 0.5 采用“一套静态站点、三层职责”：
 - `design-system/collaborative-visualization/`：设计JSON、CSS令牌、ChartSpec、确定性Chart Router、SVG/ECharts/React实现样例和交互参考；
 - `design-system/collaborative-visualization/CLAUDE_SOURCE_REVIEW.md`：Claude补充材料与EIX的逐项对照和取舍记录；
 - `src/specimens/`：34 个通用组件的独立交互示例；
-- `src/guidance-specimens.js`：17 个智能体验交互模式的结构参考、状态示例或协作约定模拟；
+- `src/guidance-data.js` 与 `src/guidance-specimens.js`：17 个智能体验交互模式的真实 Agent 应用映射、结构参考、状态示例或协作约定模拟；
 - `src/architecture-data.js` 和 `src/conformance-data.js`：任务投影和从任务到设计检查的追踪关系；
 - `specimen.html`：使用同源 `iframe` 隔离的交互示例环境；
 - `archive/rev-0.1/` 至 `archive/rev-0.5-pre-zh-localization/`：只读历史版本和英文原稿；
@@ -52,7 +52,7 @@ http://127.0.0.1:4190/#/brief
 - `#/design-system/primitives/:id`：布局基础件；
 - `#/design-system/components/:id`：通用组件；
 - `design-system/collaborative-visualization/samples/index.html`：Collaborative Intelligence数据表达交互参考；
-- `#/guidance`：智能体验设计指导；
+- `#/guidance`：智能体验设计指导，以及 Staff Claim 流程事项、政策调查、规则候选和失败恢复的端到端交互场景；
 - `#/guidance/shared|process|collaborative|handoff/:id`：交互模式详情；
 - `#/journeys`：端到端场景；
 - `#/acceptance`：设计检查；

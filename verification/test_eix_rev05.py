@@ -549,10 +549,47 @@ def test_guidance_contracts(page) -> None:
     expect(page.locator("#guidanceCompositionCanvas")).to_contain_text("来源修订版本已锁定")
     expect(page.locator("#guidanceCompositionCanvas")).to_contain_text("不会把分析任务直接改成“执行中”")
     page.locator('[data-guidance-composition="collaborative"]').click()
-    expect(page.locator(".guidance-contract-chooser > a")).to_have_count(3)
-    expect(page.locator(".guidance-contract-chooser")).to_contain_text("人机协作约定 · Process Intelligence")
-    expect(page.locator(".guidance-contract-chooser")).to_contain_text("人机协作约定 · Collaborative Intelligence")
-    expect(page.locator(".guidance-contract-chooser")).to_contain_text("共同机制 · 工作交接")
+    expect(page.locator(".guidance-contract-chooser > a")).to_have_count(4)
+    expect(page.locator(".guidance-contract-chooser")).to_contain_text("所有 Agent 共用的界面能力")
+    expect(page.locator(".guidance-contract-chooser")).to_contain_text("流程型 Agent 的三个工作视图")
+    expect(page.locator(".guidance-contract-chooser")).to_contain_text("协作型 Agent 的任务与交付界面")
+    expect(page.locator(".guidance-contract-chooser")).to_contain_text("Agent 与人之间的受控连接")
+
+    expect(page.locator("#guidanceScenarioCanvas .mock-browser-frame")).to_have_count(1)
+    assert_mock_browser_radius(page, "#guidanceScenarioCanvas", "Staff Claim scenario")
+    expect(page.locator("[data-guidance-scenario-stage]")).to_have_count(5)
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("SC-2027-0142")
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("Staff Claim Processing Agent")
+    page.locator("#guidanceScenarioCanvas").scroll_into_view_if_needed()
+    scenario_scroll_before = page.evaluate("window.scrollY")
+    page.locator('[data-guidance-scenario-stage="1"]').click()
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("P01 · 异常优先工作台")
+    scenario_scroll_after = page.evaluate("window.scrollY")
+    require(
+        abs(scenario_scroll_after - scenario_scroll_before) <= 24,
+        f"Staff Claim stage selection changed page scroll: {scenario_scroll_before} -> {scenario_scroll_after}",
+    )
+    page.locator("[data-guidance-scenario-next]").click()
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("调查任务")
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("暂停 · 等待调查")
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("调查完成不等于理赔已批准")
+    page.locator("[data-guidance-scenario-next]").click()
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("规则候选")
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("候选 · 尚未启用")
+    page.locator("[data-guidance-scenario-next]").click()
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("原付款操作")
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("结果未知")
+    page.locator("[data-guidance-scenario-recover]").click()
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("恢复完成")
+    expect(page.locator("#guidanceScenarioCanvas")).to_contain_text("原“结果未知”事件仍保留")
+    page.locator("[data-guidance-scenario-reset]").click()
+    expect(page.locator('[data-guidance-scenario-stage="0"]')).to_have_attribute("aria-selected", "true")
+    page.locator('[data-guidance-scenario-stage="0"]').focus()
+    page.keyboard.press("ArrowRight")
+    expect(page.locator('[data-guidance-scenario-stage="1"]')).to_have_attribute("aria-selected", "true")
+    expect(page.locator('[data-guidance-scenario-stage="1"]')).to_be_focused()
+    page.locator('[data-guidance-scenario-stage="0"]').click()
+
     expect(page.locator("#guidance-flows")).to_be_hidden()
     expect(page.locator(".guidance-brief-action")).to_be_visible()
     page.locator(".guidance-brief-action button").click()
@@ -571,15 +608,21 @@ def test_guidance_contracts(page) -> None:
         abs(scroll_after_filter - scroll_before_filter) <= 24,
         f"Guidance filter changed the page scroll position: {scroll_before_filter} -> {scroll_after_filter}",
     )
+    page.locator('[data-pattern-id="P02"]').scroll_into_view_if_needed()
+    scroll_before_pattern = page.evaluate("window.scrollY")
     page.locator('[data-pattern-id="P02"]').click()
     page.wait_for_function("() => window.location.hash.endsWith('/P02')")
     page.wait_for_timeout(50)
     scroll_after_pattern = page.evaluate("window.scrollY")
     require(
-        abs(scroll_after_pattern - scroll_after_filter) <= 24,
-        f"Pattern selection changed the page scroll position: {scroll_after_filter} -> {scroll_after_pattern}",
+        abs(scroll_after_pattern - scroll_before_pattern) <= 24,
+        f"Pattern selection changed the page scroll position: {scroll_before_pattern} -> {scroll_after_pattern}",
     )
     expect(page.locator("#patternDetail .mock-browser-frame")).to_have_count(1)
+    expect(page.locator(".pattern-real-world article")).to_have_count(4)
+    expect(page.locator(".pattern-real-world")).to_contain_text("规则治理能力")
+    expect(page.locator(".pattern-real-world")).to_contain_text("从哪里进入")
+    expect(page.locator(".pattern-real-world")).to_contain_text("产生什么记录")
     expect(page.locator(".pattern-review-rules .pattern-review-grid article")).to_have_count(2)
     expect(page.locator(".pattern-review-rules")).to_contain_text("应该保留与应该避免的做法")
 
@@ -977,6 +1020,7 @@ def test_full_detail_route_regression(browser) -> None:
                 )
             if route.startswith("#/guidance/"):
                 expect(page.locator(".guidance-live-specimen")).to_be_visible()
+                expect(page.locator(".pattern-real-world article")).to_have_count(4)
                 assert_mock_browser_radius(page, "#patternDetail", route)
                 require(
                     page.locator(".guidance-live-specimen").evaluate(

@@ -56,6 +56,7 @@ import { enhanceMockBrowserFrames, mockBrowserFrameHtml } from "./src/mock-brows
  * @property {string[]} donts
  * @property {string[]} tests
  * @property {string[]} extensions
+ * @property {{agents:string[], users:string, entry:string, record:string, example:string}} realWorld
  */
 
 /**
@@ -1209,6 +1210,8 @@ const appState = {
   patternFilter: "all",
   selectedPatternId: "S01",
   selectedGuidanceComposition: "collaborative",
+  guidanceScenarioStage: 0,
+  guidanceScenarioRecovered: false,
   selectedSpecimen: "patch",
   selectedJourney: "quick-answer",
   journeyStep: 0,
@@ -1297,6 +1300,7 @@ const elements = {
   guidanceCompositionTabs: document.querySelector("#guidanceCompositionTabs"),
   guidanceCompositionCanvas: document.querySelector("#guidanceCompositionCanvas"),
   guidanceCompositionSummary: document.querySelector("#guidanceCompositionSummary"),
+  guidanceScenarioCanvas: document.querySelector("#guidanceScenarioCanvas"),
   guidanceRouteMeta: document.querySelector("#guidanceRouteMeta"),
   guidanceFlows: document.querySelector("#guidanceFlows"),
   patternList: document.querySelector("#patternList"),
@@ -1813,6 +1817,7 @@ function renderRoute({ focusMain = false } = {}) {
   if (appState.route === "guidance") {
     syncGuidanceRoute();
     renderGuidanceComposition();
+    renderGuidanceScenario();
     renderPatterns();
   }
   if (appState.route === "design-system" && elements.designSystemApp) {
@@ -2638,8 +2643,8 @@ function syncGuidanceRoute() {
     const meta =
       requestedGroup === "all"
         ? {
-            title: "全部智能协作模式",
-            description: "共享机制、Process Intelligence 组合、Collaborative Intelligence 组合与跨约定交接。",
+            title: "全部智能协作界面模式",
+            description: "所有 Agent 共用的界面能力、两类 Intelligence 的工作视图，以及跨对象的受控工作交接。",
           }
         : guidanceGroupMeta[requestedGroup];
     elements.guidanceRouteMeta.innerHTML = `<strong>${escapeHtml(meta.title)}</strong><span>${escapeHtml(meta.description)}</span>`;
@@ -2865,6 +2870,385 @@ function renderGuidanceComposition() {
   `;
 }
 
+const staffClaimScenarioStages = [
+  {
+    id: "intake",
+    index: "01",
+    tab: "提交与校验",
+    title: "理赔 Agent 自动完成常规校验，并识别一项政策边界。",
+    pattern: "主流程 · 自动处理",
+    actor: "Staff Claim Processing Agent",
+    object: "流程事项 SC-2027-0142",
+    status: "需要注意",
+    tone: "warning",
+    description: "员工提交差旅理赔后，Agent 按模板4.8校验身份、金额、票据和政策。四项通过，一项无法按现有规则判断。",
+    changed: "流程事项从“校验中”进入“需要注意”，并记录无法判断的政策条件。",
+    unchanged: "没有拒绝申请、没有批准付款，也没有修改任何流程规则。",
+  },
+  {
+    id: "exception",
+    index: "02",
+    tab: "处理异常",
+    title: "异常工作台只把需要人判断的边界交给 Controller。",
+    pattern: "P01 · 异常优先工作台",
+    actor: "Staff Claim Processing Agent + Staff Claim Controller",
+    object: "流程事项 SC-2027-0142",
+    status: "等待决定",
+    tone: "warning",
+    description: "现有规则无法确定“22:00后出租车、无事前批准”是否适用安全例外。系统保留已完成校验，并说明继续、补充或调查的影响。",
+    changed: "事项进入人工决定点；Controller 获得完整事实、政策版本和三个可控选项。",
+    unchanged: "正常事项继续自动处理；当前事项尚未批准、尚未付款。",
+  },
+  {
+    id: "investigation",
+    index: "03",
+    tab: "政策调查",
+    title: "政策问题创建独立调查任务，原理赔事项保持暂停。",
+    pattern: "S10 + C02 · 受控交接与政策调查",
+    actor: "Policy Investigation Assistant + Staff Claim Controller",
+    object: "调查任务 INV-2027-0068",
+    status: "建议已就绪",
+    tone: "verified",
+    description: "调查助手比较全球差旅政策、本地安全补充条款和两项历史决定，给出有依据的解释；它不接管理赔事项，也不能批准付款。",
+    changed: "创建独立调查任务并关联同一追踪编号；调查结果可以交回原事项。",
+    unchanged: "流程事项仍是“等待决定”；调查完成不等于理赔已批准。",
+  },
+  {
+    id: "decision",
+    index: "04",
+    tab: "决定与规则候选",
+    title: "人工决定恢复当前事项，重复判断只生成规则候选。",
+    pattern: "S05 + P02 · 决策记录与规则治理",
+    actor: "Staff Claim Controller + Rule Governance Capability",
+    object: "决定 DEC-2027-0319 / 规则候选 RC-2027-0027",
+    status: "决定已确认",
+    tone: "verified",
+    description: "Controller 根据调查依据批准本次安全例外。系统发现过去90天有12项相同判断，因此创建规则候选供回放和审批，但它不会影响当前或未来事项。",
+    changed: "原事项恢复并准备付款；另建决策记录和规则候选。",
+    unchanged: "规则候选仍未校验、未批准、未预发布、未启用。",
+  },
+  {
+    id: "recovery",
+    index: "05",
+    tab: "失败恢复",
+    title: "付款失败后保留原记录，并用新的恢复事项继续处理。",
+    pattern: "P03 · 恢复与回滚工作区",
+    actor: "Staff Claim Processing Agent + Staff Claim Controller",
+    object: "恢复事项 REC-2027-0018",
+    status: "等待恢复",
+    tone: "blocking",
+    description: "付款接口返回超时，结果无法确认。系统保留原付款操作，阻止重复支付，并提供核对、重试和人工接管三个恢复路径。",
+    changed: "创建恢复事项，关联原付款操作并冻结重复执行。",
+    unchanged: "原失败记录不会被改写成成功；规则候选也不会因本次失败改变状态。",
+  },
+];
+
+function staffClaimObjectLedgerHtml(stageIndex) {
+  const recovered = appState.guidanceScenarioRecovered;
+  const objects = [
+    {
+      type: "流程事项",
+      id: "SC-2027-0142",
+      status: ["校验边界", "等待决定", "暂停 · 等待调查", "已批准 · 准备付款", recovered ? "恢复完成" : "付款结果未知"][stageIndex],
+      active: stageIndex <= 1,
+    },
+    stageIndex >= 2 && {
+      type: "调查任务",
+      id: "INV-2027-0068",
+      status: stageIndex === 2 ? "建议已就绪" : "已完成 · 来源锁定",
+      active: stageIndex === 2,
+    },
+    stageIndex >= 3 && {
+      type: "决策记录",
+      id: "DEC-2027-0319",
+      status: "已确认",
+      active: false,
+    },
+    stageIndex >= 3 && {
+      type: "规则候选",
+      id: "RC-2027-0027",
+      status: "候选 · 尚未启用",
+      active: stageIndex === 3,
+    },
+    stageIndex >= 4 && {
+      type: "恢复事项",
+      id: "REC-2027-0018",
+      status: recovered ? "已恢复 · 待核验到账" : "等待恢复决定",
+      active: true,
+    },
+  ].filter(Boolean);
+
+  return objects
+    .map(
+      (object) => `
+        <article class="${object.active ? "active" : ""}">
+          <span>${escapeHtml(object.type)}</span>
+          <strong>${escapeHtml(object.id)}</strong>
+          <small>${escapeHtml(object.status)}</small>
+        </article>
+      `,
+    )
+    .join("");
+}
+
+function staffClaimStageDetailHtml(stage) {
+  if (stage.id === "intake") {
+    return `
+      <div class="scenario-check-grid" aria-label="自动校验结果">
+        <article class="passed"><span>员工与成本中心</span><strong>匹配</strong><small>主数据 2027-07-28</small></article>
+        <article class="passed"><span>金额与币种</span><strong>CNY 486.00</strong><small>在个人限额内</small></article>
+        <article class="passed"><span>电子票据</span><strong>已核验</strong><small>发票编号与金额一致</small></article>
+        <article class="passed"><span>重复申请</span><strong>未发现</strong><small>近180天记录已检查</small></article>
+        <article class="attention"><span>差旅政策</span><strong>无法自动判断</strong><small>夜间交通安全例外与事前批准要求存在边界</small></article>
+      </div>
+      <div class="scenario-stage-callout">
+        <span>Agent 停止自动推进的原因</span>
+        <p>两个有效政策条件在当前事实下产生冲突，而且该边界决定属于 Controller 的职责范围。</p>
+      </div>
+    `;
+  }
+
+  if (stage.id === "exception") {
+    return `
+      <div class="scenario-exception-layout">
+        <section>
+          <span>当前事实</span>
+          <strong>22:34从客户现场前往酒店</strong>
+          <ul><li>出租车金额 CNY 486</li><li>无事前批准记录</li><li>行程与会议记录一致</li></ul>
+        </section>
+        <section>
+          <span>政策边界</span>
+          <strong>本地安全例外与全球批准规则同时适用</strong>
+          <ul><li>本地补充条款允许夜间安全交通</li><li>全球政策要求超限费用事前批准</li><li>现有规则未定义优先级</li></ul>
+        </section>
+        <section class="scenario-control-choice">
+          <span>Controller 可以选择</span>
+          <button type="button">要求员工补充说明</button>
+          <button type="button" class="selected">发起政策调查</button>
+          <button type="button">人工接管并直接决定</button>
+        </section>
+      </div>
+    `;
+  }
+
+  if (stage.id === "investigation") {
+    return `
+      <div class="scenario-investigation-document">
+        <header>
+          <div><span>调查问题</span><strong>夜间安全例外是否可以覆盖本次无事前批准？</strong></div>
+          <span class="scenario-evidence-state">3项依据已核验</span>
+        </header>
+        <div class="scenario-source-row">
+          <article><span>全球差旅政策 v7.2</span><strong>超限交通通常需要事前批准</strong><small>适用范围 · 全球员工</small></article>
+          <article><span>中国安全补充条款 v3.1</span><strong>22:00后可选择安全交通方式</strong><small>适用范围 · 中国区差旅</small></article>
+          <article><span>历史决定 × 2</span><strong>同类情形曾按安全例外放行</strong><small>仅作决策参考，不自动形成规则</small></article>
+        </div>
+        <section class="scenario-investigation-result">
+          <span>有依据的建议</span>
+          <p>本次行程符合本地安全例外的事实条件，可以作为一次性例外提交 Controller 决定。由于全球政策未明确优先级，不建议自动批准或直接形成规则。</p>
+          <small>限制 · 该建议不替代 Controller 决定，也不改变政策文本。</small>
+        </section>
+      </div>
+    `;
+  }
+
+  if (stage.id === "decision") {
+    return `
+      <div class="scenario-decision-rule-grid">
+        <article>
+          <span>决策记录 · DEC-2027-0319</span>
+          <strong>批准本次安全例外</strong>
+          <dl>
+            <div><dt>负责人</dt><dd>Staff Claim Controller</dd></div>
+            <div><dt>依据</dt><dd>INV-2027-0068 · 修订1</dd></div>
+            <div><dt>影响</dt><dd>只恢复SC-2027-0142</dd></div>
+          </dl>
+          <small>已确认不等于已付款</small>
+        </article>
+        <article class="candidate">
+          <span>规则候选 · RC-2027-0027</span>
+          <strong>夜间安全交通例外</strong>
+          <ol>
+            <li class="current">候选</li><li>回放</li><li>冲突检查</li><li>审批</li><li>预发布</li><li>启用</li>
+          </ol>
+          <p>过去90天有12项相似人工决定。候选只提出未来可能的规则，不影响当前事项。</p>
+        </article>
+      </div>
+    `;
+  }
+
+  const recovered = appState.guidanceScenarioRecovered;
+  return `
+    <div class="scenario-recovery-layout ${recovered ? "is-recovered" : ""}">
+      <section class="scenario-operation-lineage">
+        <article><span>原付款操作 · PAY-2027-8821</span><strong>结果未知</strong><small>请求已发送 · 60秒未收到确认</small></article>
+        <i aria-hidden="true"></i>
+        <article><span>恢复事项 · REC-2027-0018</span><strong>${recovered ? "已执行核对，不需要重试" : "等待选择恢复路径"}</strong><small>${recovered ? "支付平台确认原交易成功" : "已冻结同一申请的再次付款"}</small></article>
+      </section>
+      <div class="scenario-recovery-options">
+        <button type="button" class="${recovered ? "selected" : ""}"><span>先核对支付平台</span><small>可逆 · 不产生第二笔付款</small></button>
+        <button type="button" ${recovered ? "disabled" : ""}><span>确认失败后重试</span><small>需要新的业务操作记录</small></button>
+        <button type="button" ${recovered ? "disabled" : ""}><span>人工接管</span><small>保留 Agent 已完成的检查</small></button>
+      </div>
+      <div class="scenario-stage-callout ${recovered ? "success" : ""}">
+        <span>${recovered ? "恢复结果" : "恢复原则"}</span>
+        <p>${recovered ? "原交易已成功，恢复事项记录核对结果；原“结果未知”事件仍保留在审计时间线中。" : "恢复不是把失败状态改成成功，而是创建一条新的、可追踪的恢复路径。"}</p>
+      </div>
+    </div>
+  `;
+}
+
+function staffClaimScenarioHtml() {
+  const stageIndex = appState.guidanceScenarioStage;
+  const stage = staffClaimScenarioStages[stageIndex];
+  const isLast = stageIndex === staffClaimScenarioStages.length - 1;
+  const recovered = appState.guidanceScenarioRecovered;
+  const primaryLabel = isLast ? (recovered ? "重新演示" : "确认先核对支付平台") : [
+    "打开异常工作台",
+    "创建政策调查任务",
+    "交还处理建议",
+    "模拟付款结果未知",
+  ][stageIndex];
+
+  return `
+    <div class="staff-claim-scenario-app">
+      <header class="scenario-app-bar">
+        <div>
+          <span>Staff Claim Processing Agent</span>
+          <strong>差旅理赔运行 · 模板4.8</strong>
+        </div>
+        <dl>
+          <div><dt>触发方式</dt><dd>员工提交申请</dd></div>
+          <div><dt>根事项</dt><dd>SC-2027-0142</dd></div>
+          <div><dt>追踪编号</dt><dd>TRACE-CLAIM-0142</dd></div>
+        </dl>
+      </header>
+      <div class="scenario-role-strip" aria-label="参与角色">
+        <span><i></i><b>流程推进</b> Claim Processing Agent</span>
+        <span><i></i><b>按需调查</b> Policy Investigation Assistant</span>
+        <span><i></i><b>人工责任</b> Staff Claim Controller</span>
+        <span><i></i><b>未来能力</b> Rule Governance</span>
+      </div>
+      <div class="scenario-stage-navigation">
+        <span>场景进度</span>
+        <div role="tablist" aria-label="选择 Staff Claim 演示阶段">
+          ${staffClaimScenarioStages
+            .map(
+              (item, index) => `
+                <button
+                  type="button"
+                  role="tab"
+                  data-guidance-scenario-stage="${index}"
+                  aria-selected="${index === stageIndex}"
+                  tabindex="${index === stageIndex ? "0" : "-1"}"
+                ><span>${item.index}</span>${escapeHtml(item.tab)}</button>
+              `,
+            )
+            .join("")}
+        </div>
+      </div>
+      <div class="scenario-workspace">
+        <aside class="scenario-object-ledger">
+          <header><span>工作对象账本</span><small>同一追踪编号 · 分别建档</small></header>
+          ${staffClaimObjectLedgerHtml(stageIndex)}
+        </aside>
+        <main class="scenario-stage-panel" tabindex="-1">
+          <header>
+            <div>
+              <span>${escapeHtml(stage.pattern)}</span>
+              <h4>${escapeHtml(stage.title)}</h4>
+              <p>${escapeHtml(stage.description)}</p>
+            </div>
+            <span class="scenario-stage-status ${escapeHtml(stage.tone)}">${escapeHtml(recovered && isLast ? "恢复完成" : stage.status)}</span>
+          </header>
+          <div class="scenario-stage-meta">
+            <div><span>当前负责人</span><strong>${escapeHtml(stage.actor)}</strong></div>
+            <div><span>当前工作对象</span><strong>${escapeHtml(stage.object)}</strong></div>
+          </div>
+          <div class="scenario-stage-body">
+            ${staffClaimStageDetailHtml(stage)}
+          </div>
+          <div class="scenario-stage-actions">
+            <button type="button" class="button secondary" data-guidance-scenario-back ${stageIndex === 0 ? "disabled" : ""}>上一步</button>
+            <button type="button" class="button primary" ${isLast && !recovered ? "data-guidance-scenario-recover" : isLast ? "data-guidance-scenario-reset" : "data-guidance-scenario-next"}>${escapeHtml(primaryLabel)}</button>
+          </div>
+        </main>
+      </div>
+      <footer class="scenario-change-receipt">
+        <article><span>本步新产生的记录</span><p>${escapeHtml(stage.changed)}</p></article>
+        <article><span>本步没有发生的事</span><p>${escapeHtml(stage.unchanged)}</p></article>
+      </footer>
+    </div>
+  `;
+}
+
+function setGuidanceScenarioStage(stageIndex, { focus = true } = {}) {
+  appState.guidanceScenarioStage = Math.max(0, Math.min(staffClaimScenarioStages.length - 1, stageIndex));
+  if (appState.guidanceScenarioStage !== staffClaimScenarioStages.length - 1) {
+    appState.guidanceScenarioRecovered = false;
+  }
+  renderGuidanceScenario();
+  if (focus) {
+    requestAnimationFrame(() => {
+      elements.guidanceScenarioCanvas?.querySelector(".scenario-stage-panel")?.focus({ preventScroll: true });
+    });
+  }
+}
+
+function renderGuidanceScenario() {
+  if (!elements.guidanceScenarioCanvas) return;
+  elements.guidanceScenarioCanvas.innerHTML = mockBrowserFrameHtml(staffClaimScenarioHtml(), {
+    title: "Staff Claim · 端到端协作演示",
+    address: "eix.template/process/staff-claim/trace-0142",
+    status: "演示数据 · 无外部操作",
+    principles: ["对象分别建档", "人工决定边界", "失败保留记录"],
+    className: "guidance-scenario-browser",
+  });
+
+  const stageButtons = [...elements.guidanceScenarioCanvas.querySelectorAll("[data-guidance-scenario-stage]")];
+  stageButtons.forEach((button, index) => {
+    button.addEventListener("click", () => setGuidanceScenarioStage(index));
+    button.addEventListener("keydown", (event) => {
+      let nextIndex = null;
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % stageButtons.length;
+      if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (index - 1 + stageButtons.length) % stageButtons.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = stageButtons.length - 1;
+      if (nextIndex === null) return;
+      event.preventDefault();
+      setGuidanceScenarioStage(nextIndex, { focus: false });
+      requestAnimationFrame(() => {
+        elements.guidanceScenarioCanvas
+          ?.querySelector(`[data-guidance-scenario-stage="${nextIndex}"]`)
+          ?.focus({ preventScroll: true });
+      });
+    });
+  });
+
+  elements.guidanceScenarioCanvas.querySelector("[data-guidance-scenario-next]")?.addEventListener("click", () => {
+    setGuidanceScenarioStage(appState.guidanceScenarioStage + 1);
+  });
+  elements.guidanceScenarioCanvas.querySelector("[data-guidance-scenario-back]")?.addEventListener("click", () => {
+    setGuidanceScenarioStage(appState.guidanceScenarioStage - 1);
+  });
+  elements.guidanceScenarioCanvas.querySelector("[data-guidance-scenario-recover]")?.addEventListener("click", () => {
+    appState.guidanceScenarioRecovered = true;
+    renderGuidanceScenario();
+    requestAnimationFrame(() => {
+      elements.guidanceScenarioCanvas?.querySelector(".scenario-stage-panel")?.focus({ preventScroll: true });
+    });
+  });
+  elements.guidanceScenarioCanvas.querySelector("[data-guidance-scenario-reset]")?.addEventListener("click", () => {
+    appState.guidanceScenarioRecovered = false;
+    setGuidanceScenarioStage(0, { focus: false });
+    requestAnimationFrame(() => {
+      elements.guidanceScenarioCanvas
+        ?.querySelector('[data-guidance-scenario-stage="0"]')
+        ?.focus({ preventScroll: true });
+    });
+  });
+}
+
 function renderPatterns() {
   document.querySelectorAll("[data-pattern-filter]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.patternFilter === appState.patternFilter));
@@ -2905,6 +3289,18 @@ function renderPatterns() {
       principles: ["工作对象可见", "状态字段独立", "失败后可恢复"],
       className: "guidance-pattern-browser",
     })}
+    <section class="pattern-real-world">
+      <header>
+        <div><span>真实应用映射</span><h4>真实 Agent、用户、入口与产出</h4></div>
+        <p>${escapeHtml(pattern.realWorld.example)}</p>
+      </header>
+      <div>
+        <article><span>常见 Agent</span>${list(pattern.realWorld.agents)}</article>
+        <article><span>主要用户</span><p>${escapeHtml(pattern.realWorld.users)}</p></article>
+        <article><span>从哪里进入</span><p>${escapeHtml(pattern.realWorld.entry)}</p></article>
+        <article><span>产生什么记录</span><p>${escapeHtml(pattern.realWorld.record)}</p></article>
+      </div>
+    </section>
     <div class="pattern-detail-grid">
       <section><span>用户担忧</span><p>${escapeHtml(pattern.fear)}</p></section>
       <section><span>工作对象 / 负责人</span><p>${escapeHtml(pattern.workObject)}<br>${escapeHtml(pattern.owner)}</p></section>

@@ -61,8 +61,8 @@
   --foundation-shadow-raised: 0 10px 28px rgba(23, 26, 29, 0.12);
   --foundation-motion-fast: 160ms;
   --foundation-motion-standard: 200ms;
-  --foundation-font-family-display: "MBCorpoATitle", "Avenir Next Condensed", "Arial Narrow", "PingFang SC", sans-serif;
-  --foundation-font-family-body: "MBCorpoSText", "Avenir Next", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  --foundation-font-family-display: "system-ui", "Avenir Next Condensed", "Arial Narrow", "PingFang SC", sans-serif;
+  --foundation-font-family-body: "system-ui", "Avenir Next", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
   --foundation-font-family-utility: "JetBrains Mono", "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
   --foundation-font-size-100: 12px;
   --foundation-font-size-200: 13px;

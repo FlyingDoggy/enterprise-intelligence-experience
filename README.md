@@ -16,7 +16,7 @@ Rev 0.5 采用“一套静态站点、三层职责”：
 - `UBIQUITOUS_LANGUAGE.md`：当前中文版本的唯一术语基准；
 - `index.html`、`styles.css`、`app.js` 和 `src/`：使用哈希路由的静态参考站；
 - `design-system/tokens.json`：设计变量的唯一结构化来源；
-- `design-system/fonts.generated.css`：从批准的showcase提取并内嵌的五个MB字体面；
+- `design-system/fonts.generated.css`：公开版本的系统字体策略（不内嵌字体二进制）；
 - `design-system/collaborative-visualization/`：设计JSON、CSS令牌、ChartSpec、确定性Chart Router、SVG/ECharts/React实现样例和交互参考；
 - `design-system/collaborative-visualization/CLAUDE_SOURCE_REVIEW.md`：Claude补充材料与EIX的逐项对照和取舍记录；
 - `src/specimens/`：34 个通用组件的独立交互示例；
@@ -33,7 +33,7 @@ Rev 0.5 采用“一套静态站点、三层职责”：
 ## 本地启动
 
 ```bash
-cd "/Users/muyuyang/Desktop/Muyu-AI-Projects/FC China (FG)/54. Enterprise Intelligence Experience 2.0"
+cd enterprise-intelligence-experience
 python3 -m http.server 4190 --bind 127.0.0.1
 ```
 
@@ -70,15 +70,14 @@ http://127.0.0.1:4190/#/brief
 node scripts/generate-tokens.mjs
 ```
 
-## 更新内嵌字体
+## 公开字体策略
 
-字体CSS已提交，静态站点不依赖外部字体服务。需要从批准的showcase重新生成时运行：
+公开版本采用系统字体和中文回退，不分发第三方示例中的字体二进制，也不请求外部字体服务。
+字体角色与排版参数由 `design-system/tokens.json` 管理。更新策略文件可运行：
 
 ```bash
-node scripts/extract-showcase-fonts.mjs "/absolute/path/to/UI components showcase 1.html"
+node scripts/generate-font-policy.mjs
 ```
-
-脚本只接受预期的五个MB字体面，并在生成文件中记录源文件SHA-256。
 
 ## 运行边界
 
@@ -115,4 +114,4 @@ python3 verification/test_eix_rev05.py
 ./deploy/publish-ecs.sh
 ```
 
-脚本默认发布到 `ecs-user@8.160.176.104`，使用 `/Users/muyuyang/Downloads/audi-chatbi-poc.pem`。可以通过 `EIX_DEPLOY_HOST` 和 `EIX_DEPLOY_KEY` 覆盖默认值。旧版本会保留，可通过重新指向 `/opt/eix/current` 回退。
+运行前显式设置 `EIX_DEPLOY_HOST` 与 `EIX_DEPLOY_KEY`；仓库不携带默认服务器地址或密钥路径。旧版本会保留，可通过重新指向 `/opt/eix/current` 回退。

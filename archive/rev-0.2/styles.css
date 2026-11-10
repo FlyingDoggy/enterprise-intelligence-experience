@@ -39,8 +39,8 @@
   --rail-width: 188px;
   --content-width: 1040px;
 
-  --font-display: "MBCorpoATitle", "Avenir Next Condensed", "Arial Narrow", "PingFang SC", sans-serif;
-  --font-body: "MBCorpoSText", "Avenir Next", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+  --font-display: "system-ui", "Avenir Next Condensed", "Arial Narrow", "PingFang SC", sans-serif;
+  --font-body: "system-ui", "Avenir Next", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
 }
 

@@ -29,7 +29,7 @@ export const foundations = [
     cn: "字体",
     purpose: "通过标题、正文、数据与元信息四种角色建立稳定阅读层级。",
     principles: ["正文优先可读性", "数字启用Tabular Numerals", "中英文边界由排版规则统一处理"],
-    examples: ["Display · MBCorpoATitle", "Body · MBCorpoSText / PingFang SC", "Utility · JetBrains Mono"],
+    examples: ["Display · system-ui", "Body · system-ui / PingFang SC", "Utility · JetBrains Mono"],
     acceptance: ["中文正文默认17px，辅助正文不小于15px，有效元信息不小于12px", "标题不依赖全大写表达层级", "长中文标题在390px不溢出"],
     relatedIds: ["text", "heading"],
   },

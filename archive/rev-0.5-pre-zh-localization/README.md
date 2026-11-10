@@ -23,7 +23,7 @@ Rev 0.5采用“一套静态站点、三层职责”，并将Shared Experience K
 ## 本地启动
 
 ```bash
-cd "/Users/muyuyang/Desktop/Muyu-AI-Projects/FC China (FG)/54. Enterprise Intelligence Experience 2.0"
+cd enterprise-intelligence-experience
 python3 -m http.server 4190 --bind 127.0.0.1
 ```
 
@@ -92,4 +92,4 @@ python3 verification/test_eix_rev05.py
 ./deploy/publish-ecs.sh
 ```
 
-脚本默认发布到`ecs-user@8.160.176.104`，使用`/Users/muyuyang/Downloads/audi-chatbi-poc.pem`。可通过`EIX_DEPLOY_HOST`和`EIX_DEPLOY_KEY`覆盖。旧Release保留，可通过重新指向`/opt/eix/current`回退。
+运行前显式设置`EIX_DEPLOY_HOST`和`EIX_DEPLOY_KEY`；公开仓库不提供部署主机或私钥路径。旧Release保留，可通过重新指向`/opt/eix/current`回退。

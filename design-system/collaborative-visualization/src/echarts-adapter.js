@@ -74,7 +74,7 @@ function baseOption(spec, palette) {
     },
     textStyle: {
       color: palette.text,
-      fontFamily: "MBCorpoSText, PingFang SC, Microsoft YaHei, sans-serif",
+      fontFamily: "system-ui, PingFang SC, Microsoft YaHei, sans-serif",
     },
     grid: { left: 80, right: 32, top: 28, bottom: 48, containLabel: true },
     tooltip: {

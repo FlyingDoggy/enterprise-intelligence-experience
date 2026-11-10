@@ -12,7 +12,7 @@ Rev 0.2采用“一主两伴侣、一套静态站点”：
 ## 本地启动
 
 ```bash
-cd "/Users/muyuyang/Desktop/Muyu-AI-Projects/FC China (FG)/54. Enterprise Intelligence Experience 2.0"
+cd enterprise-intelligence-experience
 python3 -m http.server 4190 --bind 127.0.0.1
 ```
 

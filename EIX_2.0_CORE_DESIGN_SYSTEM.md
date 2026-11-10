@@ -1,6 +1,6 @@
 # EIX 核心设计系统
 
-> 候选平台标准 · 修订版本 0.5 · 2026-07-27  
+> 候选平台标准 · 修订版本 0.5 · 2026-07-27
 > 品牌中性核心层 + EIX 主题 · 规范先行，可直接指导实现
 
 | 字段 | 定义 |
@@ -199,8 +199,8 @@ eix.<state-domain>.<property>
 
 | 角色 | 字体 | 用途 |
 |---|---|---|
-| 展示文字 | `MBCorpoATitle` | 页面和章节标题 |
-| 正文 | `MBCorpoSText, PingFang SC, Microsoft YaHei` | 界面与正文 |
+| 展示文字 | `system-ui` | 页面和章节标题 |
+| 正文 | `system-ui, PingFang SC, Microsoft YaHei` | 界面与正文 |
 | 辅助信息 | `JetBrains Mono, ui-monospace` | ID、修订版本、设计变量与数据元信息 |
 
 数字统一使用等宽数字。中英文边界由统一排版规则处理；参考站使用`text-autospace`，不依赖随机插入的手工空格。

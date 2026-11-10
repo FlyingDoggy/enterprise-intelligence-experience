@@ -203,43 +203,12 @@ for (const requiredPath of [
 }
 
 const generatedFonts = await read("design-system/fonts.generated.css");
-const expectedFaces = [
-  ['MBCorpoATitle', "400"],
-  ['MBCorpoSTitle', "400"],
-  ['MBCorpoSTitle', "700"],
-  ['MBCorpoSText', "400"],
-  ['MBCorpoSText', "700"],
-];
-for (const [family, weight] of expectedFaces) {
-  const facePattern = new RegExp(
-    `font-family:\\s*"${family}"[\\s\\S]*?font-weight:\\s*${weight}[\\s\\S]*?font-display:\\s*swap`,
-  );
-  if (!facePattern.test(generatedFonts)) fail(`Missing generated font face: ${family} ${weight}`);
+if (/@font-face|data:font|https?:\/\//i.test(generatedFonts)) {
+  fail("Public font policy must use installed system fonts without bundled binaries or remote requests");
 }
-if ((generatedFonts.match(/@font-face/g) || []).length !== expectedFaces.length) {
-  fail("Generated font CSS must contain exactly the five approved MB font faces");
-}
-if (/https?:\/\//i.test(generatedFonts)) {
-  fail("Generated font CSS must not request an external font service");
-}
-
-for (const path of fontConsumerCssFiles) {
-  const css = await read(path);
-  const unsupportedWeights = [
-    ...css.matchAll(/(?:font-weight|font)\s*:\s*(500|560|600|650)\b/gi),
-  ];
-  if (unsupportedWeights.length) {
-    fail(`${path} uses ${unsupportedWeights.length} unsupported synthetic MB font weights`);
-  }
-}
-
-for (const path of [
-  "index.html",
-  "specimen.html",
-  "design-system/collaborative-visualization/samples/index.html",
-]) {
+for (const path of ["index.html", "specimen.html", "design-system/collaborative-visualization/samples/index.html"]) {
   const html = await read(path);
-  if (!html.includes("fonts.generated.css")) fail(`${path} does not load the generated MB font faces`);
+  if (!html.includes("fonts.generated.css")) fail(`${path} does not load the public font policy`);
 }
 
 for (const requiredTheme of ["neutral", "eix"]) {

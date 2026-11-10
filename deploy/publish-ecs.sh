@@ -2,8 +2,8 @@
 set -euo pipefail
 
 project_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-deploy_host="${EIX_DEPLOY_HOST:-ecs-user@8.160.176.104}"
-deploy_key="${EIX_DEPLOY_KEY:-/Users/muyuyang/Downloads/audi-chatbi-poc.pem}"
+deploy_host="${EIX_DEPLOY_HOST:?Set EIX_DEPLOY_HOST to the deployment user and host}"
+deploy_key="${EIX_DEPLOY_KEY:?Set EIX_DEPLOY_KEY to a local SSH private-key path}"
 release_id="$(date '+%Y%m%d-%H%M%S')"
 staging_path="/tmp/eix-release-${release_id}"
 release_path="/opt/eix/releases/${release_id}"
@@ -72,4 +72,4 @@ ssh "${ssh_options[@]}" "${deploy_host}" "
   readlink -f /opt/eix/current
 "
 
-echo "Published EIX release ${release_id} to http://8.160.176.104/eix/"
+echo "Published EIX release ${release_id} to ${deploy_host}"

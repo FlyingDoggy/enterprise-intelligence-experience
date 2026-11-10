@@ -1,7 +1,7 @@
 # Collaborative Intelligence数据表达验证记录
 
-> 日期：2026-07-27  
-> 状态：候选扩展验证通过  
+> 日期：2026-07-27
+> 状态：候选扩展验证通过
 > 范围：结构化设计源、Token、ChartSpec、Router、校验器、SVG/ECharts/React参考、交互样例和主站入口
 
 ## 1. 自动契约测试
@@ -82,7 +82,7 @@ python verification/test_collaborative_visualization.py
 ## 5. 公网发布
 
 - 发布版本：`20260727-235102`
-- 地址：`http://8.160.176.104/eix/design-system/collaborative-visualization/samples/index.html`
+- 地址：`https://example.com/eix/design-system/collaborative-visualization/samples/index.html`
 - Nginx配置检查与发布后健康检查通过；
 - 上述四个视口、全部ChartBlock、图谱、键盘、Console和溢出检查已对公网版本重新执行并通过。
 

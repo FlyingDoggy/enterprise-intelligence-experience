@@ -1,7 +1,7 @@
 # EIX 2.0 可见语言检查
 
-> 日期：2026-07-27  
-> 基准：`UBIQUITOUS_LANGUAGE.md`  
+> 日期：2026-07-27
+> 基准：`UBIQUITOUS_LANGUAGE.md`
 > 检查对象：6个一级路由、49个设计系统详情页、17个智能体验模式详情页，以及当前版Markdown阅读页。
 
 ## 结论
@@ -27,7 +27,7 @@
 - 设计变量路径与CSS变量，例如`semantic.surface.paper`、`var(--foundation-space-4)`
 - 组件参考属性，例如`href`、`target`、`aria-label`
 - 包名，例如`@eix/tokens`、`@eix/ui`
-- 字体族名称，例如`MBCorpoSText`、`MBCorpoATitle`、`PingFang SC`、`JetBrains Mono`
+- 字体族名称，例如`system-ui`、`system-ui`、`PingFang SC`、`JetBrains Mono`
 
 ## 保留的业务代码、单位与编号
 

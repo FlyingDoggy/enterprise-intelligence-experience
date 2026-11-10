@@ -1,6 +1,6 @@
 # EIX Core Design System
 
-> Candidate Platform Standard · Revision 0.3 · 2026-07-25  
+> Candidate Platform Standard · Revision 0.3 · 2026-07-25
 > Brand-neutral Core + EIX Theme · Documentation-first, implementation-ready
 
 | Field | Definition |
@@ -182,8 +182,8 @@ Core Color Roles：
 
 | Role | Font | Use |
 |---|---|---|
-| Display | `MBCorpoATitle` | Page和Section Title |
-| Body | `MBCorpoSText, PingFang SC, Microsoft YaHei` | UI与正文 |
+| Display | `system-ui` | Page和Section Title |
+| Body | `system-ui, PingFang SC, Microsoft YaHei` | UI与正文 |
 | Utility | `JetBrains Mono, ui-monospace` | ID、Revision、Token与数据元信息 |
 
 数字统一使用Tabular Numerals。中英文边界由统一排版规则处理；参考站使用`text-autospace`，不依赖随机插入的手工空格。

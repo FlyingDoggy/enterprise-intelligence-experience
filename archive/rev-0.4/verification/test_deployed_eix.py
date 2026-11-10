@@ -7,7 +7,7 @@ import os
 from playwright.sync_api import expect, sync_playwright
 
 
-BASE_URL = os.environ.get("EIX_BASE_URL", "http://8.160.176.104/eix").rstrip("/")
+BASE_URL = os.environ.get("EIX_BASE_URL", "http://127.0.0.1:4190").rstrip("/")
 CHROME_PATH = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ROUTES = ["brief", "architecture", "design-system", "guidance", "journeys", "acceptance"]
 

@@ -347,25 +347,25 @@ function foundationPreview(spec, tokenSource) {
     return `
       <div class="ds-type-specimen">
         <div class="ds-type-role ds-type-role--display">
-          <span>大型叙事标题 · MBCorpoATitle 400</span>
+          <span>大型叙事标题 · system-ui 400</span>
           <h2>人工控制始终可见。<small>Human control stays visible.</small></h2>
         </div>
         <div class="ds-type-role ds-type-role--heading">
-          <span>页面与组件标题 · MBCorpoSTitle 700</span>
+          <span>页面与组件标题 · system-ui 700</span>
           <h3>依据先于结论，责任先于执行。</h3>
         </div>
         <div class="ds-type-role ds-type-role--body">
-          <span>正文与中英混排 · MBCorpoSText / 中文回退 · 17/1.65</span>
+          <span>正文与中英混排 · system-ui / 中文回退 · 17/1.65</span>
           <p>界面持续显示目标、上下文、状态、负责人和修订版本。Process Intelligence 与 Collaborative Intelligence 共享同一套可理解、可检查的工作语言。</p>
         </div>
         <div class="ds-type-role ds-type-role--numeric" data-font-numeric-specimen>
-          <span>数据 · MBCorpoSText · tabular-nums + lining-nums</span>
+          <span>数据 · system-ui · tabular-nums + lining-nums</span>
           <div aria-label="等宽数字对照">
             <b>¥1,111,111.00</b><b>¥8,888,888.00</b>
             <b>−8.1%</b><b>+12.4pp</b>
             <b>FY26 YTD</b><b>2026-07-28 15:42</b>
           </div>
-          <p><strong>Roboto结论：</strong>MB字体已提供tnum与lnum特性，当前不加载Roboto；只有浏览器实测失败时才启用数字专用回退。</p>
+          <p><strong>Roboto结论：</strong>系统字体已提供tnum与lnum特性，当前不加载Roboto；只有浏览器实测失败时才启用数字专用回退。</p>
         </div>
         <div class="ds-type-role ds-type-role--utility">
           <span>工具文字 · JetBrains Mono / 系统等宽字体</span>

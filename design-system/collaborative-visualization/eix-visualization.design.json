@@ -34,8 +34,8 @@
       "gax-tokens.css",
       "gax-ui/src/domain.tsx",
       "gax-ui/src/gax-ui.stories.tsx",
-      "MB-Design-System.html",
-      "mb-tokens.json"
+      "theme-design-reference.html",
+      "theme-tokens.json"
     ],
     "adopted": [
       "图表系列色与界面状态色隔离",

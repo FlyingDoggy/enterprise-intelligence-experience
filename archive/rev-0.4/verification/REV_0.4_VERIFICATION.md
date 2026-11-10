@@ -1,7 +1,7 @@
 # EIX 2.0 Rev 0.4 Verification Record
 
-> Verification date: 2026-07-26  
-> Subject: Canonical文档、Core Design System、Intelligence UX Guidance与确定性静态参考站  
+> Verification date: 2026-07-26
+> Subject: Canonical文档、Core Design System、Intelligence UX Guidance与确定性静态参考站
 > Runtime boundary: no LLM、API、database、permission service、policy engine or external action
 
 ## 1. Automated result
@@ -97,7 +97,7 @@ Result:
 
 - Release: `20260726-020317`
 - Immutable path: `/opt/eix/releases/20260726-020317`
-- Public route: `http://8.160.176.104/eix/`
+- Public route: `https://example.com/eix/`
 - Nginx configuration: PASS
 - 1440 / 390 primary-route smoke test: PASS
 - Dark Mode、Drawer、Capability S09、Governed Flows与Markdown reader smoke test: PASS

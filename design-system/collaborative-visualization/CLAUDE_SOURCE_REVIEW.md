@@ -1,17 +1,17 @@
 # Claude补充材料对照评审
 
-> 评审日期：2026-07-27  
+> 评审日期：2026-07-27
 > 结论：吸收其“图表治理与工程交付”能力，保留EIX的语义边界和人机协作模型；不复制其未授权组件代码。
 
 ## 1. 评审范围
 
-来源位于`/Users/muyuyang/Desktop/Benz/BRD Parsing/`：
+来源位于`<local-workspace>`：
 
 | 来源 | 主要内容 | 本轮用途 |
 |---|---|---|
-| `GAX-Design-System.html` / `MB-Design-System.html` | 设计系统章节、图表家族、使用规范和界面样例 | 识别Claude新增的图表治理能力 |
+| `GAX-Design-System.html` / `theme-design-reference.html` | 设计系统章节、图表家族、使用规范和界面样例 | 识别Claude新增的图表治理能力 |
 | `gax-tokens.json` / `gax-tokens.css` | 结构化设计变量与生成CSS | 对照EIX Token交付形式 |
-| `mb-tokens.json` / `mb-tokens.css` | MB主题映射 | 验证Core、主题和领域扩展的分层方式 |
+| `theme-tokens.json` / `theme-tokens.css` | 主题映射 | 验证Core、主题和领域扩展的分层方式 |
 | `gax-ui/` | React组件、类型、验证脚本和参考页面 | 对照实现级契约，不复制源码或API |
 | `GOVERNANCE.md` | 组件和设计变量治理 | 对照成熟度、变更与发布机制 |
 | `chart-chapter-outline.md` | 图表章节结构和图形选择规则 | 提炼工作问题到图形语法 |
